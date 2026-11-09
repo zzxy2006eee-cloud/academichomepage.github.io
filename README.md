@@ -14,6 +14,21 @@ A quiet, blue-and-white academic homepage with a graphite sidebar, independently
 
 本项目为原创静态主页，参考 [AcadHomepage](https://github.com/RayeRen/acad-homepage.github.io) 的开源使用方式与内容组织，没有复制其代码。使用原生 HTML / CSS / JavaScript，无框架和第三方运行时依赖。
 
+### 使用说明目录
+
+- [快速查找：页面内容在哪里修改](#快速查找页面内容在哪里修改)
+- [第一次替换成自己的资料](#第一次替换成自己的资料)
+- [个人资料与头像](#个人资料与头像)
+- [About Me、近况、研究方向与技能](#about-me近况研究方向与技能)
+- [教育背景与荣誉奖项](#教育背景与荣誉奖项)
+- [论文成果](#论文成果)
+- [核心项目与封面图片](#核心项目与封面图片)
+- [中英文切换](#中英文切换)
+- [GitHub 贡献与热力图](#github-贡献与热力图)
+- [配色、布局与栏目标题](#配色布局与栏目标题)
+- [修改后的预览与发布](#修改后的预览与发布)
+- [常见问题](#常见问题)
+
 ### 功能
 
 - 桌面端左右两栏独立滚动；手机端为响应式单列，个人资料可展开。
@@ -37,31 +52,209 @@ node scripts/serve.mjs
 
 打开 http://127.0.0.1:4173 。修改后重新执行 `node scripts/build.mjs` 并刷新页面。按 Ctrl+C 停止预览。
 
-### 修改内容
+### 快速查找：页面内容在哪里修改
 
-所有个人文字在 [`data/site.json`](data/site.json)，大部分文本采用以下双语格式：
+**日常改资料主要只需要修改 [`data/site.json`](data/site.json)，更换图片则放到 [`assets/images/`](assets/images/)。** 下表中的配置字段均位于 `data/site.json`，除非单独标注了文件。
+
+`profile.name` 表示在 `profile` 对象里找到 `name`；`projects[]` 表示项目列表中的每一项。
+
+| 页面位置 / 想修改的内容 | 对应字段或文件 | 说明 |
+| --- | --- | --- |
+| 左上角 `zZ /` 标识 | `profile.initials` | 简短昵称或姓名缩写 |
+| 头像 | `profile.avatar` + `assets/images/avatar.png` | 同名覆盖图片，或修改图片路径 |
+| 姓名 / 昵称 | `profile.name.zh`、`profile.name.en` | 分别用于中文、英文界面 |
+| 姓名下面一行英文 | `profile.romanized` | 可填写拼音、英文名或个人副标题 |
+| `@用户名` | `profile.handle` | 仅为展示文字，不决定贡献数据来源 |
+| 身份 / 职位 | `profile.role` | 如博士研究生、工程师 |
+| 蓝点旁的交流状态 | `profile.status` | 如“欢迎交流与合作” |
+| 学校、实验室、所在地 | `profile.institution`、`profile.lab`、`profile.location` | 侧栏基本信息 |
+| 邮箱与联系按钮 | `profile.email` | 只填邮箱地址，不加 `mailto:` |
+| 简历下载 | `profile.cvUrl` | PDF 路径或完整网址 |
+| Scholar / ORCID | `profile.scholarUrl`、`profile.orcidUrl` | 留空则不显示对应链接 |
+| 侧栏最近更新日期 | `profile.updated` | 手动维护，例如 `2026-11-09` |
+| 右侧 About Me 正文 | `about[]` | 每一项对应一个段落 |
+| About Me 下方近况 | `news.date`、`news.text` | 日期与一句话近况 |
+| 研究方向 | `interests[]` | 按列表顺序展示 |
+| 专业技能 | `skills[].title`、`skills[].items` | 技能分组标题及标签 |
+| 教育背景 | `education[]` | 起止时间、学校、学位、专业 |
+| 荣誉与奖项 | `awards[]` | 奖项、级别 / 授予单位、年份 |
+| 论文成果 | `publications[]` | 标题、作者、发表状态、PDF、代码和引用 |
+| 核心项目 | `projects[]` | 封面、介绍、研究、职责、成果、链接 |
+| GitHub 个人主页和贡献来源 | `githubUsername` | 仅填用户名，如 `zzxy2006eee-cloud` |
+| 页脚 `Open source` | 顶层 `repository` | 本主页的源码仓库：`用户名/仓库名` |
+| 上游贡献的人工说明 | `contributionOverrides` | 按 `owner/repo` 配置中英文说明 |
+| 默认语言 | `defaultLanguage` | `zh` 或 `en` |
+| “示例资料”提示 | `demo` | 替换完真实内容后设为 `false` |
+| 配色、字号、间距、栏宽 | [`src/styles.css`](src/styles.css) | 在编辑器中搜索对应 CSS 名称 |
+| 栏目标题、图标、导航文字 | [`src/app.js`](src/app.js) 的 `sections` | 正文栏目顺序另见下文 |
+| 网页图标 | [`assets/favicon.svg`](assets/favicon.svg) | 浏览器标签页上的小图标 |
+| 搜索摘要 | [`index.html`](index.html) 的 `meta[name="description"]` | 浏览器标题由 `src/app.js` 根据昵称与语言生成 |
+| 自动同步时间 | [`.github/workflows/pages.yml`](.github/workflows/pages.yml) 的 `schedule` | Cron 使用 UTC 时间 |
+
+### 第一次替换成自己的资料
+
+1. 修改 `profile` 中的姓名、学校、身份、邮箱等信息；头像已使用你提供的海边黑猫图片。
+2. 将 `about`、`interests`、`skills` 改成自己的介绍。
+3. 替换 `education`、`awards`、`publications`、`projects` 中的示例条目。没有对应内容时，可以暂时把列表改成 `[]`；栏目标题仍会保留。
+4. 填写真实的论文、仓库、简历链接，补齐中英文内容。
+5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
+6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
+
+目前昵称使用 GitHub 的 `zZ`，头像是用户提供的图片；学历、奖项、论文、项目及部分介绍仍是明确标注的示例。GitHub 区域使用真实公开数据，不会将设计参考截图中的 PR 当成个人贡献。
+
+### 配置文件的基本写法
+
+大部分文本采用以下双语格式：
 
 ```json
 { "zh": "中文内容", "en": "English content" }
 ```
 
-| 配置 | 用途 |
+列表中新增一项时，可以复制现有对象，再替换字段。教育、奖项、论文和项目按配置中的顺序展示，不会自动按年份排序；把想优先展示的条目放在前面。
+
+JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一项后面不要加逗号。JSON 不支持注释。保存为 UTF-8，网页资源路径使用 `/`，不要填写 `D:\...` 这样的本机路径。
+
+### 个人资料与头像
+
+在 `profile` 中编辑。比如：
+
+```json
+{
+  "name": { "zh": "张三", "en": "San Zhang" },
+  "initials": "ZS",
+  "romanized": "San Zhang",
+  "handle": "@zzxy2006eee-cloud",
+  "avatar": "assets/images/avatar.png",
+  "email": "yourname@example.com",
+  "cvUrl": "assets/files/cv.pdf"
+}
+```
+
+这是部分字段示例，只替换 `profile` 中对应的字段，保留其他字段。
+
+- **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按方形裁切显示。头像替代文本在 `src/app.js` 的 `sidebar()` 中，目前描述的是黑猫图片；更换内容后可一并修改。
+- **上传简历**：自行创建 `assets/files/`，放入 `cv.pdf`，然后填写 `profile.cvUrl`。留空时按钮调用浏览器打印，可“另存为 PDF”。
+- **邮箱与联系按钮**：填写 `profile.email` 后，邮箱和联系按钮会打开邮件应用；留空时联系按钮跳转至你的 GitHub 主页。
+- **学术链接**：`scholarUrl`、`orcidUrl` 使用完整 `https://...` 地址；留空时对应入口隐藏。
+- **日期**：`profile.updated` 是你维护资料的日期，不会自动改变；热力图下方的同步时间由程序单独更新。
+
+### About Me、近况、研究方向与技能
+
+`about` 是段落列表。下面的写法会显示两段介绍：
+
+```json
+"about": [
+  { "zh": "你好，我是张三，目前就读于……", "en": "Hello, I am San Zhang, currently studying at…" },
+  { "zh": "我的研究关注……", "en": "My research focuses on…" }
+]
+```
+
+`about` 内容按普通文本显示，不会解析 Markdown 或 HTML。想换段请新增列表项。
+
+`news` 控制简介下面的一行近况：
+
+```json
+"news": {
+  "date": "2026.11",
+  "text": { "zh": "发布了一个新的开源项目。", "en": "Released a new open-source project." }
+}
+```
+
+不想展示近况时，可设置 `"news": null`。`interests` 中的每项对应一个研究方向；`skills` 的每项对应一个技能分组：
+
+```json
+{
+  "title": { "zh": "编程与工程", "en": "Programming & engineering" },
+  "items": ["Python", "TypeScript", "PyTorch"]
+}
+```
+
+### 教育背景与荣誉奖项
+
+在 `education` 列表里复制已有对象，填写：
+
+| 字段 | 含义 |
 | --- | --- |
-| `profile` | 姓名、机构、邮箱、头像、简历、Scholar、ORCID |
-| `about` / `news` | 自我介绍与一行近况 |
-| `education` / `awards` | 教育背景与荣誉 |
-| `publications` | 论文、作者、状态、PDF、代码、BibTeX |
-| `projects` | 封面、介绍、研究、职责、成果、仓库与 Demo |
-| `interests` / `skills` | 研究兴趣与技能 |
-| `githubUsername` | 贡献数据来源账号 |
-| `contributionOverrides` | 按 `owner/repo` 自定义具体贡献的中英文介绍 |
-| `demo` | 是否显示「履历为示例」提示，替换真实资料后再设为 `false` |
+| `period` | 起止时间，例如 `2023 — 至今`，支持中英文对象 |
+| `school` | 学校名称 |
+| `degree` | 学位或阶段，例如本科、硕士、博士 |
+| `detail` | 专业、学院、实验室或补充说明 |
 
-**当前姓名、学历、奖项、论文及项目仍为明确标注的示例，不是账号持有人的真实履历。** 头像使用用户提供的海边黑猫图片。GitHub 区域展示实际公开数据，不把参考截图里的他人 PR 当作个人贡献。
+在 `awards` 列表里填写 `title`（奖项名称）、`organization`（级别与授予单位）、`year`（年份）。日期、学位和奖项不会自动从其他平台获取，需要自行维护。
 
-头像：`assets/images/avatar.png`。项目封面：`assets/images/knowledge.svg` 和 `agents.svg`；可替换为 PNG / JPG / WebP，然后修改项目 `cover` 路径。封面、标题和仓库按钮会在配置 `repository` 后跳转到相应 GitHub 项目。留空的 PDF / 仓库链接不会生成假链接。
+### 论文成果
 
-修改贡献介绍的例子：
+每篇论文对应 `publications` 中的一个对象。复制已有条目后，修改以下字段：
+
+| 字段 | 页面作用 |
+| --- | --- |
+| `id` | 内部标识，例如 `my-paper-2026`；同一个列表中不能重复 |
+| `year` | 左侧年份 |
+| `title` | 论文标题；可直接使用英文字符串，也可提供中英文对象 |
+| `authors` | 作者姓名列表，按实际作者顺序填写 |
+| `highlightAuthor` | 要加粗并加下划线的姓名，必须与 `authors` 中的文字完全一致 |
+| `role` | 如“共同一作”；没有则设为 `""` |
+| `status` | 如“已发表”“已接收”“预印本” |
+| `venue` | 会议、期刊、年份等发表信息 |
+| `pdf` | PDF 网址或本项目文件路径 |
+| `code` | 该论文的代码仓库完整网址 |
+| `bibtex` | 点击 BibTeX 后展示并可复制的引用文本 |
+
+可以把论文 PDF 放到 `assets/papers/my-paper.pdf`，然后设置 `"pdf": "assets/papers/my-paper.pdf"`。`pdf` 或 `code` 留空时，按钮显示为未配置状态；`bibtex` 留空时不显示引用入口。
+
+在 JSON 字符串中，用 `\n` 表示 BibTeX 换行，例如：
+
+```json
+"bibtex": "@article{myPaper2026,\n  title={My Paper Title},\n  author={Zhang, San},\n  year={2026}\n}"
+```
+
+### 核心项目与封面图片
+
+每张项目卡片对应 `projects` 中的一项：
+
+| 字段 | 页面位置 / 行为 |
+| --- | --- |
+| `id` | 唯一项目标识，用于打开正确的详情弹窗 |
+| `title` | 项目名称 |
+| `cover` | 封面图片的相对路径 |
+| `description` | 名称下面的一句话介绍 |
+| `research` | “研究”一行，例如 RAG、LLM 或具体问题 |
+| `role` | “职责”一行，说明自己负责什么 |
+| `outcome` | “成果”一行，填写真实产出 |
+| `tags` | 技术或研究方向标签列表 |
+| `repository` | **该项目**的 GitHub 仓库完整网址 |
+| `demo` | 在线演示地址；留空则隐藏 Demo 入口 |
+| `details` | “项目详情”弹窗中的详细介绍，按普通文本显示 |
+
+例如把新封面放到 `assets/images/my-project.png`，然后在对应项目里修改：
+
+```json
+"cover": "assets/images/my-project.png",
+"repository": "https://github.com/zzxy2006eee-cloud/your-project",
+"tags": ["LLM", "RAG", { "zh": "知识图谱", "en": "Knowledge graphs" }]
+```
+
+封面支持 SVG、PNG、JPG、WebP。建议使用横向图片，比例约 `1.85:1`；页面使用 `object-fit: cover`，边缘可能被裁切，重要内容尽量居中。
+
+配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”仍打开本页弹窗。仓库留空时，封面和标题打开详情，仓库按钮禁用。
+
+注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，格式为 `用户名/仓库名`；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
+
+### 中英文切换
+
+- `defaultLanguage` 决定首次访问的默认语言，填写 `"zh"` 或 `"en"`。
+- 中文和英文由你分别维护，不会自动翻译。通用专有名词如 `Python` 可以只用字符串，两种界面会显示相同文本。
+- 已选择过的语言保存在浏览器中，因此更改默认语言后，老访客仍会看到之前选择的语言。可以点击页面语言按钮，或使用无痕窗口检查首次访问效果。
+- 内容翻译在 `data/site.json`；按钮、空状态等界面文字在 `src/app.js` 的 `w("中文", "English")` 中；栏目标题与导航在 `sections` 中。
+- 当前正式支持中文、英文两种语言；增加第三种语言需要修改渲染逻辑，不能只增加一个 JSON 字段。
+
+### GitHub 贡献与热力图
+
+`githubUsername` 决定贡献数据来源、侧栏 GitHub 链接和“全部仓库”入口。`profile.handle` 只是展示文字，改它不会更换数据账号。
+
+贡献表统计公开、已合并、且仓库拥有者不是当前账号的 PR。没有符合条件的 PR 时会显示空状态，不需要手工添加假的统计数字。表格默认展示最近有合并记录的 6 个仓库；每个仓库最多展示 2 条 PR 标题和 3 个合并链接，完整记录可通过详情或 GitHub 搜索入口查看。
+
+如果希望把自动取得的 PR 标题改写成更清楚的中英文介绍，编辑 `contributionOverrides`：
 
 ```json
 "contributionOverrides": {
@@ -71,6 +264,87 @@ node scripts/serve.mjs
   }
 }
 ```
+
+键名必须与 GitHub 的 `owner/repository` 完全对应。该配置只覆盖**已查询到的仓库**的介绍，不会新增贡献行、修改 PR 数量或伪造合并记录。
+
+- **热力图数据**：`scripts/sync-github.mjs` 从 GitHub 获取今年与去年数据；浏览器里的年份选择器随同步结果更新。
+- **同步时间**：在 `.github/workflows/pages.yml` 中修改 `schedule` 下的 Cron。当前 `17 2 * * *` 为 UTC 02:17，即北京时间每天 10:17。它不是实时推送，GitHub 调度也可能延迟。
+- **立即更新**：在仓库 Actions 中选择 `Sync contributions and deploy homepage`，点击 `Run workflow`，选择 `main` 并运行。无需为了刷新数据修改个人介绍。
+- **改统计规则或增加历史年份**：编辑 `scripts/sync-github.mjs`。当前年份列表是 `[year, year - 1]`。
+- **改表格显示条数**：编辑 `src/app.js` 的 `contributions()`，其中 `.slice(0, 6)` 控制仓库数量，另外的 `.slice(0, 2)`、`.slice(0, 3)` 控制介绍和合并链接数量。
+- **不要手工改 `data/github.json` 来维护介绍**：它是同步快照，会被自动数据替换。人工说明请写在 `contributionOverrides`。
+
+### 配色、布局与栏目标题
+
+这些修改位于 [`src/styles.css`](src/styles.css)，通常不需要碰 `data/site.json`。
+
+| 想修改的效果 | 在 CSS 中搜索 | 说明 |
+| --- | --- | --- |
+| 主要文字和链接色 | `:root` 下的 `--ink`、`--blue`、`--blue-dark` | 修改相应十六进制颜色 |
+| 深色侧栏 | `.sidebar` 的 `background` | 当前是两个蓝灰色组成的渐变；只改 `--sidebar` 不会改变该渐变 |
+| 字体 | `:root` 下的 `--font` | 使用字体回退列表，不依赖外部字体服务 |
+| 主页最大宽度 | `.site-shell` 的 `max-width` | 同名规则有后续覆盖，桌面默认最终值为 `1320px` |
+| 左栏宽度 | `.site-shell` 的 `grid-template-columns` | 桌面默认 `300px minmax(0, 1fr)`，不同屏宽有覆盖规则 |
+| 头像大小与圆角 | `.profile-avatar` | 手机端也有单独的覆盖规则 |
+| 正文边距 | `.content` | 调整内边距 `padding` |
+| 栏目间距 | `.content-section` | 调整 `margin-top` |
+| 项目卡片数量 / 间距 | `.project-grid` | 桌面两列，手机一列 |
+| 封面裁切比例 | `.project-cover` | 修改 `aspect-ratio` 和 `object-fit` |
+| 贡献图颜色 | `.heat-cell[data-level=...]`、`.legend-cell[data-level=...]` | 日历和图例应一起修改 |
+| 手机适配 | `@media (max-width: 760px)` | 760px 及以下切换为单列 |
+| 导出 PDF 的样式 | `@media print` | 打印专用布局 |
+
+**独立滚动的关键**：桌面端 `body` 禁止整体滚动，`.sidebar` 和 `.main-pane` 分别设置 `height: 100dvh`、`overflow-y: auto`。要保留左右独立操控，避免把它们改回由整个页面统一滚动。手机端有意改为单列页面滚动。
+
+栏目名称、英文副标题和小图标在 `src/app.js` 的 `sections` 数组中，顺序为：内部 ID、中文导航、英文导航、中文栏目标题、英文副标题、图标。比如教育栏的 ID 是 `education`，图标是 `🎓`。
+
+`sections` 决定导航顺序；**正文顺序**还需要在 `render()` 返回的 HTML 中调整相应 `<section>` 块。只调整数组不会移动正文栏目。删除或新增栏目时，需要同时维护 `sections`、对应渲染函数和 `render()`，保持导航 ID 与正文 ID 一致。
+
+### 修改后的预览与发布
+
+在 Windows PowerShell 中进入项目目录：
+
+```powershell
+Set-Location -LiteralPath 'D:\个人主页\academic-homepage'
+node scripts/check.mjs
+node scripts/build.mjs
+node scripts/serve.mjs
+```
+
+打开 [本地预览](http://127.0.0.1:4173)，检查中文、英文和手机宽度。`check.mjs` 会检查 JSON、双语必填项、图片是否存在、项目 / 论文 ID、账号快照与脚本语法。预览服务没有自动构建：修改后需要再次运行 `node scripts/build.mjs` 并刷新浏览器；服务运行中可以在第二个终端执行构建。
+
+确认无误后，在项目目录提交并推送：
+
+```powershell
+git status
+git add data/site.json assets/images
+git commit -m "Update homepage content"
+git push origin main
+```
+
+上述 `git add` 适用于文字和图片修改；若同时修改了 `src/styles.css`、`assets/files/` 等文件，也要将实际修改的路径加入暂存。之后在仓库 Actions 查看最新工作流，`deploy` 成功后刷新[线上主页](https://zzxy2006eee-cloud.github.io/academichomepage.github.io/)。
+
+也可以直接在 GitHub 网页打开 `data/site.json`，使用编辑按钮保存并提交；图片通过仓库的文件上传入口放到相应目录。提交到 `main` 后同样会自动部署。
+
+**修改源文件，不要编辑 `dist/`。** `dist/` 是构建产物，重新构建会覆盖内容，而且不会提交到 Git。README 中的预览截图位于 `docs/`，不会随网页自动重新截图；它们不影响网站实际显示。
+
+### 常见问题
+
+| 现象 | 应检查的位置 |
+| --- | --- |
+| 修改后本地页面没变化 | 重新执行 `node scripts/build.mjs`，再刷新；不是只保存源文件 |
+| 本地有变化，线上没有 | 是否推送到 `main`，最新 Actions 是否成功；然后尝试强制刷新 |
+| 图片在本机正常，线上不显示 | 检查文件名大小写、相对路径与是否提交图片；不要使用 Windows 绝对路径 |
+| GitHub / PDF 按钮是灰色的 | 对应项目的 `repository` 或论文的 `pdf` / `code` 仍为空 |
+| 改完名字，论文作者仍未变化 | 论文的 `authors`、`highlightAuthor`、`bibtex` 都需要分别更新 |
+| 改成英文默认，但仍显示中文 | 浏览器记住了之前选择的语言；点击 EN 或用无痕窗口查看 |
+| 页面仍提示“示例资料” | 确认示例全部替换后，将顶层 `demo` 改为 `false` |
+| 无法隐藏某个空栏目 | 空列表只清空条目；完整隐藏需要同时修改 `sections` 和 `render()` |
+| 有提交活动，但上游 PR 表为空 | 热力图和上游合并 PR 口径不同；自己仓库的提交不等于贡献给其他仓库的已合并 PR |
+| 热力图没有马上更新 | 查看最后同步时间，可手动运行工作流；GitHub 自身统计也可能延迟 |
+| 更换 GitHub 账号后校验失败 | 更新 `githubUsername` 后重新同步快照；`profile.handle` 和顶层 `repository` 按需要分别修改 |
+| JSON 无法解析 | 检查英文双引号、逗号、是否包含注释；运行 `node scripts/check.mjs` 查看错误 |
+| 直接双击 `index.html` 内容不出现 | 使用构建和本地预览命令；源目录的运行数据文件由构建生成到 `dist/data/` |
 
 ### GitHub Pages
 
