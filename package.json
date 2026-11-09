@@ -1,0 +1,15 @@
+{
+  "name": "academic-homepage",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A bilingual academic homepage with independent scrolling and verified GitHub contributions.",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "start": "node scripts/serve.mjs",
+    "check": "node scripts/check.mjs",
+    "sync": "node scripts/sync-github.mjs"
+  },
+  "engines": { "node": ">=20" },
+  "license": "MIT"
+}

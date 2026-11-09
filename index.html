@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#293544" />
+    <meta
+      name="description"
+      content="个人学术主页：研究方向、教育背景、论文成果、核心项目与开源贡献。"
+    />
+    <title>Academic Homepage</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="src/styles.css" />
+    <script src="data/site.js" defer></script>
+    <script src="data/github.js" defer></script>
+    <script src="src/app.js" defer></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#about">跳至正文 / Skip to content</a>
+    <div class="site-shell">
+      <aside id="sidebar" class="sidebar" aria-label="个人信息"></aside>
+      <main id="main-pane" class="main-pane" tabindex="-1">
+        <header id="topbar" class="topbar"></header>
+        <div id="content" class="content"></div>
+      </main>
+    </div>
+    <dialog id="detail-dialog">
+      <button class="dialog-close" aria-label="关闭 / Close">×</button>
+      <div id="dialog-content"></div>
+    </dialog>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <noscript
+      ><p class="noscript">
+        此页面需要启用 JavaScript。Please enable JavaScript to view this homepage.
+      </p></noscript
+    >
+  </body>
+</html>

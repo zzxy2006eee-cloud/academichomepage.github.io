@@ -1,0 +1,186 @@
+{
+  "demo": true,
+  "defaultLanguage": "zh",
+  "githubUsername": "zzxy2006eee-cloud",
+  "repository": "zzxy2006eee-cloud/academichomepage.github.io",
+  "profile": {
+    "name": { "zh": "zZ", "en": "zZ" },
+    "initials": "zZ",
+    "romanized": "Academic Homepage",
+    "handle": "@zzxy2006eee-cloud",
+    "avatar": "assets/images/avatar.png",
+    "role": { "zh": "研究者 · 开源探索者", "en": "Researcher · Open-source explorer" },
+    "status": { "zh": "欢迎交流与合作", "en": "Open to ideas & collaboration" },
+    "institution": { "zh": "你的学校 / 机构", "en": "Your university / institution" },
+    "lab": { "zh": "你的学院 / 实验室", "en": "Your department / laboratory" },
+    "location": { "zh": "中国", "en": "China" },
+    "email": "",
+    "cvUrl": "",
+    "scholarUrl": "",
+    "orcidUrl": "",
+    "updated": "2026-11-09"
+  },
+  "interests": [
+    { "zh": "大语言模型 / LLM", "en": "Large language models" },
+    { "zh": "人机交互 / HCI", "en": "Human–computer interaction" },
+    { "zh": "知识可视化", "en": "Knowledge visualization" }
+  ],
+  "skills": [
+    {
+      "title": { "zh": "编程与工程", "en": "Programming & engineering" },
+      "items": ["Python", "TypeScript", "PyTorch"]
+    },
+    {
+      "title": { "zh": "研究与设计", "en": "Research & design" },
+      "items": [
+        { "zh": "实验设计", "en": "Experiment design" },
+        { "zh": "数据分析", "en": "Data analysis" },
+        "Figma",
+        { "zh": "学术写作", "en": "Academic writing" }
+      ]
+    }
+  ],
+  "about": [
+    {
+      "zh": "你好，欢迎来到我的个人主页。这里记录我的研究、项目与开源实践。",
+      "en": "Hello, and welcome to my personal homepage. This is a home for my research, projects, and open-source work."
+    },
+    {
+      "zh": "我关注大语言模型、检索增强生成与人机协同，希望探索更可靠、可解释的智能系统。",
+      "en": "My interests include large language models, retrieval-augmented generation, and human–AI collaboration, with a focus on reliable and interpretable intelligent systems."
+    },
+    {
+      "zh": "我也喜欢把想法做成可用的工具，分享代码、实验与学习记录。欢迎就相关研究和开源项目交流合作。",
+      "en": "I enjoy turning ideas into useful tools and sharing code, experiments, and learning notes. I welcome conversations about related research and open-source collaboration."
+    }
+  ],
+  "news": {
+    "date": "2026.11",
+    "text": {
+      "zh": "个人主页上线，持续记录研究与开源实践。",
+      "en": "Launching this homepage to document research and open-source work."
+    }
+  },
+  "education": [
+    {
+      "period": { "zh": "2023 — 至今", "en": "2023 — Present" },
+      "school": { "zh": "示例大学", "en": "Example University" },
+      "degree": { "zh": "博士", "en": "Ph.D." },
+      "detail": {
+        "zh": "计算机科学与技术 · 智能计算实验室",
+        "en": "Computer Science · Intelligent Computing Lab"
+      }
+    },
+    {
+      "period": "2019 — 2023",
+      "school": { "zh": "示例理工大学", "en": "Example Institute of Technology" },
+      "degree": { "zh": "本科", "en": "B.Eng." },
+      "detail": {
+        "zh": "软件工程 · 工学学士",
+        "en": "Software Engineering · Bachelor of Engineering"
+      }
+    }
+  ],
+  "awards": [
+    {
+      "title": { "zh": "研究生学术创新奖", "en": "Graduate Research Innovation Award" },
+      "organization": { "zh": "校级 · 示例大学", "en": "University level · Example University" },
+      "year": "2025"
+    },
+    {
+      "title": { "zh": "优秀毕业生", "en": "Outstanding Graduate" },
+      "organization": {
+        "zh": "校级 · 示例理工大学",
+        "en": "University level · Example Institute of Technology"
+      },
+      "year": "2023"
+    }
+  ],
+  "publications": [
+    {
+      "id": "interactive-learning",
+      "year": "2026",
+      "title": "Human-Centered Interfaces for Interactive Learning",
+      "authors": ["Your Name", "Ming Chen", "Yue Wang"],
+      "highlightAuthor": "Your Name",
+      "role": { "zh": "共同一作", "en": "Co-first author" },
+      "status": { "zh": "已接收", "en": "Accepted" },
+      "venue": { "zh": "示例会议 · 2026", "en": "Example conference · 2026" },
+      "pdf": "",
+      "code": "",
+      "bibtex": "@inproceedings{example2026interactive,\n  title={Human-Centered Interfaces for Interactive Learning},\n  author={Your Name and Ming Chen and Yue Wang},\n  year={2026},\n  note={Example entry; replace before use}\n}"
+    },
+    {
+      "id": "knowledge-exploration",
+      "year": "2025",
+      "title": "Retrieval-Augmented Knowledge Exploration with Large Language Models",
+      "authors": ["Your Name", "Yue Wang"],
+      "highlightAuthor": "Your Name",
+      "role": "",
+      "status": { "zh": "预印本", "en": "Preprint" },
+      "venue": { "zh": "示例论文 · 2025", "en": "Example paper · 2025" },
+      "pdf": "",
+      "code": "",
+      "bibtex": "@misc{example2025retrieval,\n  title={Retrieval-Augmented Knowledge Exploration with Large Language Models},\n  author={Your Name and Yue Wang},\n  year={2025},\n  note={Example entry; replace before use}\n}"
+    }
+  ],
+  "projects": [
+    {
+      "id": "literature-assistant",
+      "title": { "zh": "LLM 文献研究助手", "en": "LLM Research Companion" },
+      "cover": "assets/images/knowledge.svg",
+      "description": {
+        "zh": "面向科研阅读的检索、问答与知识整理。",
+        "en": "Search, question answering, and knowledge organization for research reading."
+      },
+      "research": {
+        "zh": "RAG、知识图谱与可溯源生成",
+        "en": "RAG, knowledge graphs, and traceable generation"
+      },
+      "role": {
+        "zh": "负责检索流程与评测框架",
+        "en": "Retrieval pipeline and evaluation framework"
+      },
+      "outcome": {
+        "zh": "开源原型与可复现实验脚本",
+        "en": "Open-source prototype and reproducible experiments"
+      },
+      "tags": ["LLM", "RAG", { "zh": "知识图谱", "en": "Knowledge graphs" }],
+      "repository": "",
+      "demo": "",
+      "details": {
+        "zh": "这是用于展示页面布局的示例项目。你可以在 data/site.json 中替换介绍、研究内容、个人职责、项目成果和 GitHub 仓库链接，并替换 assets/images 中的封面图片。",
+        "en": "This is an example project. Replace its description, research, responsibilities, results, and GitHub repository in data/site.json. Replace the cover image in assets/images."
+      }
+    },
+    {
+      "id": "multi-agent",
+      "title": { "zh": "多智能体协作平台", "en": "Multi-agent Collaboration" },
+      "cover": "assets/images/agents.svg",
+      "description": {
+        "zh": "支持多个智能体协作完成研究任务。",
+        "en": "Enabling multiple agents to collaborate on research tasks."
+      },
+      "research": {
+        "zh": "任务规划、工具调用与协作评测",
+        "en": "Planning, tool use, and collaborative evaluation"
+      },
+      "role": {
+        "zh": "负责协作流程与工具接口",
+        "en": "Collaboration workflows and tool interfaces"
+      },
+      "outcome": {
+        "zh": "提供演示系统与基准测试",
+        "en": "Demonstration system and benchmark tests"
+      },
+      "tags": ["AI Agents", "LLM", "Evaluation"],
+      "repository": "",
+      "demo": "",
+      "details": {
+        "zh": "这是用于展示页面布局的示例项目。项目详情可以写研究动机、系统设计、技术路线与实验结果。配置仓库地址后，封面、标题和 GitHub 按钮都将链接到该项目。",
+        "en": "This example illustrates how to present research motivation, architecture, methodology, and results. Once a repository URL is configured, the cover, title, and GitHub button link to it."
+      }
+    }
+  ],
+  "contributionOverrides": {}
+}
