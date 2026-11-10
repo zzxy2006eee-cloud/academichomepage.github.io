@@ -60,23 +60,18 @@ node scripts/serve.mjs
 
 | 页面位置 / 想修改的内容 | 对应字段或文件 | 说明 |
 | --- | --- | --- |
-| 左上角 `zZ /` 标识 | `profile.initials` | 简短昵称或姓名缩写 |
 | 头像 | `profile.avatar` + `assets/images/avatar.png` | 同名覆盖图片，或修改图片路径 |
-| 姓名 / 昵称 | `profile.name.zh`、`profile.name.en` | 分别用于中文、英文界面 |
+| 头像下方姓名 | `profile.name.zh` | 侧栏始终展示中文姓名；`profile.name.en` 用于英文页面标题等位置 |
 | 姓名下面一行英文 | `profile.romanized` | 可填写拼音、英文名或个人副标题 |
-| `@用户名` | `profile.handle` | 仅为展示文字，不决定贡献数据来源 |
-| 国籍 | `profile.nationality` | 中英文国籍文字，留空则不显示 |
-| 身份 / 职位 | `profile.role` | 如博士研究生、工程师 |
-| 蓝点旁的交流状态 | `profile.status` | 如“欢迎交流与合作” |
-| 学校、实验室、所在地 | `profile.institution`、`profile.lab`、`profile.location` | 侧栏基本信息 |
-| 邮箱与联系按钮 | `profile.email` | 只填邮箱地址，不加 `mailto:` |
-| 简历下载 | `profile.cvUrl` | PDF 路径或完整网址 |
-| Scholar / ORCID | `profile.scholarUrl`、`profile.orcidUrl` | 留空则不显示对应链接 |
+| 姓名下方学校、基本信息中的学校 | `profile.institution` | 两处共用同一双语字段 |
+| 基本信息中的国家 | `profile.location` | 当前为中国 / China |
+| 基本信息中的邮箱 | `profile.email` | 只填邮箱地址，不加 `mailto:` |
+| 基本信息中的 GitHub 账号名 | `githubUsername` | 同时决定主页链接与贡献数据来源 |
 | 侧栏最近更新日期 | `profile.updated` | 手动维护，例如 `2026-11-09` |
 | 右侧 About Me 正文 | `about[]` | 每一项对应一个段落 |
 | About Me 下方近况 | `news.date`、`news.text` | 日期与一句话近况 |
 | 研究方向 | `interests[]` | 按列表顺序展示 |
-| 专业技能 | `skills[].title`、`skills[].items` | 技能分组标题及标签 |
+| 专业技能 | `skills[].title`、`skills[].items` | 按顺序展示标签；`title` 留空时隐藏分组标题 |
 | 教育背景 | `education[]` | 起止时间、学校、学位、专业 |
 | 荣誉与奖项 | `awards[]` | 奖项、级别 / 授予单位、年份 |
 | 论文成果 | `publications[]` | 标题、作者、发表状态、PDF、代码和引用 |
@@ -102,7 +97,7 @@ node scripts/serve.mjs
 5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
 6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
 
-当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。荣誉、论文与专业技能尚未替换，仍明确标为示例；GitHub 区域使用真实账号数据。
+当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。专业技能为 Python、PyTorch、C++；荣誉与论文尚未替换，仍明确标为示例；GitHub 区域使用真实账号数据。
 
 ### 配置文件的基本写法
 
@@ -134,10 +129,10 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 这是部分字段示例，只替换 `profile` 中对应的字段，保留其他字段。
 
-- **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按方形裁切显示。头像替代文本在 `src/app.js` 的 `sidebar()` 中，目前描述的是黑猫图片；更换内容后可一并修改。
-- **上传简历**：自行创建 `assets/files/`，放入 `cv.pdf`，然后填写 `profile.cvUrl`。留空时按钮调用浏览器打印，可“另存为 PDF”。
-- **邮箱与联系按钮**：填写 `profile.email` 后，邮箱和联系按钮会打开邮件应用；留空时联系按钮跳转至你的 GitHub 主页。
-- **学术链接**：`scholarUrl`、`orcidUrl` 使用完整 `https://...` 地址；留空时对应入口隐藏。
+- **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按圆形框裁切显示。头像替代文本在 `src/app.js` 的 `sidebar()` 中，目前描述的是黑猫图片；更换内容后可一并修改。
+- **侧栏顺序**：最上方直接显示头像，下方依次为中文姓名、英文姓名、学校；基本信息依次为学校、国家、邮箱、GitHub 账号名，之后是研究方向和专业技能。
+- **邮箱**：填写 `profile.email` 后，点击邮箱会打开邮件应用。
+- **保留字段**：`initials`、`handle`、`role`、`status`、`lab`、`nationality`、`cvUrl`、`scholarUrl`、`orcidUrl` 暂不在精简侧栏显示。需要恢复额外入口时修改 `src/app.js` 的 `sidebar()`；仍可用浏览器打印功能导出 PDF。
 - **日期**：`profile.updated` 是你维护资料的日期，不会自动改变；热力图下方的同步时间由程序单独更新。
 
 ### About Me、近况、研究方向与技能
@@ -166,8 +161,8 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 ```json
 {
-  "title": { "zh": "编程与工程", "en": "Programming & engineering" },
-  "items": ["Python", "TypeScript", "PyTorch"]
+  "title": "",
+  "items": ["Python", "PyTorch", "C++"]
 }
 ```
 
@@ -254,7 +249,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 ### GitHub 贡献与热力图
 
-`githubUsername` 决定贡献数据来源、侧栏 GitHub 链接和“全部仓库”入口。`profile.handle` 只是展示文字，改它不会更换数据账号。
+`githubUsername` 决定贡献数据来源、侧栏 GitHub 账号名与链接和“全部仓库”入口。`profile.handle` 是保留字段，当前不显示。
 
 贡献表统计公开、已合并、且仓库拥有者不是当前账号的 PR。没有符合条件的 PR 时会显示空状态，不需要手工添加假的统计数字。表格默认展示最近有合并记录的 6 个仓库；每个仓库最多展示 2 条 PR 标题和 3 个合并链接，完整记录可通过详情或 GitHub 搜索入口查看。
 
@@ -271,7 +266,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 键名必须与 GitHub 的 `owner/repository` 完全对应。该配置只覆盖**已查询到的仓库**的介绍，不会新增贡献行、修改 PR 数量或伪造合并记录。
 
-- **热力图数据**：`scripts/sync-github.mjs` 从 `user(login: githubUsername).contributionsCollection` 获取真实贡献日历。默认使用 GitHub 个人主页相同的近一年查询口径，另外提供今年和去年；选择器显示“近一年 / 今年 / 去年”。仅将颜色映射为网站的蓝灰色，日期和贡献数量来自 GitHub。
+- **热力图数据**：`scripts/sync-github.mjs` 从 `user(login: githubUsername).contributionsCollection` 获取真实贡献日历。默认使用 GitHub 个人主页相同的近一年查询口径，另外提供今年和去年；选择器显示“近一年”及具体年份。日历与图例使用 GitHub 风格的绿色梯度，日期和贡献数量来自 GitHub。
 - **同步时间**：在 `.github/workflows/pages.yml` 中修改 `schedule` 下的 Cron。当前 `17 2 * * *` 为 UTC 02:17，即北京时间每天 10:17。它不是实时推送，GitHub 调度也可能延迟。
 - **立即更新**：在仓库 Actions 中选择 `Sync contributions and deploy homepage`，点击 `Run workflow`，选择 `main` 并运行。无需为了刷新数据修改个人介绍。
 - **改统计规则或增加历史年份**：编辑 `scripts/sync-github.mjs`。当前范围列表是 `["last-year", year, year - 1]`，其中 `last-year` 使用 GitHub 默认的近一年范围。
@@ -346,7 +341,7 @@ git push origin main
 | 无法隐藏某个空栏目 | 空列表只清空条目；完整隐藏需要同时修改 `sections` 和 `render()` |
 | 有提交活动，但上游 PR 表为空 | 热力图和上游合并 PR 口径不同；自己仓库的提交不等于贡献给其他仓库的已合并 PR |
 | 热力图没有马上更新 | 查看最后同步时间，可手动运行工作流；GitHub 自身统计也可能延迟 |
-| 更换 GitHub 账号后校验失败 | 更新 `githubUsername` 后重新同步快照；`profile.handle` 和顶层 `repository` 按需要分别修改 |
+| 更换 GitHub 账号后校验失败 | 更新 `githubUsername` 后重新同步快照；顶层 `repository` 按需要修改 |
 | JSON 无法解析 | 检查英文双引号、逗号、是否包含注释；运行 `node scripts/check.mjs` 查看错误 |
 | 直接双击 `index.html` 内容不出现 | 使用构建和本地预览命令；源目录的运行数据文件由构建生成到 `dist/data/` |
 
@@ -386,7 +381,7 @@ This is an original, dependency-free academic homepage inspired by the content s
 
 Run `node scripts/build.mjs` and `node scripts/serve.mjs` with Node.js 20+. Edit bilingual content in `data/site.json`, and put images in `assets/images/`. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
 
-The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; honors, papers, and skills remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
+The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; skills are Python, PyTorch, and C++; honors and papers remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
 
 Enable **GitHub Actions** as the repository's Pages source. A project repository named `academichomepage.github.io` is served at `https://USERNAME.github.io/academichomepage.github.io/`.
 

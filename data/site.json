@@ -55,32 +55,8 @@
   ],
   "skills": [
     {
-      "title": {
-        "zh": "编程与工程",
-        "en": "Programming & engineering"
-      },
-      "items": ["Python", "TypeScript", "PyTorch"]
-    },
-    {
-      "title": {
-        "zh": "研究与设计",
-        "en": "Research & design"
-      },
-      "items": [
-        {
-          "zh": "实验设计",
-          "en": "Experiment design"
-        },
-        {
-          "zh": "数据分析",
-          "en": "Data analysis"
-        },
-        "Figma",
-        {
-          "zh": "学术写作",
-          "en": "Academic writing"
-        }
-      ]
+      "title": "",
+      "items": ["Python", "PyTorch", "C++"]
     }
   ],
   "about": [
@@ -251,11 +227,11 @@
   ],
   "contributionOverrides": {},
   "demoNote": {
-    "zh": "荣誉、论文及专业技能仍为待替换示例；个人信息、教育背景和核心项目已更新。",
-    "en": "Honors, publications, and skills remain placeholders. Personal details, education, and featured projects have been updated."
+    "zh": "荣誉与论文仍为待替换示例；个人信息、教育背景、专业技能和核心项目已更新。",
+    "en": "Honors and publications remain placeholders. Personal details, education, skills, and featured projects have been updated."
   },
   "demoLabel": {
-    "zh": "荣誉、论文与技能为示例",
-    "en": "Example honors, papers & skills"
+    "zh": "荣誉与论文为示例",
+    "en": "Example honors & papers"
   }
 }

@@ -117,27 +117,12 @@ button {
   flex-direction: column;
   gap: 0;
 }
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  margin-bottom: 34px;
-  white-space: nowrap;
-}
-.brand strong {
-  font-size: 24px;
-  letter-spacing: 1px;
-}
-.brand span {
-  font-size: 9px;
-  letter-spacing: 2.5px;
-  color: #bdc8d5;
-}
 .profile-avatar {
   width: 166px;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 7px;
+  border-radius: 50%;
+  border: 3px solid #d7e3ee;
   box-shadow: 0 7px 24px #07121e2b;
   margin-bottom: 25px;
 }
@@ -158,7 +143,7 @@ button {
   color: #a8b7c8;
 }
 .profile-role {
-  margin: 20px 0 10px;
+  margin: 14px 0 0;
   font-size: 13px;
 }
 .profile-status {
@@ -933,26 +918,26 @@ tbody tr:nth-child(even) {
 .heat-cell {
   padding: 0;
   border-radius: 1px;
-  background: #edf1f5;
+  background: #ebedf0;
   position: relative;
   min-width: 0;
   cursor: default;
 }
 .heat-cell[data-level="1"],
 .legend-cell[data-level="1"] {
-  background: #c5d7e6;
+  background: #9be9a8;
 }
 .heat-cell[data-level="2"],
 .legend-cell[data-level="2"] {
-  background: #91b2cd;
+  background: #40c463;
 }
 .heat-cell[data-level="3"],
 .legend-cell[data-level="3"] {
-  background: #608eaf;
+  background: #30a14e;
 }
 .heat-cell[data-level="4"],
 .legend-cell[data-level="4"] {
-  background: #365f83;
+  background: #216e39;
 }
 .heat-cell.empty {
   visibility: hidden;
@@ -977,7 +962,7 @@ tbody tr:nth-child(even) {
   width: 9px;
   height: 9px;
   border-radius: 2px;
-  background: #edf1f5;
+  background: #ebedf0;
 }
 .legend span:first-child {
   margin-right: 4px;
@@ -1296,7 +1281,7 @@ table {
   }
   .profile-avatar {
     width: 82px;
-    grid-row: 1/6;
+    grid-row: 1/4;
     margin: 0;
   }
   .profile-name {

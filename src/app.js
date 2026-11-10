@@ -77,21 +77,19 @@
   }
   function sidebar() {
     const p = data.profile;
-    return `<div class="brand"><strong>${esc(p.initials)} /</strong><span>ACADEMIC PROFILE</span></div><div class="profile-head"><img class="profile-avatar" src="${esc(p.avatar)}" alt="${esc(w("海边黑猫头像", "Black cat looking out at the sea"))}" width="166" height="166"><h2 class="profile-name">${esc(l(p.name))}</h2><div class="romanized">${esc(p.romanized)}</div><div class="handle">${esc(p.handle)}</div><p class="profile-role">${esc(l(p.role))}</p><div class="profile-status"><span class="status-dot"></span>${esc(l(p.status))}</div></div>${sideSection(
+    return `<div class="profile-head"><img class="profile-avatar" src="${esc(p.avatar)}" alt="${esc(w("海边黑猫头像", "Black cat looking out at the sea"))}" width="166" height="166"><h2 class="profile-name">${esc(p.name.zh || l(p.name))}</h2><div class="romanized">${esc(p.romanized)}</div><p class="profile-role">${esc(l(p.institution))}</p></div>${sideSection(
       "基本信息",
       "BASIC INFORMATION",
       `<div class="info-list">${[
         ["cap", l(p.institution)],
-        ["layers", l(p.lab)],
         ["pin", l(p.location)],
-        ["people", p.nationality ? `${w("国籍", "Nationality")}: ${l(p.nationality)}` : ""],
       ]
         .filter((x) => x[1])
         .map(([i, text]) => `<div class="info-row">${icon(i)}<span>${esc(text)}</span></div>`)
         .join(
           "",
-        )}${p.email ? `<div class="info-row">${icon("mail")}<a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ""}</div><div class="side-actions">${p.cvUrl ? link(p.cvUrl, `${w("下载简历", "Download CV")} ↗`, "side-btn primary") : `<button class="side-btn primary" data-action="print">${w("导出简历", "Export CV")} ↗</button>`}${p.email ? `<a class="side-btn" href="mailto:${esc(p.email)}">${w("联系我", "Contact")} ↗</a>` : link(`https://github.com/${data.githubUsername}`, `${w("联系我", "Contact")} ↗`, "side-btn")}</div><div class="socials">${link(`https://github.com/${data.githubUsername}`, "GitHub ↗")}${p.scholarUrl ? link(p.scholarUrl, "Scholar ↗") : ""}${p.orcidUrl ? link(p.orcidUrl, "ORCID ↗") : ""}</div>`,
-    )}${sideSection("研究方向", "RESEARCH INTERESTS", `<ul class="interests">${data.interests.map((x, i) => `<li>${icon(["layers", "people", "network"][i % 3])}<span>${esc(l(x))}</span></li>`).join("")}</ul>`)}${sideSection("专业技能", "SKILLS", data.skills.map((x, i) => `<div class="skill-group"><div class="skill-title">${icon(i ? "research" : "code")}${esc(l(x.title))}</div><div class="skill-tags">${x.items.map((item) => `<span>${esc(l(item))}</span>`).join("")}</div>`).join(""))}<div class="side-footer"><div>${icon("github")}<span>${w("最近更新", "Updated")} / ${esc(p.updated)}</span></div></div>`;
+        )}${p.email ? `<div class="info-row">${icon("mail")}<a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ""}<div class="info-row">${icon("github")}${link(`https://github.com/${data.githubUsername}`, esc(data.githubUsername))}</div></div>`,
+    )}${sideSection("研究方向", "RESEARCH INTERESTS", `<ul class="interests">${data.interests.map((x, i) => `<li>${icon(["layers", "people", "network"][i % 3])}<span>${esc(l(x))}</span></li>`).join("")}</ul>`)}${sideSection("专业技能", "SKILLS", data.skills.map((x, i) => `<div class="skill-group">${l(x.title) ? `<div class="skill-title">${icon(i ? "research" : "code")}${esc(l(x.title))}</div>` : ""}<div class="skill-tags">${x.items.map((item) => `<span>${esc(l(item))}</span>`).join("")}</div>`).join(""))}<div class="side-footer"><div>${icon("github")}<span>${w("最近更新", "Updated")} / ${esc(p.updated)}</span></div></div>`;
   }
   function nav() {
     return `<button class="mobile-profile" data-action="profile" aria-expanded="${document.getElementById("sidebar").classList.contains("expanded")}" aria-controls="sidebar">${icon("menu")}${w("个人资料", "Profile")}</button><nav class="nav-links" aria-label="${w("页面导航", "Page navigation")}">${sections.map((s) => `<a href="#${s[0]}" data-section="${s[0]}">${esc(w(s[1], s[2]))}</a>`).join("")}</nav><div class="language-switch" role="group" aria-label="Language">${["zh", "en"].map((code) => `<button data-language="${code}" class="${lang === code ? "active" : ""}" aria-pressed="${lang === code}">${code === "zh" ? "中文" : "EN"}</button>`).join("")}</div>`;
