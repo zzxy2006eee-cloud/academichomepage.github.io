@@ -674,6 +674,7 @@ button {
 }
 .project-cover {
   width: 100%;
+  height: auto;
   aspect-ratio: 1.85;
   object-fit: cover;
   transition: transform 0.4s;

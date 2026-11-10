@@ -41,26 +41,28 @@ const levels = {
   FOURTH_QUARTILE: 4,
 };
 const calendars = [];
-for (const y of [year, year - 1]) {
-  const from = `${y}-01-01T00:00:00Z`,
-    to = y === year ? now.toISOString() : `${y}-12-31T23:59:59Z`;
+for (const y of ["last-year", year, year - 1]) {
+  // Omit the dates for GitHub's default rolling-year profile calendar.
+  const from = y === "last-year" ? undefined : `${y}-01-01T00:00:00Z`,
+    to = y === "last-year" ? undefined : y === year ? now.toISOString() : `${y}-12-31T23:59:59Z`;
   const query =
-    "query($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection(from:$from,to:$to){contributionCalendar{totalContributions weeks{contributionDays{date weekday contributionCount contributionLevel}}}}}}";
+    "query($login:String!,$from:DateTime,$to:DateTime){user(login:$login){contributionsCollection(from:$from,to:$to){startedAt endedAt contributionCalendar{totalContributions weeks{contributionDays{date weekday contributionCount contributionLevel}}}}}}";
   const r = await request("https://api.github.com/graphql", {
     query,
     variables: { login: username, from, to },
   });
   if (!r.data?.user) throw new Error("GitHub account not found");
-  const calendar = r.data.user.contributionsCollection.contributionCalendar;
+  const collection = r.data.user.contributionsCollection;
+  const calendar = collection.contributionCalendar;
   calendars.push({
     year: y,
-    from,
-    to,
+    from: collection.startedAt,
+    to: collection.endedAt,
     total: calendar.totalContributions,
     weeks: calendar.weeks
       .map((w) => ({
         days: w.contributionDays
-          .filter((d) => d.date.startsWith(String(y)))
+          .filter((d) => y === "last-year" || d.date.startsWith(String(y)))
           .map((d) => ({
             date: d.date,
             weekday: d.weekday,

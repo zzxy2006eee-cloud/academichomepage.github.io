@@ -65,6 +65,7 @@ node scripts/serve.mjs
 | 姓名 / 昵称 | `profile.name.zh`、`profile.name.en` | 分别用于中文、英文界面 |
 | 姓名下面一行英文 | `profile.romanized` | 可填写拼音、英文名或个人副标题 |
 | `@用户名` | `profile.handle` | 仅为展示文字，不决定贡献数据来源 |
+| 国籍 | `profile.nationality` | 中英文国籍文字，留空则不显示 |
 | 身份 / 职位 | `profile.role` | 如博士研究生、工程师 |
 | 蓝点旁的交流状态 | `profile.status` | 如“欢迎交流与合作” |
 | 学校、实验室、所在地 | `profile.institution`、`profile.lab`、`profile.location` | 侧栏基本信息 |
@@ -85,6 +86,7 @@ node scripts/serve.mjs
 | 上游贡献的人工说明 | `contributionOverrides` | 按 `owner/repo` 配置中英文说明 |
 | 默认语言 | `defaultLanguage` | `zh` 或 `en` |
 | “示例资料”提示 | `demo` | 替换完真实内容后设为 `false` |
+| 部分资料仍为示例时的提示 | `demoNote`、`demoLabel` | 分别控制简介下方说明与页脚的简短标记 |
 | 配色、字号、间距、栏宽 | [`src/styles.css`](src/styles.css) | 在编辑器中搜索对应 CSS 名称 |
 | 栏目标题、图标、导航文字 | [`src/app.js`](src/app.js) 的 `sections` | 正文栏目顺序另见下文 |
 | 网页图标 | [`assets/favicon.svg`](assets/favicon.svg) | 浏览器标签页上的小图标 |
@@ -100,7 +102,7 @@ node scripts/serve.mjs
 5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
 6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
 
-目前昵称使用 GitHub 的 `zZ`，头像是用户提供的图片；学历、奖项、论文、项目及部分介绍仍是明确标注的示例。GitHub 区域使用真实公开数据，不会将设计参考截图中的 PR 当成个人贡献。
+当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。荣誉、论文与专业技能尚未替换，仍明确标为示例；GitHub 区域使用真实账号数据。
 
 ### 配置文件的基本写法
 
@@ -238,6 +240,8 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”仍打开本页弹窗。仓库留空时，封面和标题打开详情，仓库按钮禁用。
 
+研究、职责、成果中某项尚未确认时，可将对应字段设为 `""`，页面将隐藏这一行。当前两个真实项目未填写未经确认的个人职责。封面是项目主题示意图，并非实物照片；当前文件为 `assets/images/drone-navigation.svg`、`assets/images/robot-perception.svg`。
+
 注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，格式为 `用户名/仓库名`；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
 
 ### 中英文切换
@@ -267,10 +271,10 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 键名必须与 GitHub 的 `owner/repository` 完全对应。该配置只覆盖**已查询到的仓库**的介绍，不会新增贡献行、修改 PR 数量或伪造合并记录。
 
-- **热力图数据**：`scripts/sync-github.mjs` 从 GitHub 获取今年与去年数据；浏览器里的年份选择器随同步结果更新。
+- **热力图数据**：`scripts/sync-github.mjs` 从 `user(login: githubUsername).contributionsCollection` 获取真实贡献日历。默认使用 GitHub 个人主页相同的近一年查询口径，另外提供今年和去年；选择器显示“近一年 / 今年 / 去年”。仅将颜色映射为网站的蓝灰色，日期和贡献数量来自 GitHub。
 - **同步时间**：在 `.github/workflows/pages.yml` 中修改 `schedule` 下的 Cron。当前 `17 2 * * *` 为 UTC 02:17，即北京时间每天 10:17。它不是实时推送，GitHub 调度也可能延迟。
 - **立即更新**：在仓库 Actions 中选择 `Sync contributions and deploy homepage`，点击 `Run workflow`，选择 `main` 并运行。无需为了刷新数据修改个人介绍。
-- **改统计规则或增加历史年份**：编辑 `scripts/sync-github.mjs`。当前年份列表是 `[year, year - 1]`。
+- **改统计规则或增加历史年份**：编辑 `scripts/sync-github.mjs`。当前范围列表是 `["last-year", year, year - 1]`，其中 `last-year` 使用 GitHub 默认的近一年范围。
 - **改表格显示条数**：编辑 `src/app.js` 的 `contributions()`，其中 `.slice(0, 6)` 控制仓库数量，另外的 `.slice(0, 2)`、`.slice(0, 3)` 控制介绍和合并链接数量。
 - **不要手工改 `data/github.json` 来维护介绍**：它是同步快照，会被自动数据替换。人工说明请写在 `contributionOverrides`。
 
@@ -357,7 +361,7 @@ git push origin main
 
 ### 贡献数据
 
-`scripts/sync-github.mjs` 通过 GitHub GraphQL 获取今年与去年的日历，通过 REST Search 获取公开、已合并且不属于当前账号名下仓库的 PR。表格中的描述默认取 PR 标题，可以通过 `contributionOverrides` 精编中英文说明。日期范围与同步时间会显示在界面上。
+`scripts/sync-github.mjs` 通过 GitHub GraphQL 获取近一年、今年与去年的日历，通过 REST Search 获取公开、已合并且不属于当前账号名下仓库的 PR。表格中的描述默认取 PR 标题，可以通过 `contributionOverrides` 精编中英文说明。日期范围与同步时间会显示在界面上；自动同步不等于与 GitHub 页面实时一致。
 
 Actions 使用内置 `GITHUB_TOKEN`，无需将 Token 写进源码。手动同步时，将 Token 设置为当前进程环境变量 `GITHUB_TOKEN` 后运行 `node scripts/sync-github.mjs`。**不要提交 Token 或 `.env` 文件。** 搜索最多保留最近 1,000 条记录；超出后会明确显示截断提示。热力图统计的是 GitHub 返回的贡献活动，和「已合并上游 PR」不是同一种口径。
 
@@ -382,7 +386,7 @@ This is an original, dependency-free academic homepage inspired by the content s
 
 Run `node scripts/build.mjs` and `node scripts/serve.mjs` with Node.js 20+. Edit bilingual content in `data/site.json`, and put images in `assets/images/`. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
 
-The biography, education, awards, papers, and projects are explicitly labeled examples. Replace them before disabling `demo`. The GitHub section uses real public account data: upstream merged PR descriptions and links, plus this year's and last year's contribution calendars. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
+The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; honors, papers, and skills remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
 
 Enable **GitHub Actions** as the repository's Pages source. A project repository named `academichomepage.github.io` is served at `https://USERNAME.github.io/academichomepage.github.io/`.
 

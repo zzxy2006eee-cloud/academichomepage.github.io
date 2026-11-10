@@ -25,6 +25,17 @@ assert.equal(
   "Snapshot must match the configured account; run sync after changing it",
 );
 for (const c of github.calendars) {
+  const days = c.weeks.flatMap((week) => week.days);
+  assert.equal(
+    new Set(days.map((day) => day.date)).size,
+    days.length,
+    "Calendar dates must be unique",
+  );
+  assert.equal(
+    days.reduce((sum, day) => sum + day.count, 0),
+    c.total,
+    "Calendar total must match the daily contributions",
+  );
   for (const w of c.weeks) {
     assert.ok(w.days.length <= 7);
     for (const d of w.days) {

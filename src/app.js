@@ -84,6 +84,7 @@
         ["cap", l(p.institution)],
         ["layers", l(p.lab)],
         ["pin", l(p.location)],
+        ["people", p.nationality ? `${w("国籍", "Nationality")}: ${l(p.nationality)}` : ""],
       ]
         .filter((x) => x[1])
         .map(([i, text]) => `<div class="info-row">${icon(i)}<span>${esc(text)}</span></div>`)
@@ -128,6 +129,7 @@
             ["role", "职责", "Role"],
             ["outcome", "成果", "Outcome"],
           ]
+            .filter(([key]) => l(x[key]))
             .map(([key, zh, en]) => `<div><dt>${w(zh, en)}</dt><dd>${esc(l(x[key]))}</dd></div>`)
             .join(
               "",
@@ -167,11 +169,11 @@
             })
             .join("")
         : `<tr class="empty-row"><td colspan="3">${ready ? w("目前尚无符合条件的公开上游合并记录。新的贡献会在同步后自动出现在这里。", "No public merged upstream contributions yet. New contributions will appear after synchronization.") : w("等待 GitHub 数据同步。", "Waiting for GitHub data.")}</td></tr>`
-    }</tbody></table></div><div class="contribution-links">${link(search, `${w("查看全部上游合并记录", "View all upstream merged PRs")} ↗`)}${groups.length ? `<button class="text-button" data-action="contributions">${w("查看贡献详情", "Contribution details")} ↗</button>` : ""}</div><div class="activity-panel"><div class="activity-header"><h3>${icon("github")}${w("贡献活跃度", "Contribution activity")}<small>GitHub Activity</small></h3><div class="activity-controls">${github.calendars?.length ? `<label><span class="sr-only" hidden>${w("年份", "Year")}</span><select id="calendar-year" aria-label="${w("选择贡献年份", "Contribution year")}">${github.calendars.map((c) => `<option value="${c.year}" ${c.year === selectedYear ? "selected" : ""}>${c.year}</option>`).join("")}</select></label>` : ""}${link(`https://github.com/${data.githubUsername}`, `${w("GitHub 主页", "GitHub profile")} ↗`)}</div></div><div id="calendar"></div></div>`;
+    }</tbody></table></div><div class="contribution-links">${link(search, `${w("查看全部上游合并记录", "View all upstream merged PRs")} ↗`)}${groups.length ? `<button class="text-button" data-action="contributions">${w("查看贡献详情", "Contribution details")} ↗</button>` : ""}</div><div class="activity-panel"><div class="activity-header"><h3>${icon("github")}${w("贡献活跃度", "Contribution activity")}<small>GitHub Activity</small></h3><div class="activity-controls">${github.calendars?.length ? `<label><span class="sr-only" hidden>${w("年份", "Year")}</span><select id="calendar-year" aria-label="${w("选择贡献年份", "Contribution year")}">${github.calendars.map((c) => `<option value="${c.year}" ${String(c.year) === String(selectedYear) ? "selected" : ""}>${c.year === "last-year" ? w("近一年", "Last year") : c.year}</option>`).join("")}</select></label>` : ""}${link(`https://github.com/${data.githubUsername}`, `${w("GitHub 主页", "GitHub profile")} ↗`)}</div></div><div id="calendar"></div></div>`;
   }
   function renderCalendar() {
     const el = document.getElementById("calendar"),
-      c = github.calendars?.find((c) => c.year === selectedYear);
+      c = github.calendars?.find((c) => String(c.year) === String(selectedYear));
     if (!c) {
       el.innerHTML = `<div class="calendar-empty">${w("贡献日历暂不可用；同步成功后会显示真实数据。", "The contribution calendar is not available yet. Real data will appear after synchronization.")}</div>`;
       return;
@@ -183,15 +185,16 @@
     let seen = new Set();
     const monthCells = c.weeks
       .map((week, i) => {
-        const day = week.days.find((d) => d.date.startsWith(String(c.year)));
+        const day = week.days[0];
         if (!day) return "";
         const m = Number(day.date.slice(5, 7)) - 1;
-        if (seen.has(m)) return "";
-        seen.add(m);
+        const monthKey = day.date.slice(0, 7);
+        if (seen.has(monthKey)) return "";
+        seen.add(monthKey);
         return `<span style="grid-column:${i + 1}">${months[m]}</span>`;
       })
       .join("");
-    el.innerHTML = `<div class="calendar-scroll"><div class="calendar-layout" style="--weeks:${c.weeks.length}"><div class="weekdays"><span></span>${Array.from({ length: 7 }, (_, i) => `<span>${{ 1: w("一", "Mon"), 3: w("三", "Wed"), 5: w("五", "Fri") }[i] || ""}</span>`).join("")}</div><div class="calendar-main"><div class="months">${monthCells}</div><div class="heatmap" role="img" aria-label="${esc(w(`${c.year} 年贡献日历，共 ${c.total} 次贡献`, `${c.year} contribution calendar, ${c.total} contributions`))}">${c.weeks
+    el.innerHTML = `<div class="calendar-scroll"><div class="calendar-layout" style="--weeks:${c.weeks.length}"><div class="weekdays"><span></span>${Array.from({ length: 7 }, (_, i) => `<span>${{ 1: w("一", "Mon"), 3: w("三", "Wed"), 5: w("五", "Fri") }[i] || ""}</span>`).join("")}</div><div class="calendar-main"><div class="months">${monthCells}</div><div class="heatmap" role="img" aria-label="${esc(w(`${c.year === "last-year" ? "近一年" : c.year + " 年"}贡献日历，共 ${c.total} 次贡献`, `${c.year === "last-year" ? "Last year" : c.year} contribution calendar, ${c.total} contributions`))}">${c.weeks
       .map(
         (week) =>
           `<div class="heat-week">${Array.from({ length: 7 }, (_, weekday) => {
@@ -224,7 +227,7 @@
     side.innerHTML = sidebar();
     document.getElementById("topbar").innerHTML = nav();
     document.getElementById("content").innerHTML =
-      `<section id="about" class="content-section about-section" aria-labelledby="about-title">${heading("about")}<div class="about-copy">${data.about.map((p) => `<p>${esc(l(p))}</p>`).join("")}</div>${data.news ? `<div class="news"><span class="status-dot"></span><span class="news-label">${w("近况", "Now")}</span><span class="news-date">${esc(data.news.date)}</span><span>${esc(l(data.news.text))}</span></div>` : ""}${data.demo ? `<div class="demo-note"><span>${w("示例资料", "DEMO PROFILE")}</span>${w("履历、论文和项目为可替换的示例；GitHub 区域展示真实公开数据。", "Biography, papers, and projects are examples. The GitHub section uses real public data.")}</div>` : ""}</section><section id="education" class="content-section" aria-labelledby="education-title">${heading("education")}${education()}</section><section id="honors" class="content-section" aria-labelledby="honors-title">${heading("honors")}${awards()}</section><section id="publications" class="content-section" aria-labelledby="publications-title">${heading("publications")}${papers()}</section><section id="projects" class="content-section" aria-labelledby="projects-title">${heading("projects", `<a class="section-action" href="https://github.com/${esc(data.githubUsername)}?tab=repositories" target="_blank" rel="noopener noreferrer">${w("全部仓库", "All repositories")} ↗</a>`)}${projects()}</section><section id="opensource" class="content-section" aria-labelledby="opensource-title">${heading("opensource")}${contributions()}</section><footer class="site-footer"><span>© ${new Date().getFullYear()} ${esc(l(data.profile.name))}</span><div class="footer-links">${data.demo ? `<span>${w("履历与项目为示例", "Example biography & projects")}</span>` : ""}${link(`https://github.com/${data.repository}`, "Open source ↗")}</div></footer>`;
+      `<section id="about" class="content-section about-section" aria-labelledby="about-title">${heading("about")}<div class="about-copy">${data.about.map((p) => `<p>${esc(l(p))}</p>`).join("")}</div>${data.news ? `<div class="news"><span class="status-dot"></span><span class="news-label">${w("近况", "Now")}</span><span class="news-date">${esc(data.news.date)}</span><span>${esc(l(data.news.text))}</span></div>` : ""}${data.demo ? `<div class="demo-note"><span>${w("示例资料", "DEMO PROFILE")}</span>${esc(l(data.demoNote) || w("履历、论文和项目为可替换的示例；GitHub 区域展示真实公开数据。", "Biography, papers, and projects are examples. The GitHub section uses real public data."))}</div>` : ""}</section><section id="education" class="content-section" aria-labelledby="education-title">${heading("education")}${education()}</section><section id="honors" class="content-section" aria-labelledby="honors-title">${heading("honors")}${awards()}</section><section id="publications" class="content-section" aria-labelledby="publications-title">${heading("publications")}${papers()}</section><section id="projects" class="content-section" aria-labelledby="projects-title">${heading("projects", `<a class="section-action" href="https://github.com/${esc(data.githubUsername)}?tab=repositories" target="_blank" rel="noopener noreferrer">${w("全部仓库", "All repositories")} ↗</a>`)}${projects()}</section><section id="opensource" class="content-section" aria-labelledby="opensource-title">${heading("opensource")}${contributions()}</section><footer class="site-footer"><span>© ${new Date().getFullYear()} ${esc(l(data.profile.name))}</span><div class="footer-links">${data.demo ? `<span>${esc(l(data.demoLabel) || w("履历与项目为示例", "Example biography & projects"))}</span>` : ""}${link(`https://github.com/${data.repository}`, "Open source ↗")}</div></footer>`;
     renderCalendar();
     main.scrollTop = oldScroll;
     side.scrollTop = sideScroll;
@@ -302,6 +305,7 @@
           ["role", "我的职责", "My role"],
           ["outcome", "项目成果", "Outcome"],
         ]
+          .filter(([k]) => l(p[k]))
           .map(([k, z, en]) => `<div><dt>${w(z, en)}</dt><dd>${esc(l(p[k]))}</dd></div>`)
           .join("")}</dl>${p.repository ? link(p.repository, `${icon("github")} GitHub ↗`) : ""}`,
       );
@@ -343,7 +347,7 @@
   });
   document.addEventListener("change", (e) => {
     if (e.target.id === "calendar-year") {
-      selectedYear = Number(e.target.value);
+      selectedYear = e.target.value;
       renderCalendar();
     }
   });
