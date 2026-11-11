@@ -287,6 +287,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 | 主页最大宽度 | `.site-shell` 的 `max-width` | 同名规则有后续覆盖，桌面默认最终值为 `1320px` |
 | 左栏宽度 | `.site-shell` 的 `grid-template-columns` | 桌面默认 `300px minmax(0, 1fr)`，不同屏宽有覆盖规则 |
 | 头像大小与圆角 | `.profile-avatar` | 手机端也有单独的覆盖规则 |
+| 头像与姓名对齐 | `.profile-head`、`.profile-avatar` | 桌面端沿侧栏竖直中线居中；手机端保留头像与姓名并排布局 |
 | 正文边距 | `.content` | 调整内边距 `padding` |
 | 栏目间距 | `.content-section` | 调整 `margin-top` |
 | 项目卡片数量 / 间距 | `.project-grid` | 桌面两列，手机一列 |

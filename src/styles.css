@@ -117,6 +117,9 @@ button {
   flex-direction: column;
   gap: 0;
 }
+.profile-head {
+  text-align: center;
+}
 .profile-avatar {
   width: 166px;
   aspect-ratio: 1;
@@ -125,6 +128,7 @@ button {
   border: 3px solid #d7e3ee;
   box-shadow: 0 7px 24px #07121e2b;
   margin-bottom: 25px;
+  margin-inline: auto;
 }
 .profile-name {
   font-size: 32px;
@@ -1280,6 +1284,7 @@ table {
   }
   .profile-head {
     display: grid;
+    text-align: left;
     grid-template-columns: 82px 1fr;
     column-gap: 20px;
   }
