@@ -231,11 +231,11 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 "tags": ["LLM", "RAG", { "zh": "知识图谱", "en": "Knowledge graphs" }]
 ```
 
-封面支持 SVG、PNG、JPG、WebP。建议使用横向图片，比例约 `1.85:1`；页面使用 `object-fit: cover`，边缘可能被裁切，重要内容尽量居中。
+封面支持 SVG、PNG、JPG、WebP。卡片展示区域比例约 `1.85:1`；页面与详情弹窗使用 `object-fit: contain`，完整展示设备，周围保留浅色留白。
 
 配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”仍打开本页弹窗。仓库留空时，封面和标题打开详情，仓库按钮禁用。
 
-研究、职责、成果中某项尚未确认时，可将对应字段设为 `""`，页面将隐藏这一行。当前两个真实项目未填写未经确认的个人职责。封面是项目主题示意图，并非实物照片；当前文件为 `assets/images/drone-navigation.svg`、`assets/images/robot-perception.svg`。
+研究、职责、成果中某项尚未确认时，可将对应字段设为 `""`，页面将隐藏这一行。当前两个真实项目未填写未经确认的个人职责。封面使用用户提供的无人机与清扫机器人图片，文件分别为 `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`；可以同名替换，也可以修改 `projects[].cover` 指向新图片。
 
 注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，格式为 `用户名/仓库名`；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
 
@@ -387,4 +387,4 @@ Enable **GitHub Actions** as the repository's Pages source. A project repository
 
 ## License
 
-Source code and original SVG illustrations are MIT licensed. The user-supplied avatar is retained as a personal asset; replace it with your own image when reusing this template.
+Source code and original SVG illustrations are MIT licensed. The user-supplied avatar and project photographs are retained as personal assets; replace them with your own images when reusing this template.

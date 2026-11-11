@@ -174,7 +174,7 @@
         "zh": "无人机导航与视觉",
         "en": "Drone Navigation & Vision"
       },
-      "cover": "assets/images/drone-navigation.svg",
+      "cover": "assets/images/drone-navigation.png",
       "description": {
         "zh": "基于 ROS、PX4 与 Gazebo 的四旋翼巡检、建图定位和导航仿真。",
         "en": "A ROS, PX4, and Gazebo simulation workspace for quadrotor inspection, mapping, localization, and navigation."
@@ -202,7 +202,7 @@
         "zh": "机场清扫机器人",
         "en": "Airport Sweeping Robot"
       },
-      "cover": "assets/images/robot-perception.svg",
+      "cover": "assets/images/robot-perception.png",
       "description": {
         "zh": "结合四路相机环视感知、BEV 与自主导航的机器人清扫系统。",
         "en": "A robotic sweeping system combining four-camera surround perception, BEV, and autonomous navigation."

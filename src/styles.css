@@ -661,7 +661,9 @@ button {
   width: 100%;
   height: auto;
   aspect-ratio: 1.85;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 12px;
+  background: #f5f7fa;
   transition: transform 0.4s;
 }
 .project:hover .project-cover {
@@ -1088,7 +1090,9 @@ dialog pre {
   margin: 0 0 20px;
   width: 100%;
   max-height: 220px;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 12px;
+  background: #f5f7fa;
 }
 .all-contributions {
   max-height: 55vh;
