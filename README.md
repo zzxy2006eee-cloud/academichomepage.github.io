@@ -81,7 +81,7 @@ node scripts/serve.mjs
 | 上游贡献的人工说明 | `contributionOverrides` | 按 `owner/repo` 配置中英文说明 |
 | 默认语言 | `defaultLanguage` | `zh` 或 `en` |
 | “示例资料”提示 | `demo` | 替换完真实内容后设为 `false` |
-| 部分资料仍为示例时的提示 | `demoNote`、`demoLabel` | 分别控制简介下方说明与页脚的简短标记 |
+| 部分资料仍为示例时的提示 | `demoNote`、`demoLabel` | 分别控制简介下方说明与页脚的简短标记；`demoNote` 设为 `null` 可单独隐藏简介提示 |
 | 配色、字号、间距、栏宽 | [`src/styles.css`](src/styles.css) | 在编辑器中搜索对应 CSS 名称 |
 | 栏目标题、图标、导航文字 | [`src/app.js`](src/app.js) 的 `sections` | 正文栏目顺序另见下文 |
 | 网页图标 | [`assets/favicon.svg`](assets/favicon.svg) | 浏览器标签页上的小图标 |
@@ -157,7 +157,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 }
 ```
 
-不想展示近况时，可设置 `"news": null`。`interests` 中的每项对应一个研究方向；`skills` 的每项对应一个技能分组：
+不想展示近况时，可设置 `"news": null`。当前已隐藏近况和简介下方的示例提示（`news`、`demoNote` 均为 `null`）。`interests` 中的每项对应一个研究方向；`skills` 的每项对应一个技能分组：
 
 ```json
 {

@@ -73,13 +73,7 @@
       "en": "This homepage documents my drone navigation and vision work, as well as robot perception and navigation projects. Feel free to get in touch on GitHub or by email."
     }
   ],
-  "news": {
-    "date": "2026.11",
-    "text": {
-      "zh": "个人主页上线，持续记录研究与开源实践。",
-      "en": "Launching this homepage to document research and open-source work."
-    }
-  },
+  "news": null,
   "education": [
     {
       "period": {
@@ -226,10 +220,7 @@
     }
   ],
   "contributionOverrides": {},
-  "demoNote": {
-    "zh": "荣誉与论文仍为待替换示例；个人信息、教育背景、专业技能和核心项目已更新。",
-    "en": "Honors and publications remain placeholders. Personal details, education, skills, and featured projects have been updated."
-  },
+  "demoNote": null,
   "demoLabel": {
     "zh": "荣誉与论文为示例",
     "en": "Example honors & papers"
