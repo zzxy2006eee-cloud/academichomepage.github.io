@@ -33,7 +33,7 @@
     "cvUrl": "",
     "scholarUrl": "",
     "orcidUrl": "",
-    "updated": "2026-11-10",
+    "updated": "2026-11-12",
     "nationality": {
       "zh": "中国",
       "en": "Chinese"
@@ -56,7 +56,15 @@
   "skills": [
     {
       "title": "",
-      "items": ["Python", "PyTorch", "C++"]
+      "items": [
+        "Python",
+        "PyTorch",
+        "C++",
+        {
+          "zh": "英语四六级",
+          "en": "English · CET-4 & CET-6"
+        }
+      ]
     }
   ],
   "about": [
@@ -97,25 +105,43 @@
   "awards": [
     {
       "title": {
-        "zh": "研究生学术创新奖",
-        "en": "Graduate Research Innovation Award"
+        "zh": "优秀学生一等奖学金",
+        "en": "First-Class Outstanding Student Scholarship"
       },
-      "organization": {
-        "zh": "校级 · 示例大学",
-        "en": "University level · Example University"
-      },
-      "year": "2025"
+      "organization": "",
+      "year": "2024–2025"
     },
     {
       "title": {
-        "zh": "优秀毕业生",
-        "en": "Outstanding Graduate"
+        "zh": "优秀学生一等奖学金",
+        "en": "First-Class Outstanding Student Scholarship"
       },
-      "organization": {
-        "zh": "校级 · 示例理工大学",
-        "en": "University level · Example Institute of Technology"
+      "organization": "",
+      "year": "2025–2026"
+    },
+    {
+      "title": {
+        "zh": "国家励志奖学金",
+        "en": "National Endeavor Scholarship"
       },
-      "year": "2023"
+      "organization": "",
+      "year": "2025–2026"
+    },
+    {
+      "title": {
+        "zh": "Openhouse工程创新与设计金奖",
+        "en": "Openhouse Engineering Innovation and Design — Gold Award"
+      },
+      "organization": "",
+      "year": "2026"
+    },
+    {
+      "title": {
+        "zh": "中国机器人及人工智能大赛省级优秀奖",
+        "en": "China Robot and Artificial Intelligence Competition — Provincial Excellence Award"
+      },
+      "organization": "",
+      "year": "2026"
     }
   ],
   "publications": [
@@ -222,7 +248,7 @@
   "contributionOverrides": {},
   "demoNote": null,
   "demoLabel": {
-    "zh": "荣誉与论文为示例",
-    "en": "Example honors & papers"
+    "zh": "论文为示例",
+    "en": "Example publications"
   }
 }

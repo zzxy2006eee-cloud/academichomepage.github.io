@@ -97,7 +97,7 @@ node scripts/serve.mjs
 5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
 6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
 
-当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。专业技能为 Python、PyTorch、C++；荣誉与论文尚未替换，仍明确标为示例；GitHub 区域使用真实账号数据。
+当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。专业技能为 Python、PyTorch、C++、英语四六级；荣誉与奖项已替换为用户提供的五项，论文仍为示例；GitHub 区域使用真实账号数据。
 
 ### 配置文件的基本写法
 
@@ -384,7 +384,7 @@ This is an original, dependency-free academic homepage inspired by the content s
 
 Run `node scripts/build.mjs` and `node scripts/serve.mjs` with Node.js 20+. Edit bilingual content in `data/site.json`, and put images in `assets/images/`. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
 
-The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; skills are Python, PyTorch, and C++; honors and papers remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
+The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; skills are Python, PyTorch, C++, and English CET-4 & CET-6. The five honors have been updated; only papers remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
 
 Enable **GitHub Actions** as the repository's Pages source. A project repository named `academichomepage.github.io` is served at `https://USERNAME.github.io/academichomepage.github.io/`.
 
