@@ -503,6 +503,24 @@ button {
   font-size: 14px;
   margin: 0 0 5px;
 }
+.school-heading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.school-logo {
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  border-radius: 50%;
+  object-fit: cover;
+  /* The official image has white side margins around the circular emblem. */
+  object-position: 54% center;
+}
+.school-heading span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
 .education-detail p {
   font-size: 11px;
   color: #687583;

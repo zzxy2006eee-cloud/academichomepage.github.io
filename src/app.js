@@ -98,7 +98,7 @@
     return data.education
       .map(
         (x) =>
-          `<div class="education-row"><span class="date">${esc(l(x.period))}</span><div class="education-detail"><h3>${esc(l(x.school))}</h3><p>${esc(l(x.detail))}</p></div><span class="badge">${esc(l(x.degree))}</span></div>`,
+          `<div class="education-row"><span class="date">${esc(l(x.period))}</span><div class="education-detail"><h3 class="school-heading">${x.logo ? `<img class="school-logo" src="${esc(x.logo)}" alt="" width="30" height="30">` : ""}<span>${esc(l(x.school))}</span></h3>${l(x.detail) ? `<p>${esc(l(x.detail))}</p>` : ""}</div><span class="badge">${esc(l(x.degree))}</span></div>`,
       )
       .join("");
   }

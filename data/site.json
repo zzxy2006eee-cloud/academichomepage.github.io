@@ -96,10 +96,8 @@
         "zh": "本科",
         "en": "Undergraduate"
       },
-      "detail": {
-        "zh": "2024 级本科生",
-        "en": "Undergraduate · Entered in 2024"
-      }
+      "detail": "",
+      "logo": "assets/images/uestc-emblem.png"
     }
   ],
   "awards": [

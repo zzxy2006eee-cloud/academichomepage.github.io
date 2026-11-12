@@ -174,6 +174,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 | --- | --- |
 | `period` | 起止时间，例如 `2023 — 至今`，支持中英文对象 |
 | `school` | 学校名称 |
+| `logo` | 可选校徽图片路径，留空不显示；当前为 `assets/images/uestc-emblem.png` |
 | `degree` | 学位或阶段，例如本科、硕士、博士 |
 | `detail` | 专业、学院、实验室或补充说明 |
 
@@ -390,4 +391,4 @@ Enable **GitHub Actions** as the repository's Pages source. A project repository
 
 ## License
 
-Source code and original SVG illustrations are MIT licensed. The user-supplied avatar and project photographs are retained as personal assets; replace them with your own images when reusing this template.
+Source code and original SVG illustrations are MIT licensed. The user-supplied avatar and project photographs are retained as personal assets; replace them with your own images when reusing this template. The UESTC emblem is sourced from the [official university news article](https://news.uestc.edu.cn/info/1007/13146.htm) and is not covered by this repository's MIT license; rights remain with its owner.

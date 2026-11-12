@@ -22,6 +22,9 @@ for (const [file, global] of [
   if (file === "site") {
     data.profile.avatar = await versionedAsset(data.profile.avatar);
     for (const project of data.projects) project.cover = await versionedAsset(project.cover);
+    for (const entry of data.education) {
+      if (entry.logo) entry.logo = await versionedAsset(entry.logo);
+    }
   }
   await writeFile(
     path.join(dist, "data", `${file}.js`),

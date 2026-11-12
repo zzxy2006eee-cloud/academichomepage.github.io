@@ -10,7 +10,11 @@ for (const key of ["education", "awards", "publications", "projects", "interests
   assert.ok(Array.isArray(site[key]), `${key} must be an array`);
 for (const item of [site.profile.name, site.profile.role, ...site.about])
   assert.ok(item.zh && item.en, "Both language variants are required");
-for (const asset of [site.profile.avatar, ...site.projects.map((p) => p.cover)])
+for (const asset of [
+  site.profile.avatar,
+  ...site.projects.map((p) => p.cover),
+  ...site.education.map((entry) => entry.logo).filter(Boolean),
+])
   await access(new URL("../" + asset, import.meta.url));
 for (const key of ["projects", "publications"])
   assert.equal(
