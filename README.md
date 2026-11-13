@@ -150,7 +150,7 @@ node scripts/dev.mjs
 - **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按圆形框裁切显示。更换头像后，可在 `src/app.js` 的 `sidebar()` 中同步修改图片的替代文本。
 - **侧栏顺序**：最上方直接显示头像，下方依次为中文姓名、英文姓名、学校；基本信息依次为学校、国家、邮箱、GitHub 账号名，之后是研究方向和专业技能。
 - **邮箱**：填写 `profile.email` 后，点击邮箱会打开邮件应用。
-- **保留字段**：`initials`、`handle`、`role`、`status`、`lab`、`nationality`、`cvUrl`、`scholarUrl`、`orcidUrl` 暂不在精简侧栏显示。需要恢复额外入口时修改 `src/app.js` 的 `sidebar()`；仍可用浏览器打印功能导出 PDF。
+- **保留字段**：`initials`、`handle`、`role`、`status`、`lab`、`nationality`、`cvUrl`、`scholarUrl`、`orcidUrl` 暂不在精简侧栏显示。需要恢复额外入口时修改 `src/app.js` 的 `sidebar()`。底部的“导出 PDF 简历”会根据主页配置生成简历，不使用 `cvUrl` 文件。
 - **日期**：`profile.updated` 是你维护资料的日期，不会自动改变；热力图下方的同步时间由程序单独更新。
 
 ### About Me、近况、研究方向与技能
@@ -293,6 +293,18 @@ node scripts/dev.mjs
 - **改统计规则或增加历史年份**：编辑 `scripts/sync-github.mjs`。当前范围列表是 `["last-year", year, year - 1]`，其中 `last-year` 使用 GitHub 默认的近一年范围。
 - **改表格显示条数**：编辑 `src/app.js` 的 `contributions()`，其中 `.slice(0, 6)` 控制仓库数量，另外的 `.slice(0, 2)`、`.slice(0, 3)` 控制介绍和合并链接数量。
 - **不要手工改 `data/github.json` 来维护介绍**：它是同步快照，会被自动数据替换。人工说明请写在 `contributionOverrides`。
+
+### 导出 PDF 简历
+
+1. 选择主页语言，滚动到左侧栏最下方，点击 **导出 PDF 简历 / Export Resume PDF**。手机端先点击导航中的“个人资料 / Profile”展开侧栏。
+2. 在浏览器打印窗口选择 **另存为 PDF**，纸张选择 **A4**，建议使用默认缩放，并关闭浏览器的“页眉和页脚”，然后保存。快捷键 `Ctrl+P` 也会使用相同的简历版式。
+3. 简历按单列小节排版，包含个人联系方式、教育背景、研究方向、技能、荣誉及核心项目；不包含贡献统计、热力图、网站导航或项目封面。
+
+项目自动读取 `projects[]` 中的 `title`（名称）、`description`（简介）和 `outcome`（成果），逐项纵向排列；标题保留仓库链接。修改这些配置后，主页和简历内容会一起更新，无需维护两份资料。
+
+`resume.includePublications` 控制是否在简历中加入论文：设为 `false` 排除论文，替换为真实论文后可设为 `true`。未填写该设置时，`demo: true` 默认不导出论文，`demo: false` 默认导出。此设置不会隐藏主页的论文栏目。
+
+简历模板在 `src/app.js` 的 `renderResume()`，打印排版在 `src/styles.css` 的 `@media print`。它是独立于主页双栏布局的简历视图；内容较多时会自动分页。导出只在本地浏览器中完成，不上传资料到第三方转换服务。
 
 ### 配色、布局与栏目标题
 

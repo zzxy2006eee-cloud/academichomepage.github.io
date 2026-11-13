@@ -213,14 +213,16 @@
       "bibtex": "@misc{example2025retrieval,\n  title={Retrieval-Augmented Knowledge Exploration with Large Language Models},\n  author={Your Name and Yue Wang},\n  year={2025},\n  note={Example entry; replace before use}\n}",
     },
   ],
+  // 简历导出：替换为真实论文后可设为 true；false 不影响主页论文栏。
+  "resume": { "includePublications": false },
   // 核心项目：title 标题、description 简介、cover 封面、repository 项目仓库完整网址。
   // 留空的 research / role / outcome 不显示；details 是弹窗介绍。
   "projects": [
     {
       "id": "drone-nav-and-vision",
       "title": {
-        "zh": "无人机导航与视觉",
-        "en": "Drone Navigation & Vision",
+        "zh": "四旋翼无人机（自主导航与视觉识别）",
+        "en": "Quadrotor UAV (Autonomous Navigation & Visual Recognition)",
       },
       "cover": "assets/images/drone-navigation.png",
       "description": {
@@ -247,8 +249,8 @@
     {
       "id": "robot-challenge",
       "title": {
-        "zh": "机场清扫机器人",
-        "en": "Airport Sweeping Robot",
+        "zh": "净途智行（国产无人清扫车系统）",
+        "en": "Jingtu Zhixing (Domestically Developed Autonomous Sweeping Vehicle System)",
       },
       "cover": "assets/images/robot-perception.png",
       "description": {

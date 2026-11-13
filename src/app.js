@@ -47,6 +47,7 @@
     research: '<circle cx="10" cy="10" r="6"/><path d="m15 15 7 7M7 10h6m-3-3v6"/>',
     medal: '<circle cx="12" cy="9" r="6"/><path d="m8 14-3 8 7-3 7 3-3-8"/>',
     menu: '<path d="M4 6h16M4 12h16M4 18h16"/>',
+    download: '<path d="M12 3v12m-5-5 5 5 5-5M4 15v5h16v-5"/>',
   };
   const icon = (name) =>
     `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${svgPaths[name] || svgPaths.layers}</svg>`;
@@ -89,11 +90,35 @@
         .join(
           "",
         )}${p.email ? `<div class="info-row">${icon("mail")}<a href="mailto:${esc(p.email)}">${esc(p.email)}</a></div>` : ""}<div class="info-row">${icon("github")}${link(`https://github.com/${data.githubUsername}`, esc(data.githubUsername))}</div></div>`,
-    )}${sideSection("研究方向", "RESEARCH INTERESTS", `<ul class="interests">${data.interests.map((x, i) => `<li>${icon(["layers", "people", "network"][i % 3])}<span>${esc(l(x))}</span></li>`).join("")}</ul>`)}${sideSection("专业技能", "SKILLS", data.skills.map((x, i) => `<div class="skill-group">${l(x.title) ? `<div class="skill-title">${icon(i ? "research" : "code")}${esc(l(x.title))}</div>` : ""}<div class="skill-tags">${x.items.map((item) => `<span>${esc(l(item))}</span>`).join("")}</div>`).join(""))}<div class="side-footer"><div>${icon("github")}<span>${w("最近更新", "Updated")} / ${esc(p.updated)}</span></div></div>`;
+    )}${sideSection("研究方向", "RESEARCH INTERESTS", `<ul class="interests">${data.interests.map((x, i) => `<li>${icon(["layers", "people", "network"][i % 3])}<span>${esc(l(x))}</span></li>`).join("")}</ul>`)}${sideSection("专业技能", "SKILLS", data.skills.map((x, i) => `<div class="skill-group">${l(x.title) ? `<div class="skill-title">${icon(i ? "research" : "code")}${esc(l(x.title))}</div>` : ""}<div class="skill-tags">${x.items.map((item) => `<span>${esc(l(item))}</span>`).join("")}</div>`).join(""))}<div class="side-footer"><div>${icon("github")}<span>${w("最近更新", "Updated")} / ${esc(p.updated)}</span></div><button class="side-btn primary resume-export" data-action="print" title="${w("在打印窗口选择另存为 PDF", "Choose Save as PDF in the print dialog")}">${icon("download")}${w("导出 PDF 简历", "Export Resume PDF")}</button></div>`;
   }
   function nav() {
     return `<button class="mobile-profile" data-action="profile" aria-expanded="${document.getElementById("sidebar").classList.contains("expanded")}" aria-controls="sidebar">${icon("menu")}${w("个人资料", "Profile")}</button><nav class="nav-links" aria-label="${w("页面导航", "Page navigation")}">${sections.map((s) => `<a href="#${s[0]}" data-section="${s[0]}">${esc(w(s[1], s[2]))}</a>`).join("")}</nav><div class="language-switch" role="group" aria-label="Language">${["zh", "en"].map((code) => `<button data-language="${code}" class="${lang === code ? "active" : ""}" aria-pressed="${lang === code}">${code === "zh" ? "中文" : "EN"}</button>`).join("")}</div>`;
   }
+  function renderResume() {
+    let sheet = document.getElementById("resume-print");
+    if (!sheet) {
+      sheet = document.createElement("article");
+      sheet.id = "resume-print";
+      sheet.className = "resume-sheet";
+      document.body.append(sheet);
+    }
+    const section = (title, content) =>
+      content ? `<section class="resume-section"><h2>${esc(title)}</h2>${content}</section>` : "";
+    const p = data.profile;
+    const contacts = [
+      l(p.institution) && esc(l(p.institution)),
+      l(p.location) && esc(l(p.location)),
+      p.email && link(`mailto:${p.email}`, esc(p.email)),
+      link(`https://github.com/${data.githubUsername}`, `GitHub: ${esc(data.githubUsername)}`),
+    ].filter(Boolean);
+    // Example publications must never become claims in an exported resume.
+    const includePapers = data.resume?.includePublications ?? !data.demo;
+    sheet.lang = lang === "zh" ? "zh-CN" : "en";
+    sheet.innerHTML = `<header class="resume-header"><h1>${esc(l(p.name))}</h1>${lang === "zh" && p.romanized ? `<p class="resume-romanized">${esc(p.romanized)}</p>` : ""}<div class="resume-contact">${contacts.map((x) => `<span>${x}</span>`).join("")}</div></header>${section(w("教育背景", "Education"), data.education.map((x) => `<article class="resume-entry"><div class="resume-entry-heading"><h3>${esc(l(x.school))} · ${esc(l(x.degree))}</h3><span>${esc(l(x.period))}</span></div>${l(x.detail) ? `<p>${esc(l(x.detail))}</p>` : ""}</article>`).join(""))}${section(w("研究方向与专业技能", "Research Interests & Skills"), `${data.interests.length ? `<p><strong>${w("研究方向", "Research interests")}：</strong>${data.interests.map((x) => esc(l(x))).join(" · ")}</p>` : ""}${data.skills.map((x) => `<p><strong>${esc(l(x.title) || w("专业技能", "Skills"))}：</strong>${x.items.map((item) => esc(l(item))).join(" · ")}</p>`).join("")}`)}${section(w("荣誉与奖项", "Honors & Awards"), data.awards.map((x) => `<div class="resume-award"><span>${esc(l(x.title))}${l(x.organization) ? ` · ${esc(l(x.organization))}` : ""}</span><span>${esc(x.year)}</span></div>`).join(""))}${section(w("核心项目", "Selected Projects"), data.projects.map((x) => `<article class="resume-entry resume-project"><h3>${x.repository ? link(x.repository, esc(l(x.title))) : esc(l(x.title))}</h3><ul>${l(x.description) ? `<li><strong>${w("简介", "Overview")}：</strong>${esc(l(x.description))}</li>` : ""}${l(x.outcome) ? `<li><strong>${w("成果", "Outcome")}：</strong>${esc(l(x.outcome))}</li>` : ""}</ul></article>`).join(""))}${includePapers ? section(w("论文成果", "Publications"), data.publications.map((x) => `<article class="resume-entry"><h3>${x.pdf ? link(x.pdf, esc(l(x.title))) : esc(l(x.title))}</h3><p>${esc(x.authors.join(", "))}</p><p>${[l(x.venue), l(x.status), x.year].filter(Boolean).map(esc).join(" · ")}</p></article>`).join("")) : ""}`;
+  }
+  // Native Ctrl+P and the export button use the same current-language resume.
+  window.addEventListener("beforeprint", renderResume);
   function education() {
     return data.education
       .map(
@@ -330,7 +355,11 @@
       return;
     }
     const action = e.target.closest("[data-action]")?.dataset.action;
-    if (action === "print") window.print();
+    if (action === "print") {
+      renderResume();
+      window.print();
+      return;
+    }
     if (action === "profile") {
       const sidebar = document.getElementById("sidebar");
       sidebar.classList.toggle("expanded");
