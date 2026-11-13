@@ -2,25 +2,15 @@
 
 [中文](#中文说明) · [English](#english)
 
-A quiet, blue-and-white academic homepage with a graphite sidebar, independently scrollable columns, bilingual content, and public GitHub contribution records.
-
-**Live:** https://zzxy2006eee-cloud.github.io/academichomepage.github.io/
-
-![Desktop preview](docs/desktop-preview.png)
-
-[Mobile preview](docs/mobile-preview.png)
-
 ## 中文说明
-
-本项目为原创静态主页，参考 [AcadHomepage](https://github.com/RayeRen/acad-homepage.github.io) 的开源使用方式与内容组织，没有复制其代码。使用原生 HTML / CSS / JavaScript，无框架和第三方运行时依赖。
 
 ### 从这里开始：只改一个配置文件
 
-打开根目录的 **[`config.jsonc`](config.jsonc)**。原来的 `data/site.json` 已迁入这里，构建、校验、GitHub 同步共用这一份配置，旧文件已移除。文件里按栏目写有中文注释；不需要修改 HTML 或 JavaScript。
+打开根目录的 **[`config.jsonc`](config.jsonc)** 修改主页内容。文件里按栏目写有中文注释；日常修改资料不需要编辑 HTML 或 JavaScript。
 
 **最简单的线上修改方式：**
 
-1. 打开仓库中的 [`config.jsonc`](https://github.com/zzxy2006eee-cloud/academichomepage.github.io/blob/main/config.jsonc)，点击铅笔编辑。
+1. 打开仓库中的 [`config.jsonc`](config.jsonc)，点击铅笔编辑。
 2. 修改对应字段的双引号内文字，保留其余配置。
 3. 点击 **Commit changes**，提交到 `main`。
 4. 等待 **Actions → Sync contributions and deploy homepage** 成功，刷新主页即可。无需手动构建或上传 `dist/`。
@@ -32,11 +22,11 @@ A quiet, blue-and-white academic homepage with a graphite sidebar, independently
 ```jsonc
 {
   // 标签页标题；可以分别填写中文和英文，也可以直接填写一个字符串
-  "title": { "zh": "周轩羽 · 个人学术主页", "en": "Xuanyu Zhou · Academic Homepage" },
+  "title": { "zh": "你的姓名 · 个人学术主页", "en": "Your Name · Academic Homepage" },
   // 网页描述 / 搜索摘要。右侧可见的“关于我”正文请修改 about
   "description": { "zh": "我的研究与项目主页", "en": "My research and projects" },
-  "repository": "zzxy2006eee-cloud/academichomepage.github.io",
-  "githubUsername": "zzxy2006eee-cloud",
+  "repository": "your-username/academichomepage.github.io",
+  "githubUsername": "your-username",
   "defaultLanguage": "zh",
   "favicon": "assets/favicon.svg"
 }
@@ -69,17 +59,6 @@ A quiet, blue-and-white academic homepage with a graphite sidebar, independently
 - [修改后的预览与发布](#修改后的预览与发布)
 - [常见问题](#常见问题)
 
-### 功能
-
-- 桌面端左右两栏独立滚动；手机端为响应式单列，个人资料可展开。
-- 中文 / English 全站切换，浏览器记住语言选择。
-- About Me、教育背景、荣誉与奖项、论文成果、核心项目、开源贡献。
-- 项目封面、研究内容、个人职责、项目成果、仓库链接及详情弹窗。
-- 论文 BibTeX 预览和复制；可配置 PDF、Code 链接。
-- 公开上游 PR 的「项目 / 具体贡献 / 合并记录」明细表，真实 GitHub 热力图。
-- 每次推送、手动运行和每天北京时间 10:17 自动同步和部署。GitHub 定时工作流可能延迟；同步失败时保留已缓存的数据并显示原同步时间。
-- 浏览器打印可另存为 PDF。精简侧栏暂不展示简历下载按钮。
-
 ### 本地运行
 
 安装 Node.js 20 或更高版本，无需 `npm install`。
@@ -106,7 +85,7 @@ node scripts/dev.mjs
 | 头像下方姓名 | `profile.name.zh` | 侧栏始终展示中文姓名；`profile.name.en` 用于英文页脚等位置；浏览器标题单独由 `title` 控制 |
 | 姓名下面一行英文 | `profile.romanized` | 可填写拼音、英文名或个人副标题 |
 | 姓名下方学校、基本信息中的学校 | `profile.institution` | 两处共用同一双语字段 |
-| 基本信息中的国家 | `profile.location` | 当前为中国 / China |
+| 基本信息中的国家 | `profile.location` | 填写国家或所在地，支持中英文 |
 | 基本信息中的邮箱 | `profile.email` | 只填邮箱地址，不加 `mailto:` |
 | 基本信息中的 GitHub 账号名 | `githubUsername` | 同时决定主页链接与贡献数据来源 |
 | 侧栏最近更新日期 | `profile.updated` | 手动维护，例如 `2026-11-09` |
@@ -118,7 +97,7 @@ node scripts/dev.mjs
 | 荣誉与奖项 | `awards[]` | 奖项、级别 / 授予单位、年份 |
 | 论文成果 | `publications[]` | 标题、作者、发表状态、PDF、代码和引用 |
 | 核心项目 | `projects[]` | 封面、介绍、研究、职责、成果、链接 |
-| GitHub 个人主页和贡献来源 | `githubUsername` | 仅填用户名，如 `zzxy2006eee-cloud` |
+| GitHub 个人主页和贡献来源 | `githubUsername` | 仅填用户名，如 `your-username` |
 | 页脚 `Open source` | 顶层 `repository` | 本主页的源码仓库：`用户名/仓库名` 或完整 GitHub HTTPS 网址 |
 | 上游贡献的人工说明 | `contributionOverrides` | 按 `owner/repo` 配置中英文说明 |
 | 默认语言 | `defaultLanguage` | `zh` 或 `en` |
@@ -131,14 +110,12 @@ node scripts/dev.mjs
 
 ### 第一次替换成自己的资料
 
-1. 修改 `profile` 中的姓名、学校、身份、邮箱等信息；头像已使用你提供的海边黑猫图片。
+1. 修改 `profile` 中的姓名、学校、邮箱等信息，并将 `profile.avatar` 指向自己的头像。
 2. 将 `about`、`interests`、`skills` 改成自己的介绍。
 3. 替换 `education`、`awards`、`publications`、`projects` 中的示例条目。没有对应内容时，可以暂时把列表改成 `[]`；栏目标题仍会保留。
 4. 填写真实的论文、仓库、简历链接，补齐中英文内容。
 5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
 6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
-
-当前个人信息已更新为周轩羽（Xuanyu Zhou），电子科技大学 2024 级本科生，邮箱为 `1285027656@qq.com`。研究方向为视觉感知、导航与 SLAM、4D 世界模型；头像仍是用户提供的海边黑猫。教育背景与两个核心项目已更新，项目分别链接到 `drone-nav-and-vision` 和 `robot_challenge`，介绍依据仓库 README 编写。专业技能为 Python、PyTorch、C++、英语四六级；荣誉与奖项已替换为用户提供的五项，论文仍为示例；GitHub 区域使用真实账号数据。
 
 ### 配置文件的基本写法
 
@@ -161,7 +138,7 @@ node scripts/dev.mjs
   "name": { "zh": "张三", "en": "San Zhang" },
   "initials": "ZS",
   "romanized": "San Zhang",
-  "handle": "@zzxy2006eee-cloud",
+  "handle": "@your-username",
   "avatar": "assets/images/avatar.png",
   "email": "yourname@example.com",
   "cvUrl": "assets/files/cv.pdf"
@@ -170,7 +147,7 @@ node scripts/dev.mjs
 
 这是部分字段示例，只替换 `profile` 中对应的字段，保留其他字段。
 
-- **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按圆形框裁切显示。头像替代文本在 `src/app.js` 的 `sidebar()` 中，目前描述的是黑猫图片；更换内容后可一并修改。
+- **更换头像**：直接用新图片覆盖 `assets/images/avatar.png`。如果换成 JPG，例如 `assets/images/my-avatar.jpg`，同时修改 `profile.avatar`。建议使用正方形图片，页面会按圆形框裁切显示。更换头像后，可在 `src/app.js` 的 `sidebar()` 中同步修改图片的替代文本。
 - **侧栏顺序**：最上方直接显示头像，下方依次为中文姓名、英文姓名、学校；基本信息依次为学校、国家、邮箱、GitHub 账号名，之后是研究方向和专业技能。
 - **邮箱**：填写 `profile.email` 后，点击邮箱会打开邮件应用。
 - **保留字段**：`initials`、`handle`、`role`、`status`、`lab`、`nationality`、`cvUrl`、`scholarUrl`、`orcidUrl` 暂不在精简侧栏显示。需要恢复额外入口时修改 `src/app.js` 的 `sidebar()`；仍可用浏览器打印功能导出 PDF。
@@ -198,7 +175,7 @@ node scripts/dev.mjs
 }
 ```
 
-不想展示近况时，可设置 `"news": null`。当前已隐藏近况和简介下方的示例提示（`news`、`demoNote` 均为 `null`）。`interests` 中的每项对应一个研究方向；`skills` 的每项对应一个技能分组：
+不想展示近况时，可设置 `"news": null`。将 `demoNote` 设为 `null` 可隐藏简介下方的示例提示。`interests` 中的每项对应一个研究方向；`skills` 的每项对应一个技能分组：
 
 ```json
 {
@@ -215,7 +192,7 @@ node scripts/dev.mjs
 | --- | --- |
 | `period` | 起止时间，例如 `2023 — 至今`，支持中英文对象 |
 | `school` | 学校名称 |
-| `logo` | 可选校徽图片路径，留空不显示；当前为 `assets/images/uestc-emblem.png` |
+| `logo` | 可选校徽图片路径；将图片放入 `assets/images/` 后填写路径，留空不显示 |
 | `degree` | 学位或阶段，例如本科、硕士、博士 |
 | `detail` | 专业、学院、实验室或补充说明 |
 
@@ -269,7 +246,7 @@ node scripts/dev.mjs
 
 ```json
 "cover": "assets/images/my-project.png",
-"repository": "https://github.com/zzxy2006eee-cloud/your-project",
+"repository": "https://github.com/your-username/your-project",
 "tags": ["LLM", "RAG", { "zh": "知识图谱", "en": "Knowledge graphs" }]
 ```
 
@@ -279,7 +256,7 @@ node scripts/dev.mjs
 
 配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”仍打开本页弹窗。仓库留空时，封面和标题打开详情，仓库按钮禁用。
 
-研究、职责、成果中某项尚未确认时，可将对应字段设为 `""`，页面将隐藏这一行。当前两个真实项目未填写未经确认的个人职责。封面使用用户提供的无人机与清扫机器人图片，文件分别为 `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`；可以同名替换，也可以修改 `projects[].cover` 指向新图片。
+研究、职责、成果中某项不需要展示时，可将对应字段设为 `""`，页面将隐藏这一行。更换封面可以同名覆盖图片，也可以修改 `projects[].cover` 指向新图片。
 
 注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，支持 `用户名/仓库名` 或完整 GitHub HTTPS 网址；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
 
@@ -346,10 +323,10 @@ node scripts/dev.mjs
 
 ### 修改后的预览与发布
 
-在 Windows PowerShell 中进入项目目录：
+在 Windows PowerShell 中进入下载或克隆的项目目录（按实际位置调整路径）：
 
 ```powershell
-Set-Location -LiteralPath 'D:\个人主页\academic-homepage'
+Set-Location -LiteralPath '.\academic-homepage'
 node scripts/check.mjs
 node scripts/dev.mjs
 ```
@@ -365,11 +342,11 @@ git commit -m "Update homepage content"
 git push origin main
 ```
 
-上述 `git add` 适用于文字和图片修改；若同时修改了 `src/styles.css`、`assets/files/` 等文件，也要将实际修改的路径加入暂存。之后在仓库 Actions 查看最新工作流，`deploy` 成功后刷新[线上主页](https://zzxy2006eee-cloud.github.io/academichomepage.github.io/)。
+上述 `git add` 适用于文字和图片修改；若同时修改了 `src/styles.css`、`assets/files/` 等文件，也要将实际修改的路径加入暂存。之后在仓库 Actions 查看最新工作流，`deploy` 成功后打开仓库 **Settings → Pages** 中显示的网站地址。
 
 也可以直接在 GitHub 网页打开 `config.jsonc`，使用编辑按钮保存并提交；图片通过仓库的文件上传入口放到相应目录。提交到 `main` 后同样会自动部署。
 
-**修改源文件，不要编辑 `dist/`。** `dist/` 是构建产物，重新构建会覆盖内容，而且不会提交到 Git。README 中的预览截图位于 `docs/`，不会随网页自动重新截图；它们不影响网站实际显示。
+**修改源文件，不要编辑 `dist/`。** `dist/` 是构建产物，重新构建会覆盖内容，而且不会提交到 Git。
 
 ### 常见问题
 
@@ -416,19 +393,24 @@ src/app.js               # 渲染与交互
 src/styles.css           # 配色、布局、响应式和打印样式
 scripts/                 # 构建、同步、预览、校验
 .github/workflows/       # 每日同步和 GitHub Pages 部署
-docs/                    # 截图及维护说明
+docs/                    # 辅助文档与素材说明
 ```
 
 ## English
 
-This is an original, dependency-free academic homepage inspired by the content structure and open-source workflow of AcadHomepage. It does not reuse that project's implementation.
+1. Edit [`config.jsonc`](config.jsonc). It supports comments, trailing commas, and bilingual values such as `{ "zh": "中文", "en": "English" }`.
+2. Set `title`, `description`, `repository`, and `githubUsername`, then update `profile`, `about`, `interests`, `skills`, `education`, `awards`, `publications`, and `projects`.
+3. Put images in `assets/images/` and use relative paths in the configuration. `repository` controls the homepage's source link; `projects[].repository` controls each project link.
+4. With Node.js 20+, run `node scripts/dev.mjs` and open `http://127.0.0.1:4173`. Saving configuration or assets rebuilds the site and refreshes the browser. No dependency installation is needed.
+5. Run `node scripts/check.mjs` to validate content. Use `node --test tests/config.test.mjs` to check configuration and preview behavior.
+6. Commit and push changes to `main`. Enable **GitHub Actions** in **Settings → Pages** and wait for deployment to succeed. Local edits alone do not update the public site.
 
-Run `node scripts/dev.mjs` with Node.js 20+ for automatic rebuilds and browser reloads. Edit the annotated `config.jsonc` for site title, description, repository, profile, and bilingual content; put images in `assets/images/`. The old `data/site.json` has been migrated to this single configuration file. Commit and push to `main` to update the public website automatically. `node scripts/build.mjs` produces the static site; `node --test tests/config.test.mjs` checks configuration and preview behavior. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
+`defaultLanguage` selects the language for first-time visitors; returning visitors retain their saved preference. Supply both translations yourself. `description` controls page metadata; use `about` for the visible introduction.
 
-The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; skills are Python, PyTorch, C++, and English CET-4 & CET-6. The five honors have been updated; only papers remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
+For manual static builds, run `node scripts/build.mjs`, then `node scripts/serve.mjs`. Do not edit or commit `dist/`.
 
-Enable **GitHub Actions** as the repository's Pages source. A project repository named `academichomepage.github.io` is served at `https://USERNAME.github.io/academichomepage.github.io/`.
+GitHub Actions refreshes contribution data on pushes, manual workflow runs, and the configured daily schedule. Change `githubUsername` to use your account. If a snapshot belongs to another account, the site displays a pending state until synchronization succeeds. Keep tokens out of the configuration and source files.
 
-## License
+## 素材替换与许可
 
-Source code and original SVG illustrations are MIT licensed. The user-supplied avatar and project photographs are retained as personal assets; replace them with your own images when reusing this template. The UESTC emblem is sourced from the [official university news article](https://news.uestc.edu.cn/info/1007/13146.htm) and is not covered by this repository's MIT license; rights remain with its owner.
+复用主页时，请替换头像、项目封面和校徽，并同步修改相应配置路径。代码许可见 [LICENSE](LICENSE)，附带素材的来源及许可范围见 [素材说明](docs/ASSETS.md)。
