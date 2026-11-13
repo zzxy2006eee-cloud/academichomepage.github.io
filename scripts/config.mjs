@@ -63,10 +63,12 @@ export function normalizeConfig(input) {
   if (!input || typeof input !== "object" || Array.isArray(input))
     fail("根节点", "必须是 {} 对象。");
   const site = structuredClone(input);
+  site.internships ??= [];
   if (!site.profile || typeof site.profile !== "object") fail("profile", "请保留个人资料对象。");
   for (const field of [
     "education",
     "awards",
+    "internships",
     "publications",
     "projects",
     "interests",
@@ -74,6 +76,26 @@ export function normalizeConfig(input) {
     "about",
   ])
     if (!Array.isArray(site[field])) fail(field, "必须是列表 []；不显示内容时填写 []。");
+  for (const [index, entry] of site.internships.entries()) {
+    if (!entry || typeof entry !== "object" || Array.isArray(entry))
+      fail(`internships[${index}]`, "每条实习经历必须是 {} 对象。");
+    for (const field of ["company", "position", "period", "description"]) {
+      const value = entry[field];
+      if (
+        value !== undefined &&
+        typeof value !== "string" &&
+        !(
+          value &&
+          typeof value === "object" &&
+          !Array.isArray(value) &&
+          Object.values(value).every((text) => typeof text === "string")
+        )
+      )
+        fail(`internships[${index}].${field}`, "请填写文字或包含 zh / en 的双语对象。");
+    }
+    if (!localize(entry.company, "zh").trim())
+      fail(`internships[${index}].company`, "请填写公司或机构名称。");
+  }
   site.defaultLanguage ??= "zh";
   if (!["zh", "en"].includes(site.defaultLanguage))
     fail("defaultLanguage", '只能填写 "zh" 或 "en"。');

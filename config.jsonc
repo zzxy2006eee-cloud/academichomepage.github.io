@@ -169,6 +169,9 @@
       "year": "2026",
     },
   ],
+  // 实习经历：company 公司/机构、position 岗位、period 时间、description 工作内容与成果。
+  // 支持 { "zh": "中文", "en": "English" }；按列表顺序展示。未填写时不进入 PDF 简历。
+  "internships": [],
   // 论文成果：目前为示例，可替换或设为 []。每项 id 必须唯一。
   "publications": [
     {

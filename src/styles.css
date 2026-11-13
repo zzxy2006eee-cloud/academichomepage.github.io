@@ -483,6 +483,40 @@ button {
   white-space: nowrap;
   font-size: 9px;
 }
+.internship-empty {
+  color: var(--muted);
+  font-size: 12px;
+  margin: 0;
+}
+.internship-entry {
+  padding: 13px 0;
+}
+.internship-entry + .internship-entry {
+  border-top: 1px solid var(--line);
+}
+.internship-heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 6px 18px;
+}
+.internship-heading h3 {
+  font-size: 14px;
+  margin: 0;
+}
+.internship-heading > span {
+  font-size: 12px;
+  color: var(--muted);
+}
+.internship-entry p {
+  font-size: 12px;
+  white-space: pre-line;
+  margin: 8px 0 0;
+}
+.resume-entry p {
+  white-space: pre-line;
+}
 .education-row {
   display: grid;
   grid-template-columns: 115px minmax(0, 1fr) auto;

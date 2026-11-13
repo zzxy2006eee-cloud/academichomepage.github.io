@@ -42,7 +42,7 @@
 | `favicon` | 浏览器小图标图片路径 |
 | `profile` | 头像、姓名、学校、国家、邮箱等资料 |
 | `about` / `interests` / `skills` | 关于我、研究方向、技能 |
-| `education` / `awards` / `publications` / `projects` | 教育、奖项、论文、项目列表 |
+| `education` / `awards` / `internships` / `publications` / `projects` | 教育、奖项、实习、论文、项目列表 |
 
 ### 使用说明目录
 
@@ -95,6 +95,7 @@ node scripts/dev.mjs
 | 专业技能 | `skills[].title`、`skills[].items` | 按顺序展示标签；`title` 留空时隐藏分组标题 |
 | 教育背景 | `education[]` | 起止时间、学校、学位、专业 |
 | 荣誉与奖项 | `awards[]` | 奖项、级别 / 授予单位、年份 |
+| 实习经历 | `internships[]` | 公司、岗位、时间、工作内容与成果 |
 | 论文成果 | `publications[]` | 标题、作者、发表状态、PDF、代码和引用 |
 | 核心项目 | `projects[]` | 封面、介绍、研究、职责、成果、链接 |
 | GitHub 个人主页和贡献来源 | `githubUsername` | 仅填用户名，如 `your-username` |
@@ -112,7 +113,7 @@ node scripts/dev.mjs
 
 1. 修改 `profile` 中的姓名、学校、邮箱等信息，并将 `profile.avatar` 指向自己的头像。
 2. 将 `about`、`interests`、`skills` 改成自己的介绍。
-3. 替换 `education`、`awards`、`publications`、`projects` 中的示例条目。没有对应内容时，可以暂时把列表改成 `[]`；栏目标题仍会保留。
+3. 替换 `education`、`awards`、`internships`、`publications`、`projects` 中的示例条目。没有对应内容时，可以暂时把列表改成 `[]`；栏目标题仍会保留。
 4. 填写真实的论文、仓库、简历链接，补齐中英文内容。
 5. 确认示例履历已全部替换或删除，再将顶层 `"demo": true` 改为 `"demo": false`，并更新 `profile.updated`。
 6. 按[修改后的预览与发布](#修改后的预览与发布)检查并推送。
@@ -197,6 +198,26 @@ node scripts/dev.mjs
 | `detail` | 专业、学院、实验室或补充说明 |
 
 在 `awards` 列表里填写 `title`（奖项名称）、`organization`（级别与授予单位）、`year`（年份）。日期、学位和奖项不会自动从其他平台获取，需要自行维护。
+
+### 实习经历
+
+在 `config.jsonc` 的 `internships` 列表中填写实习记录，按列表顺序展示在“荣誉与奖项”和“论文成果”之间。例如：
+
+```json
+"internships": [
+  {
+    "company": { "zh": "公司或机构名称", "en": "Company name" },
+    "position": { "zh": "实习岗位", "en": "Internship role" },
+    "period": { "zh": "2026.07 — 2026.09", "en": "Jul — Sep 2026" },
+    "description": {
+      "zh": "填写实际负责的工作、使用的方法与取得的成果。",
+      "en": "Describe your responsibilities, methods, and outcomes."
+    }
+  }
+]
+```
+
+字段也可以直接填写普通文字；公司名称必填，其他字段可留空。`description` 支持用 `\n` 换行。没有内容时保留 `[]`，主页显示待补充提示，PDF 简历省略该栏目；填写后自动加入简历。
 
 ### 论文成果
 
@@ -411,7 +432,7 @@ docs/                    # 辅助文档与素材说明
 ## English
 
 1. Edit [`config.jsonc`](config.jsonc). It supports comments, trailing commas, and bilingual values such as `{ "zh": "中文", "en": "English" }`.
-2. Set `title`, `description`, `repository`, and `githubUsername`, then update `profile`, `about`, `interests`, `skills`, `education`, `awards`, `publications`, and `projects`.
+2. Set `title`, `description`, `repository`, and `githubUsername`, then update `profile`, `about`, `interests`, `skills`, `education`, `awards`, `internships`, `publications`, and `projects`.
 3. Put images in `assets/images/` and use relative paths in the configuration. `repository` controls the homepage's source link; `projects[].repository` controls each project link.
 4. With Node.js 20+, run `node scripts/dev.mjs` and open `http://127.0.0.1:4173`. Saving configuration or assets rebuilds the site and refreshes the browser. No dependency installation is needed.
 5. Run `node scripts/check.mjs` to validate content. Use `node --test tests/config.test.mjs` to check configuration and preview behavior.
