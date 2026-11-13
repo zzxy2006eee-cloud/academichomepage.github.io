@@ -26,6 +26,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Test configuration and publishing behavior
+        run: node --test tests/config.test.mjs
       - name: Restore last successful contribution snapshot
         uses: actions/cache/restore@v4
         with:

@@ -14,6 +14,46 @@ A quiet, blue-and-white academic homepage with a graphite sidebar, independently
 
 本项目为原创静态主页，参考 [AcadHomepage](https://github.com/RayeRen/acad-homepage.github.io) 的开源使用方式与内容组织，没有复制其代码。使用原生 HTML / CSS / JavaScript，无框架和第三方运行时依赖。
 
+### 从这里开始：只改一个配置文件
+
+打开根目录的 **[`config.jsonc`](config.jsonc)**。原来的 `data/site.json` 已迁入这里，构建、校验、GitHub 同步共用这一份配置，旧文件已移除。文件里按栏目写有中文注释；不需要修改 HTML 或 JavaScript。
+
+**最简单的线上修改方式：**
+
+1. 打开仓库中的 [`config.jsonc`](https://github.com/zzxy2006eee-cloud/academichomepage.github.io/blob/main/config.jsonc)，点击铅笔编辑。
+2. 修改对应字段的双引号内文字，保留其余配置。
+3. 点击 **Commit changes**，提交到 `main`。
+4. 等待 **Actions → Sync contributions and deploy homepage** 成功，刷新主页即可。无需手动构建或上传 `dist/`。
+
+本地编辑则运行 `node scripts/dev.mjs`，保存配置后浏览器自动刷新；**本地保存不会直接改动线上网站**，仍需 `git commit`、`git push`。
+
+下面是配置文件开头的常用字段示例（只修改对应字段，不要用此片段覆盖整个文件）：
+
+```jsonc
+{
+  // 标签页标题；可以分别填写中文和英文，也可以直接填写一个字符串
+  "title": { "zh": "周轩羽 · 个人学术主页", "en": "Xuanyu Zhou · Academic Homepage" },
+  // 网页描述 / 搜索摘要。右侧可见的“关于我”正文请修改 about
+  "description": { "zh": "我的研究与项目主页", "en": "My research and projects" },
+  "repository": "zzxy2006eee-cloud/academichomepage.github.io",
+  "githubUsername": "zzxy2006eee-cloud",
+  "defaultLanguage": "zh",
+  "favicon": "assets/favicon.svg"
+}
+```
+
+| 常用字段 | 修改后的效果 |
+| --- | --- |
+| `title` | 浏览器标签页标题，初始 HTML 和中英文切换同步更新 |
+| `description` | 网页描述与搜索摘要，初始 HTML 和中英文切换同步更新；搜索引擎刷新摘要可能有延迟 |
+| `repository` | 页脚源码仓库链接，支持 `用户名/仓库名` 或完整 GitHub HTTPS 地址；不会创建、重命名仓库或改变部署域名 |
+| `githubUsername` | GitHub 账号链接和贡献数据来源；新账号同步完成前显示等待状态，不展示旧账号的数据 |
+| `defaultLanguage` | 首次访问的默认语言 `zh` / `en` |
+| `favicon` | 浏览器小图标图片路径 |
+| `profile` | 头像、姓名、学校、国家、邮箱等资料 |
+| `about` / `interests` / `skills` | 关于我、研究方向、技能 |
+| `education` / `awards` / `publications` / `projects` | 教育、奖项、论文、项目列表 |
+
 ### 使用说明目录
 
 - [快速查找：页面内容在哪里修改](#快速查找页面内容在哪里修改)
@@ -38,30 +78,32 @@ A quiet, blue-and-white academic homepage with a graphite sidebar, independently
 - 论文 BibTeX 预览和复制；可配置 PDF、Code 链接。
 - 公开上游 PR 的「项目 / 具体贡献 / 合并记录」明细表，真实 GitHub 热力图。
 - 每次推送、手动运行和每天北京时间 10:17 自动同步和部署。GitHub 定时工作流可能延迟；同步失败时保留已缓存的数据并显示原同步时间。
-- 导出简历通过浏览器打印，可另存为 PDF；配置 `cvUrl` 后改为下载自己的简历。
+- 浏览器打印可另存为 PDF。精简侧栏暂不展示简历下载按钮。
 
 ### 本地运行
 
 安装 Node.js 20 或更高版本，无需 `npm install`。
 
 ```sh
-node scripts/check.mjs
-node scripts/build.mjs
-node scripts/serve.mjs
+node scripts/dev.mjs
 ```
 
-打开 http://127.0.0.1:4173 。修改后重新执行 `node scripts/build.mjs` 并刷新页面。按 Ctrl+C 停止预览。
+打开 http://127.0.0.1:4173 。保存 `config.jsonc`、`src/`、`assets/` 或贡献快照后会自动构建并刷新。配置写错时终端会显示错误，原页面保持不变；修正并保存后会继续更新。按 Ctrl+C 停止预览。
+
+此命令只需要 Node.js，不依赖 npm。若已安装 npm，也可使用 `npm run dev`。普通静态预览仍可运行 `node scripts/build.mjs` 后执行 `node scripts/serve.mjs`，但该模式需要手动重新构建。
 
 ### 快速查找：页面内容在哪里修改
 
-**日常改资料主要只需要修改 [`data/site.json`](data/site.json)，更换图片则放到 [`assets/images/`](assets/images/)。** 下表中的配置字段均位于 `data/site.json`，除非单独标注了文件。
+**日常改资料主要只需要修改 [`config.jsonc`](config.jsonc)，更换图片则放到 [`assets/images/`](assets/images/)。** 下表中的配置字段均位于 `config.jsonc`，除非单独标注了文件。
 
 `profile.name` 表示在 `profile` 对象里找到 `name`；`projects[]` 表示项目列表中的每一项。
 
 | 页面位置 / 想修改的内容 | 对应字段或文件 | 说明 |
 | --- | --- | --- |
+| 浏览器标题 | `title` | 支持双语文本或通用字符串 |
+| 网页描述 / 搜索摘要 | `description` | 不同于项目中的 `projects[].description` |
 | 头像 | `profile.avatar` + `assets/images/avatar.png` | 同名覆盖图片，或修改图片路径 |
-| 头像下方姓名 | `profile.name.zh` | 侧栏始终展示中文姓名；`profile.name.en` 用于英文页面标题等位置 |
+| 头像下方姓名 | `profile.name.zh` | 侧栏始终展示中文姓名；`profile.name.en` 用于英文页脚等位置；浏览器标题单独由 `title` 控制 |
 | 姓名下面一行英文 | `profile.romanized` | 可填写拼音、英文名或个人副标题 |
 | 姓名下方学校、基本信息中的学校 | `profile.institution` | 两处共用同一双语字段 |
 | 基本信息中的国家 | `profile.location` | 当前为中国 / China |
@@ -77,15 +119,14 @@ node scripts/serve.mjs
 | 论文成果 | `publications[]` | 标题、作者、发表状态、PDF、代码和引用 |
 | 核心项目 | `projects[]` | 封面、介绍、研究、职责、成果、链接 |
 | GitHub 个人主页和贡献来源 | `githubUsername` | 仅填用户名，如 `zzxy2006eee-cloud` |
-| 页脚 `Open source` | 顶层 `repository` | 本主页的源码仓库：`用户名/仓库名` |
+| 页脚 `Open source` | 顶层 `repository` | 本主页的源码仓库：`用户名/仓库名` 或完整 GitHub HTTPS 网址 |
 | 上游贡献的人工说明 | `contributionOverrides` | 按 `owner/repo` 配置中英文说明 |
 | 默认语言 | `defaultLanguage` | `zh` 或 `en` |
 | “示例资料”提示 | `demo` | 替换完真实内容后设为 `false` |
 | 部分资料仍为示例时的提示 | `demoNote`、`demoLabel` | 分别控制简介下方说明与页脚的简短标记；`demoNote` 设为 `null` 可单独隐藏简介提示 |
 | 配色、字号、间距、栏宽 | [`src/styles.css`](src/styles.css) | 在编辑器中搜索对应 CSS 名称 |
 | 栏目标题、图标、导航文字 | [`src/app.js`](src/app.js) 的 `sections` | 正文栏目顺序另见下文 |
-| 网页图标 | [`assets/favicon.svg`](assets/favicon.svg) | 浏览器标签页上的小图标 |
-| 搜索摘要 | [`index.html`](index.html) 的 `meta[name="description"]` | 浏览器标题由 `src/app.js` 根据昵称与语言生成 |
+| 网页图标 | `favicon` | 图片放入 `assets/`，再填写路径 |
 | 自动同步时间 | [`.github/workflows/pages.yml`](.github/workflows/pages.yml) 的 `schedule` | Cron 使用 UTC 时间 |
 
 ### 第一次替换成自己的资料
@@ -109,7 +150,7 @@ node scripts/serve.mjs
 
 列表中新增一项时，可以复制现有对象，再替换字段。教育、奖项、论文和项目按配置中的顺序展示，不会自动按年份排序；把想优先展示的条目放在前面。
 
-JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一项后面不要加逗号。JSON 不支持注释。保存为 UTF-8，网页资源路径使用 `/`，不要填写 `D:\...` 这样的本机路径。
+配置使用 JSONC：英文双引号、英文逗号，支持 `//` 单行注释、`/* ... */` 块注释和末尾逗号。程序不会执行配置里的代码。保存为 UTF-8，网页资源路径使用 `/`，不要填写 `D:\...` 这样的本机路径。
 
 ### 个人资料与头像
 
@@ -240,14 +281,14 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 研究、职责、成果中某项尚未确认时，可将对应字段设为 `""`，页面将隐藏这一行。当前两个真实项目未填写未经确认的个人职责。封面使用用户提供的无人机与清扫机器人图片，文件分别为 `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`；可以同名替换，也可以修改 `projects[].cover` 指向新图片。
 
-注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，格式为 `用户名/仓库名`；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
+注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，支持 `用户名/仓库名` 或完整 GitHub HTTPS 网址；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
 
 ### 中英文切换
 
 - `defaultLanguage` 决定首次访问的默认语言，填写 `"zh"` 或 `"en"`。
 - 中文和英文由你分别维护，不会自动翻译。通用专有名词如 `Python` 可以只用字符串，两种界面会显示相同文本。
 - 已选择过的语言保存在浏览器中，因此更改默认语言后，老访客仍会看到之前选择的语言。可以点击页面语言按钮，或使用无痕窗口检查首次访问效果。
-- 内容翻译在 `data/site.json`；按钮、空状态等界面文字在 `src/app.js` 的 `w("中文", "English")` 中；栏目标题与导航在 `sections` 中。
+- 内容翻译在 `config.jsonc`；按钮、空状态等界面文字在 `src/app.js` 的 `w("中文", "English")` 中；栏目标题与导航在 `sections` 中。
 - 当前正式支持中文、英文两种语言；增加第三种语言需要修改渲染逻辑，不能只增加一个 JSON 字段。
 
 ### GitHub 贡献与热力图
@@ -278,7 +319,7 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 
 ### 配色、布局与栏目标题
 
-这些修改位于 [`src/styles.css`](src/styles.css)，通常不需要碰 `data/site.json`。
+这些修改位于 [`src/styles.css`](src/styles.css)，通常不需要碰 `config.jsonc`。
 
 | 想修改的效果 | 在 CSS 中搜索 | 说明 |
 | --- | --- | --- |
@@ -310,24 +351,23 @@ JSON 使用英文双引号；相邻条目之间用英文逗号分隔，最后一
 ```powershell
 Set-Location -LiteralPath 'D:\个人主页\academic-homepage'
 node scripts/check.mjs
-node scripts/build.mjs
-node scripts/serve.mjs
+node scripts/dev.mjs
 ```
 
-打开 [本地预览](http://127.0.0.1:4173)，检查中文、英文和手机宽度。`check.mjs` 会检查 JSON、双语必填项、图片是否存在、项目 / 论文 ID、账号快照与脚本语法。预览服务没有自动构建：修改后需要再次运行 `node scripts/build.mjs` 并刷新浏览器；服务运行中可以在第二个终端执行构建。
+打开 [本地预览](http://127.0.0.1:4173)，检查中文、英文和手机宽度。`check.mjs` 会检查配置格式、双语必填项、图片是否存在、项目 / 论文 ID、账号快照与脚本语法。`node scripts/dev.mjs` 会自动重新读取配置、构建和刷新浏览器，错误时在终端提示。只需生成发布文件时执行 `node scripts/build.mjs`。
 
 确认无误后，在项目目录提交并推送：
 
 ```powershell
 git status
-git add data/site.json assets/images
+git add config.jsonc assets/images
 git commit -m "Update homepage content"
 git push origin main
 ```
 
 上述 `git add` 适用于文字和图片修改；若同时修改了 `src/styles.css`、`assets/files/` 等文件，也要将实际修改的路径加入暂存。之后在仓库 Actions 查看最新工作流，`deploy` 成功后刷新[线上主页](https://zzxy2006eee-cloud.github.io/academichomepage.github.io/)。
 
-也可以直接在 GitHub 网页打开 `data/site.json`，使用编辑按钮保存并提交；图片通过仓库的文件上传入口放到相应目录。提交到 `main` 后同样会自动部署。
+也可以直接在 GitHub 网页打开 `config.jsonc`，使用编辑按钮保存并提交；图片通过仓库的文件上传入口放到相应目录。提交到 `main` 后同样会自动部署。
 
 **修改源文件，不要编辑 `dist/`。** `dist/` 是构建产物，重新构建会覆盖内容，而且不会提交到 Git。README 中的预览截图位于 `docs/`，不会随网页自动重新截图；它们不影响网站实际显示。
 
@@ -335,7 +375,7 @@ git push origin main
 
 | 现象 | 应检查的位置 |
 | --- | --- |
-| 修改后本地页面没变化 | 重新执行 `node scripts/build.mjs`，再刷新；不是只保存源文件 |
+| 修改后本地页面没变化 | 使用 `node scripts/dev.mjs` 自动更新；若用 `node scripts/serve.mjs`，需先重新构建。检查终端是否有配置错误 |
 | 本地有变化，线上没有 | 是否推送到 `main`，最新 Actions 是否成功；然后尝试强制刷新 |
 | 图片在本机正常，线上不显示 | 检查文件名大小写、相对路径与是否提交图片；不要使用 Windows 绝对路径 |
 | GitHub / PDF 按钮是灰色的 | 对应项目的 `repository` 或论文的 `pdf` / `code` 仍为空 |
@@ -345,8 +385,8 @@ git push origin main
 | 无法隐藏某个空栏目 | 空列表只清空条目；完整隐藏需要同时修改 `sections` 和 `render()` |
 | 有提交活动，但上游 PR 表为空 | 热力图和上游合并 PR 口径不同；自己仓库的提交不等于贡献给其他仓库的已合并 PR |
 | 热力图没有马上更新 | 查看最后同步时间，可手动运行工作流；GitHub 自身统计也可能延迟 |
-| 更换 GitHub 账号后校验失败 | 更新 `githubUsername` 后重新同步快照；顶层 `repository` 按需要修改 |
-| JSON 无法解析 | 检查英文双引号、逗号、是否包含注释；运行 `node scripts/check.mjs` 查看错误 |
+| 更换 GitHub 账号后热力图为空 | 新账号同步前显示等待状态；提交后 Actions 自动同步，或手动运行工作流 |
+| 配置无法解析 | 检查英文双引号、逗号和括号；JSONC 允许注释，运行 `node scripts/check.mjs` 查看具体错误 |
 | 直接双击 `index.html` 内容不出现 | 使用构建和本地预览命令；源目录的运行数据文件由构建生成到 `dist/data/` |
 
 ### GitHub Pages
@@ -364,12 +404,12 @@ git push origin main
 
 Actions 使用内置 `GITHUB_TOKEN`，无需将 Token 写进源码。手动同步时，将 Token 设置为当前进程环境变量 `GITHUB_TOKEN` 后运行 `node scripts/sync-github.mjs`。**不要提交 Token 或 `.env` 文件。** 搜索最多保留最近 1,000 条记录；超出后会明确显示截断提示。热力图统计的是 GitHub 返回的贡献活动，和「已合并上游 PR」不是同一种口径。
 
-同步数据只进入部署产物和 Actions 缓存，不会每天自动修改源代码。源码附带首次同步快照，API 暂不可用时仍可展示已有数据。更换账号后应重新同步；缓存中的账号不匹配时，构建校验会阻止展示旧账号的数据。
+同步数据只进入部署产物和 Actions 缓存，不会每天自动修改源代码。源码附带首次同步快照，API 暂不可用时仍可展示已有数据。更换账号后应重新同步；缓存中的账号不匹配时，构建会输出新账号的等待状态，不会展示旧账号的数据，也不会阻塞其他资料发布。
 
 ### 文件结构
 
 ```text
-data/site.json           # 唯一主要内容配置
+config.jsonc             # 唯一主页配置：中文注释、双语元数据和全部资料
 data/github.json         # 首次公开 GitHub 数据快照
 assets/images/           # 头像及项目封面
 src/app.js               # 渲染与交互
@@ -383,7 +423,7 @@ docs/                    # 截图及维护说明
 
 This is an original, dependency-free academic homepage inspired by the content structure and open-source workflow of AcadHomepage. It does not reuse that project's implementation.
 
-Run `node scripts/build.mjs` and `node scripts/serve.mjs` with Node.js 20+. Edit bilingual content in `data/site.json`, and put images in `assets/images/`. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
+Run `node scripts/dev.mjs` with Node.js 20+ for automatic rebuilds and browser reloads. Edit the annotated `config.jsonc` for site title, description, repository, profile, and bilingual content; put images in `assets/images/`. The old `data/site.json` has been migrated to this single configuration file. Commit and push to `main` to update the public website automatically. `node scripts/build.mjs` produces the static site; `node --test tests/config.test.mjs` checks configuration and preview behavior. Desktop columns scroll independently. Mobile uses a single-column layout with expandable profile details. Language preference persists locally.
 
 The profile belongs to Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Education and the two repository-linked projects have been updated; skills are Python, PyTorch, C++, and English CET-4 & CET-6. The five honors have been updated; only papers remain labeled placeholders. Replace those before disabling `demo`. Project descriptions are based on the linked repositories, without unverified personal-role claims. The GitHub section uses the configured account's real contribution calendar, defaulting to the rolling-year view used by GitHub profiles, with current-year and previous-year options. Upstream merged PRs are listed separately. GitHub Actions refreshes the data and deploys on pushes, manual runs, and a daily schedule. Tokens are never included in the public website.
 

@@ -1,9 +1,10 @@
 import assert from "node:assert/strict";
-import { readFile, access } from "node:fs/promises";
+import { access } from "node:fs/promises";
 import { spawnSync } from "node:child_process";
 import { fileURLToPath } from "node:url";
+import { loadSiteConfig, loadGitHubSnapshot } from "./config.mjs";
 const root = fileURLToPath(new URL("../", import.meta.url));
-const site = JSON.parse(await readFile(new URL("../data/site.json", import.meta.url), "utf8"));
+const site = await loadSiteConfig();
 assert.match(site.githubUsername, /^[a-z\d][a-z\d-]{0,38}$/i);
 assert.ok(["zh", "en"].includes(site.defaultLanguage));
 for (const key of ["education", "awards", "publications", "projects", "interests", "skills"])
@@ -12,6 +13,7 @@ for (const item of [site.profile.name, site.profile.role, ...site.about])
   assert.ok(item.zh && item.en, "Both language variants are required");
 for (const asset of [
   site.profile.avatar,
+  site.favicon,
   ...site.projects.map((p) => p.cover),
   ...site.education.map((entry) => entry.logo).filter(Boolean),
 ])
@@ -22,11 +24,11 @@ for (const key of ["projects", "publications"])
     site[key].length,
     `${key} IDs must be unique`,
   );
-const github = JSON.parse(await readFile(new URL("../data/github.json", import.meta.url), "utf8"));
+const github = await loadGitHubSnapshot(site);
 assert.equal(
-  github.username,
-  site.githubUsername,
-  "Snapshot must match the configured account; run sync after changing it",
+  github.username.toLowerCase(),
+  site.githubUsername.toLowerCase(),
+  "Snapshot must match the configured account",
 );
 for (const c of github.calendars) {
   const days = c.weeks.flatMap((week) => week.days);
@@ -57,6 +59,8 @@ for (const file of [
   "scripts/build.mjs",
   "scripts/serve.mjs",
   "scripts/sync-github.mjs",
+  "scripts/config.mjs",
+  "scripts/dev.mjs",
 ]) {
   const r = spawnSync(process.execPath, ["--check", file], { cwd: root, encoding: "utf8" });
   assert.equal(r.status, 0, r.stderr);

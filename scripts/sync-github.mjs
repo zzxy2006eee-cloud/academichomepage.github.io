@@ -1,9 +1,10 @@
 /** Only public PR metadata is persisted. Credentials are read from the environment. */
-import { readFile, writeFile } from "node:fs/promises";
-const config = JSON.parse(await readFile(new URL("../data/site.json", import.meta.url), "utf8"));
+import { writeFile } from "node:fs/promises";
+import { loadSiteConfig } from "./config.mjs";
+const config = await loadSiteConfig();
 const username = config.githubUsername;
 if (!/^[a-z\d](?:[a-z\d-]{0,38})$/i.test(username))
-  throw new Error("Invalid githubUsername in data/site.json");
+  throw new Error("Invalid githubUsername in config.jsonc");
 const token = process.env.GITHUB_TOKEN || process.env.GH_TOKEN;
 if (!token) {
   console.log("No GITHUB_TOKEN: preserving the existing GitHub snapshot.");

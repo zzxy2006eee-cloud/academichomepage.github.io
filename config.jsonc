@@ -1,0 +1,285 @@
+// 主页配置：日常内容只需编辑这一个文件。保留英文双引号，允许 // 注释及末尾逗号。
+// 本地：node scripts/dev.mjs，保存后自动构建并刷新。线上：提交到 GitHub main 分支后自动发布。
+// 本文件内容会成为公开网页资料；不要填写密码或 Token。
+{
+  // 浏览器标签页标题。zh 为中文、en 为英文；也可直接填一段文本。
+  "title": {
+    "zh": "周轩羽 · 个人学术主页",
+    "en": "Xuanyu Zhou · Academic Homepage",
+  },
+  // 网页描述 / 搜索摘要，不会替换右侧“关于我”；关于我在 about 中编辑。
+  "description": {
+    "zh": "周轩羽，电子科技大学2024级本科生。研究兴趣：视觉感知、导航与SLAM、4D世界模型。展示无人机导航与视觉、机场清扫机器人项目及GitHub贡献。",
+    "en": "Xuanyu Zhou, a UESTC undergraduate who entered in 2024. Research interests: visual perception, navigation and SLAM, and 4D world models. Explore robotics projects and GitHub contributions.",
+  },
+  // 本主页源码仓库：填写 用户名/仓库名，或完整 https://github.com/用户名/仓库名。
+  // 只控制页脚源码链接，不会移动仓库或改变 GitHub Pages 域名。
+  "repository": "zzxy2006eee-cloud/academichomepage.github.io",
+  // 贡献热力图、上游 PR 和侧栏链接使用的 GitHub 用户名。
+  "githubUsername": "zzxy2006eee-cloud",
+  // 首次访问语言：zh / en；老访客会保留自己的语言选择。
+  "defaultLanguage": "zh",
+  // 浏览器标签页小图标。图片路径使用 /，不要填写电脑上的绝对路径。
+  "favicon": "assets/favicon.svg",
+  // 论文目前仍是示例。替换完示例后可改为 false，隐藏页脚示例标记。
+  "demo": true,
+  // 个人资料：姓名、学校、头像、邮箱等。updated 是资料更新日期，可自行修改。
+  "profile": {
+    "name": {
+      "zh": "周轩羽",
+      "en": "Xuanyu Zhou",
+    },
+    "initials": "ZXY",
+    "romanized": "Xuanyu Zhou",
+    "handle": "@zzxy2006eee-cloud",
+    "avatar": "assets/images/avatar.png",
+    "role": {
+      "zh": "电子科技大学 · 2024 级本科生",
+      "en": "UESTC · Undergraduate, entered 2024",
+    },
+    "status": {
+      "zh": "欢迎交流与合作",
+      "en": "Open to ideas & collaboration",
+    },
+    "institution": {
+      "zh": "电子科技大学",
+      "en": "University of Electronic Science and Technology of China",
+    },
+    "lab": "",
+    "location": {
+      "zh": "中国",
+      "en": "China",
+    },
+    "email": "1285027656@qq.com",
+    "cvUrl": "",
+    "scholarUrl": "",
+    "orcidUrl": "",
+    "updated": "2026-11-12",
+    "nationality": {
+      "zh": "中国",
+      "en": "Chinese",
+    },
+  },
+  // 研究方向，按下面顺序显示。
+  "interests": [
+    {
+      "zh": "视觉感知",
+      "en": "Visual perception",
+    },
+    {
+      "zh": "导航与 SLAM",
+      "en": "Navigation & SLAM",
+    },
+    {
+      "zh": "4D 世界模型",
+      "en": "4D world models",
+    },
+  ],
+  // 专业技能。title 为空时不显示分组标题；items 中可以添加文字或双语对象。
+  "skills": [
+    {
+      "title": "",
+      "items": [
+        "Python",
+        "PyTorch",
+        "C++",
+        {
+          "zh": "英语四六级",
+          "en": "English · CET-4 & CET-6",
+        },
+      ],
+    },
+  ],
+  // 右侧“关于我”，每个对象对应一个段落。
+  "about": [
+    {
+      "zh": "你好，我是周轩羽，电子科技大学 2024 级本科生，来自中国。",
+      "en": "Hello, I am Xuanyu Zhou, an undergraduate at the University of Electronic Science and Technology of China (UESTC). I entered in 2024 and am from China.",
+    },
+    {
+      "zh": "我的研究兴趣包括视觉感知、导航与 SLAM，以及 4D 世界模型。",
+      "en": "My research interests include visual perception, navigation and SLAM, and 4D world models.",
+    },
+    {
+      "zh": "这里记录我的无人机导航与视觉、机器人感知与导航项目。欢迎通过 GitHub 或邮件交流。",
+      "en": "This homepage documents my drone navigation and vision work, as well as robot perception and navigation projects. Feel free to get in touch on GitHub or by email.",
+    },
+  ],
+  // 近况条：null 表示隐藏。需要时可参考 README 设置日期和文字。
+  "news": null,
+  // 教育背景。logo 为校徽路径，detail 为空时不显示校名下方的补充说明。
+  "education": [
+    {
+      "period": {
+        "zh": "2024 — 至今",
+        "en": "2024 — Present",
+      },
+      "school": {
+        "zh": "电子科技大学",
+        "en": "University of Electronic Science and Technology of China",
+      },
+      "degree": {
+        "zh": "本科",
+        "en": "Undergraduate",
+      },
+      "detail": "",
+      "logo": "assets/images/uestc-emblem.png",
+    },
+  ],
+  // 荣誉与奖项。按列表顺序展示；organization 为空时隐藏授予单位。
+  "awards": [
+    {
+      "title": {
+        "zh": "优秀学生一等奖学金",
+        "en": "First-Class Outstanding Student Scholarship",
+      },
+      "organization": "",
+      "year": "2024–2025",
+    },
+    {
+      "title": {
+        "zh": "优秀学生一等奖学金",
+        "en": "First-Class Outstanding Student Scholarship",
+      },
+      "organization": "",
+      "year": "2025–2026",
+    },
+    {
+      "title": {
+        "zh": "国家励志奖学金",
+        "en": "National Endeavor Scholarship",
+      },
+      "organization": "",
+      "year": "2025–2026",
+    },
+    {
+      "title": {
+        "zh": "Openhouse工程创新与设计金奖",
+        "en": "Openhouse Engineering Innovation and Design — Gold Award",
+      },
+      "organization": "",
+      "year": "2026",
+    },
+    {
+      "title": {
+        "zh": "中国机器人及人工智能大赛省级优秀奖",
+        "en": "China Robot and Artificial Intelligence Competition — Provincial Excellence Award",
+      },
+      "organization": "",
+      "year": "2026",
+    },
+  ],
+  // 论文成果：目前为示例，可替换或设为 []。每项 id 必须唯一。
+  "publications": [
+    {
+      "id": "interactive-learning",
+      "year": "2026",
+      "title": "Human-Centered Interfaces for Interactive Learning",
+      "authors": ["Your Name", "Ming Chen", "Yue Wang"],
+      "highlightAuthor": "Your Name",
+      "role": {
+        "zh": "共同一作",
+        "en": "Co-first author",
+      },
+      "status": {
+        "zh": "已接收",
+        "en": "Accepted",
+      },
+      "venue": {
+        "zh": "示例会议 · 2026",
+        "en": "Example conference · 2026",
+      },
+      "pdf": "",
+      "code": "",
+      "bibtex": "@inproceedings{example2026interactive,\n  title={Human-Centered Interfaces for Interactive Learning},\n  author={Your Name and Ming Chen and Yue Wang},\n  year={2026},\n  note={Example entry; replace before use}\n}",
+    },
+    {
+      "id": "knowledge-exploration",
+      "year": "2025",
+      "title": "Retrieval-Augmented Knowledge Exploration with Large Language Models",
+      "authors": ["Your Name", "Yue Wang"],
+      "highlightAuthor": "Your Name",
+      "role": "",
+      "status": {
+        "zh": "预印本",
+        "en": "Preprint",
+      },
+      "venue": {
+        "zh": "示例论文 · 2025",
+        "en": "Example paper · 2025",
+      },
+      "pdf": "",
+      "code": "",
+      "bibtex": "@misc{example2025retrieval,\n  title={Retrieval-Augmented Knowledge Exploration with Large Language Models},\n  author={Your Name and Yue Wang},\n  year={2025},\n  note={Example entry; replace before use}\n}",
+    },
+  ],
+  // 核心项目：title 标题、description 简介、cover 封面、repository 项目仓库完整网址。
+  // 留空的 research / role / outcome 不显示；details 是弹窗介绍。
+  "projects": [
+    {
+      "id": "drone-nav-and-vision",
+      "title": {
+        "zh": "无人机导航与视觉",
+        "en": "Drone Navigation & Vision",
+      },
+      "cover": "assets/images/drone-navigation.png",
+      "description": {
+        "zh": "基于 ROS、PX4 与 Gazebo 的四旋翼巡检、建图定位和导航仿真。",
+        "en": "A ROS, PX4, and Gazebo simulation workspace for quadrotor inspection, mapping, localization, and navigation.",
+      },
+      "research": {
+        "zh": "Faster-LIO 定位、A* 全局路线与 EGO 局部规划",
+        "en": "Faster-LIO localization, global A* routes, and EGO local planning",
+      },
+      "role": "",
+      "outcome": {
+        "zh": "Qt/RViz 操作台与区域巡检流程；处于仿真验证阶段",
+        "en": "Qt/RViz console and area-inspection workflow; simulation validation in progress",
+      },
+      "tags": ["ROS", "PX4", "SLAM", "EGO"],
+      "repository": "https://github.com/zzxy2006eee-cloud/drone-nav-and-vision",
+      "demo": "",
+      "details": {
+        "zh": "项目基于 ROS Noetic，集成 PX4 SITL、Gazebo Classic、MID360 仿真、Faster-LIO 定位以及 Qt/RViz 操作台，衔接全局 A* 路线与 EGO 局部规划。支持在线建图、加载地图、区域选择、巡检路线与相机关键帧记录。根据仓库说明，项目仍处于仿真验证阶段，新增巡检功能尚未完成飞行验收，实机验收也尚未完成。",
+        "en": "This ROS Noetic workspace integrates PX4 SITL, Gazebo Classic, simulated MID360 sensing, Faster-LIO localization, and a Qt/RViz console. It connects global A* routes with EGO local planning and includes online mapping, map loading, area selection, inspection routes, and camera keyframe recording. The repository describes ongoing simulation validation; flight acceptance for the new inspection functionality and real-hardware acceptance are still pending.",
+      },
+    },
+    {
+      "id": "robot-challenge",
+      "title": {
+        "zh": "机场清扫机器人",
+        "en": "Airport Sweeping Robot",
+      },
+      "cover": "assets/images/robot-perception.png",
+      "description": {
+        "zh": "结合四路相机环视感知、BEV 与自主导航的机器人清扫系统。",
+        "en": "A robotic sweeping system combining four-camera surround perception, BEV, and autonomous navigation.",
+      },
+      "research": {
+        "zh": "YOLO11-GAM 环视识别、BEV 定位与覆盖路径规划",
+        "en": "YOLO11-GAM surround detection, BEV localization, and coverage planning",
+      },
+      "role": "",
+      "outcome": {
+        "zh": "Jetson/J6M 双机架构、Qt 操作界面与导航清扫流程",
+        "en": "Jetson/J6M dual-host architecture, Qt interface, and navigation-assisted sweeping",
+      },
+      "tags": ["ROS", "BEV", "YOLO", "SLAM"],
+      "repository": "https://github.com/zzxy2006eee-cloud/robot_challenge",
+      "demo": "",
+      "details": {
+        "zh": "项目面向机场清扫车，采用 Jetson/J6M 双机架构。当前仓库版本将四路相机、YOLO11-GAM 检测、地面二维定位与 BEV、导航逐点清扫及区域覆盖流程集成到 Qt 操作界面，并结合激光定位与导航模块。项目包含复现、部署与实验记录；覆盖路线的离线验证不等同于完整实车跟踪验收，具体运行状态以仓库文档为准。",
+        "en": "This airport sweeping robot uses a Jetson/J6M dual-host architecture. The current repository integrates four cameras, YOLO11-GAM detection, ground-plane localization and BEV, navigation-assisted point cleaning, and area coverage in a Qt interface, alongside LiDAR localization and navigation modules. It includes reproduction, deployment, and experiment documentation. Offline coverage-route validation is distinct from complete on-vehicle tracking acceptance; consult the repository for current status.",
+      },
+    },
+  ],
+  // 可为已同步的上游项目填写自定义贡献说明，详见 README。
+  "contributionOverrides": {},
+  // 关于我下方的示例说明，null 表示隐藏。
+  "demoNote": null,
+  // 页脚示例说明，仅在 demo 为 true 时显示。
+  "demoLabel": {
+    "zh": "论文为示例",
+    "en": "Example publications",
+  },
+}

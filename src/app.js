@@ -1,4 +1,4 @@
-/* Content lives in data/site.json. This file only renders the interface. */
+/* Content lives in config.jsonc. This file only renders the interface. */
 (() => {
   "use strict";
   const data = window.SITE_DATA;
@@ -220,7 +220,8 @@
       side = document.getElementById("sidebar"),
       sideScroll = side.scrollTop;
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";
-    document.title = `${l(data.profile.name)} · ${w("个人学术主页", "Academic Homepage")}`;
+    document.title = l(data.title);
+    document.querySelector('meta[name="description"]').setAttribute("content", l(data.description));
     side.setAttribute("aria-label", w("个人信息", "Profile"));
     side.innerHTML = sidebar();
     document.getElementById("topbar").innerHTML = nav();
