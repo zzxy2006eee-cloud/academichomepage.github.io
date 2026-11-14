@@ -22,12 +22,18 @@ export function startServer({
     ".webp": "image/webp",
     ".ico": "image/x-icon",
     ".pdf": "application/pdf",
+    ".mp4": "video/mp4",
+    ".webm": "video/webm",
   };
   const server = http.createServer(async (req, res) => {
     try {
       const pathname = decodeURIComponent(new URL(req.url, "http://localhost").pathname);
       if (liveReload && pathname === "/__dev/version") {
-        const html = await readFile(path.join(root, "index.html"));
+        const page =
+          new URL(req.url, "http://localhost").searchParams.get("page") === "project.html"
+            ? "project.html"
+            : "index.html";
+        const html = await readFile(path.join(root, page));
         res.writeHead(200, { "Content-Type": "text/plain", "Cache-Control": "no-store" });
         res.end(version(html));
         return;
@@ -39,8 +45,8 @@ export function startServer({
       }
       if ((await stat(target)).isDirectory()) target = path.join(target, "index.html");
       let body = await readFile(target);
-      if (liveReload && path.basename(target) === "index.html") {
-        const reload = `<script>(()=>{const current=${JSON.stringify(version(body))};setInterval(async()=>{try{const r=await fetch('/__dev/version',{cache:'no-store'});if(r.ok&&(await r.text())!==current)location.reload();}catch{}},1000);})();</script>`;
+      if (liveReload && ["index.html", "project.html"].includes(path.basename(target))) {
+        const reload = `<script>(()=>{const current=${JSON.stringify(version(body))};setInterval(async()=>{try{const r=await fetch('/__dev/version?page=${path.basename(target)}',{cache:'no-store'});if(r.ok&&(await r.text())!==current)location.reload();}catch{}},1000);})();</script>`;
         body = Buffer.from(body.toString("utf8").replace("</body>", `${reload}</body>`));
       }
       res.writeHead(200, {

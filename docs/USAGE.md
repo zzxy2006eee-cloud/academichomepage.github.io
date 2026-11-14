@@ -56,6 +56,7 @@
 - [实习经历](#实习经历)
 - [论文成果](#论文成果)
 - [核心项目与封面图片](#核心项目与封面图片)
+- [独立项目介绍页](#独立项目介绍页)
 - [中英文切换](#中英文切换)
 - [GitHub 贡献与热力图](#github-贡献与热力图)
 - [导出 PDF 简历](#导出-pdf-简历)
@@ -257,7 +258,7 @@ node scripts/dev.mjs
 
 | 字段 | 页面位置 / 行为 |
 | --- | --- |
-| `id` | 唯一项目标识，用于打开正确的详情弹窗 |
+| `id` | 唯一项目标识，用于独立介绍页的链接；更改后旧链接将失效 |
 | `title` | 项目名称 |
 | `cover` | 封面图片的相对路径 |
 | `description` | 名称下面的一句话介绍 |
@@ -267,7 +268,8 @@ node scripts/dev.mjs
 | `tags` | 技术或研究方向标签列表 |
 | `repository` | **该项目**的 GitHub 仓库完整网址 |
 | `demo` | 在线演示地址；留空则隐藏 Demo 入口 |
-| `details` | “项目详情”弹窗中的详细介绍，按普通文本显示 |
+| `details` | 独立项目页的概览正文，按普通文本显示 |
+| `detailPage` | 独立项目页的流程图、硬件结构、视频和成果 |
 
 例如把新封面放到 `assets/images/my-project.png`，然后在对应项目里修改：
 
@@ -277,15 +279,63 @@ node scripts/dev.mjs
 "tags": ["LLM", "RAG", { "zh": "知识图谱", "en": "Knowledge graphs" }]
 ```
 
-封面支持 SVG、PNG、JPG、WebP。卡片展示区域比例约 `1.85:1`；页面与详情弹窗使用 `object-fit: contain`，完整展示设备，周围保留浅色留白。
+封面支持 SVG、PNG、JPG、WebP。主页卡片展示区域比例约 `1.85:1`；封面使用 `object-fit: contain`，完整展示设备，周围保留浅色留白。
 
 构建时会自动为头像、封面、配置脚本和样式等资源添加内容版本号；日常仍只需修改源文件，版本号无需手动维护。如果刚发布后仍看到旧内容，可按 `Ctrl + F5` 强制刷新页面入口（GitHub Pages 的入口 HTML 也可能暂时被缓存）。
 
-配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”仍打开本页弹窗。仓库留空时，封面和标题打开详情，仓库按钮禁用。
+配置项目 `repository` 后，**封面、标题和 GitHub 按钮**都会跳转到该仓库；“项目详情”进入独立介绍页。仓库留空时，封面和标题也进入独立介绍页，仓库按钮禁用。
 
 研究、职责、成果中某项不需要展示时，可将对应字段设为 `""`，页面将隐藏这一行。更换封面可以同名覆盖图片，也可以修改 `projects[].cover` 指向新图片。
 
 注意两个同名字段的区别：顶层 `repository` 是**主页自身的源码仓库**，支持 `用户名/仓库名` 或完整 GitHub HTTPS 网址；`projects[].repository` 是**每个展示项目的地址**，需要完整 `https://github.com/...`。顶层 `demo` 是布尔值，控制示例提示；项目里的 `demo` 是演示链接字符串。
+
+### 独立项目介绍页
+
+每个项目有单独的可分享地址：`project.html?id=项目的id`（例如 `project.html?id=my-project`）。页面仅介绍该项目，支持直接打开、刷新、中英文切换、章节导航以及返回主页；无需设置服务器路由。不存在的 ID 会显示“项目未找到”，不会误显示其他项目。
+
+首页和项目页共用 `projects[]` 中的名称、封面、简介、标签、`details` 概览与 `outcome` 成果。额外素材填写到对应项目的 `detailPage`：
+
+```jsonc
+"detailPage": {
+  "workflow": {
+    "image": "assets/images/my-project/workflow.png",
+    "description": { "zh": "技术流程说明", "en": "Technical workflow" }
+  },
+  "hardware": {
+    "image": "assets/images/my-project/hardware.png",
+    "description": { "zh": "硬件结构说明", "en": "Hardware architecture" }
+  },
+  "videos": [
+    {
+      "title": { "zh": "功能演示", "en": "Demonstration" },
+      "type": "file",
+      "url": "assets/videos/demo.mp4",
+      "poster": "assets/images/my-project/video-poster.png",
+      "description": { "zh": "演示场景与功能说明", "en": "Demonstrated scenario and features" }
+    },
+    {
+      "title": { "zh": "完整演示", "en": "Full demonstration" },
+      "type": "link",
+      "url": "https://www.bilibili.com/video/你的稿件编号/"
+    }
+  ],
+  "achievements": [
+    {
+      "title": { "zh": "成果或奖项名称", "en": "Achievement or award" },
+      "description": { "zh": "填写该项目的实际成果", "en": "Describe the actual project outcome" },
+      "image": "assets/images/my-project/award.png",
+      "url": "https://example.com/achievement"
+    }
+  ]
+}
+```
+
+- 图片、视频文件应先放入对应的 `assets/` 目录并提交，再填写路径；也支持 HTTP(S) 地址。本地媒体会在构建时自动附带内容版本号。
+- `type: "file"` 用于 MP4/WebM 文件，可在页内播放；`poster` 是可选的视频封面。大文件建议使用外部视频托管地址。
+- `type: "link"` 用于 B 站等平台的播放页面，点击后在新标签页观看，不会将网页地址误当成视频文件。
+- 所有模块允许留空：图片路径和说明用 `""`，视频和成果用 `[]`。页面显示“内容待补充”，不会生成虚构内容。成果不会自动从个人荣誉列表复制，需要填写与该项目有关的实际记录。
+- 页面骨架在 `src/project.html`，渲染逻辑在 `src/project.js`，样式在 `src/project.css`；后续设计项目页时修改这些文件即可。
+- 本地预览使用 `node scripts/dev.mjs`，项目页也支持保存后自动刷新。提交到 `main` 后，与主页一同通过 GitHub Pages 发布。
 
 ### 中英文切换
 

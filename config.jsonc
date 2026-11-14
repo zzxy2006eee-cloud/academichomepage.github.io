@@ -219,7 +219,8 @@
   // 简历导出：替换为真实论文后可设为 true；false 不影响主页论文栏。
   "resume": { "includePublications": false },
   // 核心项目：title 标题、description 简介、cover 封面、repository 项目仓库完整网址。
-  // 留空的 research / role / outcome 不显示；details 是弹窗介绍。
+  // 留空的 research / role / outcome 不显示；details 是独立项目页的概览。
+  // detailPage：workflow / hardware 配置 image 和双语 description；videos / achievements 示例见 docs/USAGE.md。
   "projects": [
     {
       "id": "drone-nav-and-vision",
@@ -244,6 +245,12 @@
       "tags": ["ROS", "PX4", "SLAM", "EGO"],
       "repository": "https://github.com/zzxy2006eee-cloud/drone-nav-and-vision",
       "demo": "",
+      "detailPage": {
+        "workflow": { "image": "", "description": { "zh": "", "en": "" } },
+        "hardware": { "image": "", "description": { "zh": "", "en": "" } },
+        "videos": [],
+        "achievements": [],
+      },
       "details": {
         "zh": "项目基于 ROS Noetic，集成 PX4 SITL、Gazebo Classic、MID360 仿真、Faster-LIO 定位以及 Qt/RViz 操作台，衔接全局 A* 路线与 EGO 局部规划。支持在线建图、加载地图、区域选择、巡检路线与相机关键帧记录。根据仓库说明，项目仍处于仿真验证阶段，新增巡检功能尚未完成飞行验收，实机验收也尚未完成。",
         "en": "This ROS Noetic workspace integrates PX4 SITL, Gazebo Classic, simulated MID360 sensing, Faster-LIO localization, and a Qt/RViz console. It connects global A* routes with EGO local planning and includes online mapping, map loading, area selection, inspection routes, and camera keyframe recording. The repository describes ongoing simulation validation; flight acceptance for the new inspection functionality and real-hardware acceptance are still pending.",
@@ -272,6 +279,12 @@
       "tags": ["ROS", "BEV", "YOLO", "SLAM"],
       "repository": "https://github.com/zzxy2006eee-cloud/robot_challenge",
       "demo": "",
+      "detailPage": {
+        "workflow": { "image": "", "description": { "zh": "", "en": "" } },
+        "hardware": { "image": "", "description": { "zh": "", "en": "" } },
+        "videos": [],
+        "achievements": [],
+      },
       "details": {
         "zh": "项目面向机场清扫车，采用 Jetson/J6M 双机架构。当前仓库版本将四路相机、YOLO11-GAM 检测、地面二维定位与 BEV、导航逐点清扫及区域覆盖流程集成到 Qt 操作界面，并结合激光定位与导航模块。项目包含复现、部署与实验记录；覆盖路线的离线验证不等同于完整实车跟踪验收，具体运行状态以仓库文档为准。",
         "en": "This airport sweeping robot uses a Jetson/J6M dual-host architecture. The current repository integrates four cameras, YOLO11-GAM detection, ground-plane localization and BEV, navigation-assisted point cleaning, and area coverage in a Qt interface, alongside LiDAR localization and navigation modules. It includes reproduction, deployment, and experiment documentation. Offline coverage-route validation is distinct from complete on-vehicle tracking acceptance; consult the repository for current status.",

@@ -25,7 +25,18 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
     const data = file === "site" ? site : github;
     if (file === "site") {
       data.profile.avatar = await versionedAsset(data.profile.avatar);
-      for (const project of data.projects) project.cover = await versionedAsset(project.cover);
+      for (const project of data.projects) {
+        project.cover = await versionedAsset(project.cover);
+        const page = project.detailPage;
+        if (!page) continue;
+        for (const block of [page.workflow, page.hardware, ...(page.achievements || [])]) {
+          if (block?.image) block.image = await versionedAsset(block.image);
+        }
+        for (const video of page.videos || []) {
+          if (video.poster) video.poster = await versionedAsset(video.poster);
+          if (video.type === "file" && video.url) video.url = await versionedAsset(video.url);
+        }
+      }
       for (const entry of data.education) {
         if (entry.logo) entry.logo = await versionedAsset(entry.logo);
       }
@@ -55,6 +66,15 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
   for (const file of ["src/styles.css", "data/site.js", "data/github.js", "src/app.js"]) {
     html = html.replaceAll(`"${file}"`, `"${await versionedAsset(file)}"`);
   }
+  let projectHtml = await readFile(path.join(root, "src/project.html"), "utf8");
+  projectHtml = projectHtml.replace(/\{\{(LANGUAGE|TITLE|DESCRIPTION|FAVICON)\}\}/g, (_, key) =>
+    escapeHtml(metadata[key]),
+  );
+  for (const file of ["src/project.css", "data/site.js", "src/project.js"]) {
+    projectHtml = projectHtml.replaceAll(`"${file}"`, `"${await versionedAsset(file)}"`);
+  }
+  await writeFile(path.join(dist, "project.html.tmp"), projectHtml);
+  await rename(path.join(dist, "project.html.tmp"), path.join(dist, "project.html"));
   // Publish the entry point last so live reload never sees a partial template.
   await writeFile(path.join(dist, "index.html.tmp"), html);
   await rename(path.join(dist, "index.html.tmp"), path.join(dist, "index.html"));

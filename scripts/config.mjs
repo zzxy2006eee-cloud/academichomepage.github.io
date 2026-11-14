@@ -97,6 +97,38 @@ export function normalizeConfig(input) {
       fail(`internships[${index}].company`, "请填写公司或机构名称。");
   }
   site.defaultLanguage ??= "zh";
+  for (const [index, project] of site.projects.entries()) {
+    const page = project.detailPage;
+    if (page === undefined) continue;
+    const prefix = `projects[${index}].detailPage`;
+    const object = (value, field) => {
+      if (!value || typeof value !== "object" || Array.isArray(value))
+        fail(field, "必须是 {} 对象。");
+    };
+    const media = (value, field) => {
+      if (value !== undefined && typeof value !== "string")
+        fail(field, "请填写相对文件路径或完整网址。");
+      if (value && /^[a-z][a-z\d+.-]*:/i.test(value) && !/^https?:\/\//i.test(value))
+        fail(field, "仅支持本项目相对路径或 HTTP(S) 网址。");
+    };
+    object(page, prefix);
+    for (const key of ["workflow", "hardware"]) {
+      if (page[key] === undefined) continue;
+      object(page[key], `${prefix}.${key}`);
+      media(page[key].image, `${prefix}.${key}.image`);
+    }
+    for (const key of ["videos", "achievements"]) {
+      page[key] ??= [];
+      if (!Array.isArray(page[key])) fail(`${prefix}.${key}`, "必须是列表 []。");
+      for (const [itemIndex, item] of page[key].entries()) {
+        const field = `${prefix}.${key}[${itemIndex}]`;
+        object(item, field);
+        for (const name of ["image", "poster", "url"]) media(item[name], `${field}.${name}`);
+        if (key === "videos" && !["file", "link"].includes(item.type))
+          fail(`${field}.type`, '请填写 "file"（MP4/WebM）或 "link"（视频平台链接）。');
+      }
+    }
+  }
   if (!["zh", "en"].includes(site.defaultLanguage))
     fail("defaultLanguage", '只能填写 "zh" 或 "en"。');
   if (

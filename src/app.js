@@ -156,11 +156,12 @@
       )
       .join("");
   }
+  const projectUrl = (project) => `project.html?id=${encodeURIComponent(project.id)}`;
   function projects() {
     return `<div class="project-grid">${data.projects
       .map(
         (x) =>
-          `<article class="project">${x.repository ? link(x.repository, `<img class="project-cover" src="${esc(x.cover)}" alt="${esc(l(x.title))}" loading="lazy" width="600" height="324">`, "cover-link") : `<button class="cover-link" data-project="${esc(x.id)}" aria-label="${esc(l(x.title))}"><img class="project-cover" src="${esc(x.cover)}" alt="${esc(l(x.title))}" loading="lazy" width="600" height="324"></button>`}<div class="project-body"><h3>${x.repository ? link(x.repository, esc(l(x.title))) : `<button data-project="${esc(x.id)}">${esc(l(x.title))}</button>`}</h3><p class="project-description">${esc(l(x.description))}</p><dl class="project-facts">${[
+          `<article class="project">${x.repository ? link(x.repository, `<img class="project-cover" src="${esc(x.cover)}" alt="${esc(l(x.title))}" loading="lazy" width="600" height="324">`, "cover-link") : `<a class="cover-link" href="${esc(projectUrl(x))}" aria-label="${esc(l(x.title))}"><img class="project-cover" src="${esc(x.cover)}" alt="${esc(l(x.title))}" loading="lazy" width="600" height="324"></a>`}<div class="project-body"><h3>${x.repository ? link(x.repository, esc(l(x.title))) : `<a href="${esc(projectUrl(x))}">${esc(l(x.title))}</a>`}</h3><p class="project-description">${esc(l(x.description))}</p><dl class="project-facts">${[
             ["research", "研究", "Research"],
             ["role", "职责", "Role"],
             ["outcome", "成果", "Outcome"],
@@ -169,7 +170,7 @@
             .map(([key, zh, en]) => `<div><dt>${w(zh, en)}</dt><dd>${esc(l(x[key]))}</dd></div>`)
             .join(
               "",
-            )}</dl><div class="tags">${x.tags.map((t) => `<span>${esc(l(t))}</span>`).join("")}</div><div class="project-links">${x.repository ? link(x.repository, `${icon("github")} GitHub ↗`) : `<button class="text-button" disabled title="${w("请在配置中填写仓库地址", "Add a repository URL in the configuration")}">${icon("github")} ${w("仓库待配置", "Repository pending")}</button>`}<button class="text-button" data-project="${esc(x.id)}">${w("项目详情", "Details")} ↗</button>${x.demo ? link(x.demo, "Demo ↗") : ""}</div></div></article>`,
+            )}</dl><div class="tags">${x.tags.map((t) => `<span>${esc(l(t))}</span>`).join("")}</div><div class="project-links">${x.repository ? link(x.repository, `${icon("github")} GitHub ↗`) : `<button class="text-button" disabled title="${w("请在配置中填写仓库地址", "Add a repository URL in the configuration")}">${icon("github")} ${w("仓库待配置", "Repository pending")}</button>`}<a class="text-button" href="${esc(projectUrl(x))}">${w("项目详情", "Details")} ↗</a>${x.demo ? link(x.demo, "Demo ↗") : ""}</div></div></article>`,
       )
       .join("")}</div>`;
   }
@@ -331,21 +332,6 @@
       });
       history.replaceState(null, "", `#${target.id}`);
       setActive(target.id);
-      return;
-    }
-    const project = e.target.closest("[data-project]");
-    if (project) {
-      const p = data.projects.find((p) => p.id === project.dataset.project);
-      openDialog(
-        `<img class="details-cover" src="${esc(p.cover)}" alt=""><h2>${esc(l(p.title))}</h2><p>${esc(l(p.details))}</p><dl class="project-facts">${[
-          ["research", "研究内容", "Research"],
-          ["role", "我的职责", "My role"],
-          ["outcome", "项目成果", "Outcome"],
-        ]
-          .filter(([k]) => l(p[k]))
-          .map(([k, z, en]) => `<div><dt>${w(z, en)}</dt><dd>${esc(l(p[k]))}</dd></div>`)
-          .join("")}</dl>${p.repository ? link(p.repository, `${icon("github")} GitHub ↗`) : ""}`,
-      );
       return;
     }
     const bib = e.target.closest("[data-bibtex]");

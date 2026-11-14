@@ -26,6 +26,8 @@
 
 双语文字使用 `{ "zh": "中文内容", "en": "English content" }`，需要分别维护。图片放入 [`assets/images/`](assets/images/)，再修改头像或项目的图片路径；配色和间距在 [`src/styles.css`](src/styles.css) 中调整。
 
+“项目详情”打开该项目的独立介绍页；流程图、硬件结构、演示视频及成果在 `projects[].detailPage` 中配置，见[详细说明](docs/USAGE.md#独立项目介绍页)。
+
 ## 本地预览
 
 安装 **Node.js 20+**，在项目目录运行，无需安装依赖：

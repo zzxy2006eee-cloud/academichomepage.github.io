@@ -24,6 +24,11 @@ for (const key of ["projects", "publications"])
     site[key].length,
     `${key} IDs must be unique`,
   );
+for (const project of site.projects)
+  assert.ok(
+    typeof project.id === "string" && project.id.trim(),
+    "Each project needs an ID for its detail-page link",
+  );
 const github = await loadGitHubSnapshot(site);
 assert.equal(
   github.username.toLowerCase(),
@@ -56,6 +61,7 @@ for (const p of github.mergedPRs) {
 }
 for (const file of [
   "src/app.js",
+  "src/project.js",
   "scripts/build.mjs",
   "scripts/serve.mjs",
   "scripts/sync-github.mjs",

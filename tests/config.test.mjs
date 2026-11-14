@@ -121,6 +121,8 @@ test("dev watches atomic config saves, retains the last page on invalid JSON, an
     const url = `http://127.0.0.1:${port}`;
     await waitFor(() => fetch(url).then((r) => r.ok), "dev server startup");
     const initialVersion = await (await fetch(url + "/__dev/version")).text();
+    const initialProjectVersion = await (await fetch(url + "/__dev/version?page=project.html")).text();
+    assert.match(await (await fetch(url + "/project.html?id=test")).text(), /location\.reload\(\)/);
     assert.match(await (await fetch(url)).text(), /location\.reload\(\)/);
     const filename = path.join(root, "config.jsonc");
     const config = await loadSiteConfig(filename);
@@ -131,6 +133,7 @@ test("dev watches atomic config saves, retains the last page on invalid JSON, an
     await rename(filename + ".tmp", filename);
     await waitFor(async () => (await (await fetch(url)).text()).includes("<title>Saved title</title>"), "saved configuration rebuild");
     assert.notEqual(await (await fetch(url + "/__dev/version")).text(), initialVersion);
+    assert.notEqual(await (await fetch(url + "/__dev/version?page=project.html")).text(), initialProjectVersion);
     await writeFile(filename, '{"title":');
     await waitFor(() => output.includes("构建失败"), "configuration error reporting");
     assert.match(await (await fetch(url)).text(), /<title>Saved title<\/title>/);
@@ -140,4 +143,59 @@ test("dev watches atomic config saves, retains the last page on invalid JSON, an
   } finally {
     if (child.exitCode === null) { child.kill(); await once(child, "exit"); }
   }
+});
+
+test("standalone project pages publish and version configured media with static hosting", async (t) => {
+  const root = await fixture(t);
+  const filename = path.join(root, "config.jsonc");
+  const config = await loadSiteConfig(filename);
+  await writeFile(path.join(root, "assets/flow.svg"), '<svg xmlns="http://www.w3.org/2000/svg"/>');
+  // The HTTP fixture verifies media delivery, not video decoding.
+  await writeFile(path.join(root, "assets/demo.mp4"), Buffer.from([0, 0, 0, 24]));
+  config.projects[0].detailPage = {
+    workflow: { image: "assets/flow.svg", description: { zh: "流程说明", en: "Workflow" } },
+    hardware: { image: "https://example.com/hardware.png" },
+    videos: [
+      { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg" },
+      { type: "link", url: "https://example.com/watch" },
+    ],
+    achievements: [{ title: "Outcome", image: "assets/flow.svg" }],
+  };
+  await writeFile(filename, JSON.stringify(config));
+  const built = await buildSite(root);
+  const page = built.site.projects[0].detailPage;
+  assert.match(page.workflow.image, /^assets\/flow.svg\?v=[a-f\d]+$/);
+  assert.match(page.videos[0].url, /^assets\/demo.mp4\?v=[a-f\d]+$/);
+  assert.equal(page.videos[0].poster, page.workflow.image);
+  assert.equal(page.achievements[0].image, page.workflow.image);
+  assert.equal(page.hardware.image, "https://example.com/hardware.png");
+  const server = startServer({ directory: path.join(root, "dist"), port: 0 });
+  await once(server, "listening");
+  try {
+    const origin = `http://127.0.0.1:${server.address().port}`;
+    const response = await fetch(`${origin}/project.html?id=${encodeURIComponent(config.projects[0].id)}`);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, /src\/project.js\?v=[a-f\d]+/);
+    assert.match(html, /src\/project.css\?v=[a-f\d]+/);
+    assert.doesNotMatch(html, /\{\{TITLE\}\}|__dev\/version/);
+    for (const match of html.matchAll(/(?:src|href)="([^"#]+)"/g)) {
+      assert.equal((await fetch(new URL(match[1], origin))).status, 200, match[1]);
+    }
+    const video = await fetch(`${origin}/${page.videos[0].url}`);
+    assert.equal(video.headers.get("content-type"), "video/mp4");
+    assert.equal((await video.arrayBuffer()).byteLength, 4);
+  } finally {
+    server.closeAllConnections();
+    await new Promise(resolve => server.close(resolve));
+  }
+  const oldVersion = page.workflow.image;
+  await writeFile(path.join(root, "assets/flow.svg"), '<svg xmlns="http://www.w3.org/2000/svg"><title>Changed</title></svg>');
+  assert.notEqual((await buildSite(root)).site.projects[0].detailPage.workflow.image, oldVersion);
+  config.projects[0].detailPage.videos[0].type = "iframe";
+  assert.throws(() => normalizeConfig(config), /detailPage.videos\[0\].type/);
+  config.projects[0].detailPage.videos = [];
+  config.projects[0].detailPage.workflow.image = "assets/missing.png";
+  await writeFile(filename, JSON.stringify(config));
+  await assert.rejects(buildSite(root), /ENOENT/);
 });
