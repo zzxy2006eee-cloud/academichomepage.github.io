@@ -156,7 +156,7 @@
       )
       .join("");
   }
-  const projectUrl = (project) => `project.html?id=${encodeURIComponent(project.id)}`;
+  const projectUrl = (project) => `project.html#${encodeURIComponent(project.id)}`;
   function projects() {
     return `<div class="project-grid">${data.projects
       .map(

@@ -13,7 +13,21 @@
   <body>
     <a class="skip" href="#project-content">跳至项目内容 / Skip to project</a>
     <header id="project-nav" class="page-nav"></header>
-    <main id="project-content" tabindex="-1"></main>
+    <div class="portfolio-layout">
+      <aside id="project-directory" class="project-directory"></aside>
+      <main id="project-content" tabindex="-1"></main>
+    </div>
+    <dialog id="image-viewer" aria-labelledby="viewer-title">
+      <div class="viewer-toolbar">
+        <span id="viewer-title"></span>
+        <div>
+          <button id="viewer-zoom" type="button">100%</button
+          ><a id="viewer-original" target="_blank" rel="noopener noreferrer"></a
+          ><button id="viewer-close" type="button">×</button>
+        </div>
+      </div>
+      <div class="viewer-stage"><img id="viewer-image" alt="" /></div>
+    </dialog>
     <noscript>请启用 JavaScript 查看项目介绍。Please enable JavaScript.</noscript>
   </body>
 </html>
