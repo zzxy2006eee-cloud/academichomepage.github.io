@@ -39,7 +39,11 @@
   const section = (id, title, body) =>
     `<section id="${id}" class="detail-section"><h2>${esc(title)}</h2>${body || empty()}</section>`;
   function visual(block = {}) {
-    return image(block.image, l(block.description)) + paragraph(block.description);
+    const source = url(block.image);
+    const preview = source
+      ? `<a href="${esc(source)}" target="_blank" rel="noopener noreferrer" aria-label="${w("打开高清原图", "Open full-size image")}">${image(block.image, l(block.description))}</a><p>${anchor(source, w("查看高清原图", "View full-size image"))}</p>`
+      : "";
+    return preview + paragraph(block.description);
   }
   function render() {
     document.documentElement.lang = lang === "zh" ? "zh-CN" : "en";

@@ -1,0 +1,168 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1600" viewBox="0 0 2400 1600">
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8 Z" fill="#48525e"/></marker>
+<marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8 Z" fill="#547e9a"/></marker>
+<style>text{font-family:'Microsoft YaHei','Segoe UI',sans-serif;fill:#26333c}.node-title{font-weight:700;font-size:29px}.body{font-size:24px;fill:#4d5c67}.tiny{font-size:21px;fill:#60717b}</style>
+</defs>
+<rect x="0" y="0" width="2400" height="1600" rx="0" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<rect x="20" y="20" width="2360" height="1560" rx="24" fill="#fffefa" stroke="#d9d9cd" stroke-width="1.7"/>
+<text x="60" y="84" font-size="46" font-weight="700" text-anchor="start" style="fill:#26333c">四旋翼无人机 · 自主导航与视觉识别</text>
+<text x="62" y="128" font-size="22" font-weight="400" text-anchor="start" style="fill:#71828d">系统技术流程  /  QUADROTOR NAVIGATION &amp; VISUAL INSPECTION</text>
+<rect x="1974" y="59" width="364" height="49" rx="24" fill="#edf2f6" stroke="#c8d4dc" stroke-width="1.7"/>
+<text x="2156" y="91" font-size="22" font-weight="600" text-anchor="middle" style="fill:#4c6c83">ROS Noetic · PX4 · Gazebo</text>
+<rect x="60" y="167" width="2280" height="154" rx="20" fill="#f9f4de" stroke="#c8c2ab" stroke-width="1.7"/>
+<text x="87" y="209" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">Qt / RViz 操作台</text>
+<text x="87" y="250" font-size="23" font-weight="400" text-anchor="start" style="fill:#626659">地图预览 · 初始位姿 · 任务授权</text>
+<text x="87" y="285" font-size="23" font-weight="400" text-anchor="start" style="fill:#626659">状态 / 轨迹 / 相机 / 异常可视化</text>
+<rect x="600" y="191" width="450" height="105" rx="14" fill="#e5edcf" stroke="#9caab1" stroke-width="1.7"/>
+<text x="825.0" y="237" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">目标点 / 区域巡检</text>
+<text x="825.0" y="274" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">点队列 · 选区 · 条带路线</text>
+<rect x="1100" y="191" width="570" height="105" rx="14" fill="#e4edf3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1385.0" y="237" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">地图模式</text>
+<text x="1385.0" y="274" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">在线建图  /  预建 .dmap + 初始对齐</text>
+<rect x="1720" y="188" width="590" height="111" rx="14" fill="#f4e5ed" stroke="#b494a4" stroke-width="1.7" stroke-dasharray="7 5"/>
+<text x="2015" y="229" font-size="27" font-weight="700" text-anchor="middle" style="fill:#26333c">可选 AI 文本入口</text>
+<text x="2015" y="269" font-size="22" font-weight="400" text-anchor="middle" style="fill:#765b69">DeepSeek 解析 → 本地校验 → 显式授权</text>
+<path d="M 825,296 L 825,350 L 1218,350 L 1218,576 L 1265,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1016.0" y="326" width="272" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1152" y="345" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">飞行管理器受理后派发任务</text>
+<path d="M 2015,299 L 2015,350 L 1218,350" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7"/>
+<rect x="60" y="393" width="520" height="710" rx="22" fill="#f0f5ec" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="80" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="102" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">01</text>
+<text x="142" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">多源感知</text>
+<text x="142" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">SENSING &amp; PREPROCESSING</text>
+<rect x="650" y="393" width="520" height="710" rx="22" fill="#edf3f8" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="670" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="692" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">02</text>
+<text x="732" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">定位与共享地图</text>
+<text x="732" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">STATE ESTIMATION &amp; MAPPING</text>
+<rect x="1240" y="393" width="520" height="710" rx="22" fill="#fcf6dc" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="1260" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="1282" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">03</text>
+<text x="1322" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">任务与轨迹规划</text>
+<text x="1322" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">MISSION &amp; MOTION PLANNING</text>
+<rect x="1830" y="393" width="520" height="710" rx="22" fill="#fbebea" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="1850" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="1872" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">04</text>
+<text x="1912" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">安全审核与飞行</text>
+<text x="1912" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">SAFETY &amp; FLIGHT EXECUTION</text>
+<rect x="85" y="510" width="470" height="132" rx="14" fill="#dceacb" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">MID360 + 雷达 IMU</text>
+<text x="320.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">原生扫描 · 惯性测量</text>
+<text x="320.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">Gazebo 仿真传感器</text>
+<rect x="85" y="720" width="470" height="132" rx="14" fill="#d7e7c6" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">C++ Livox 数据适配</text>
+<text x="320.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">扫描时间 · 点格式转换</text>
+<text x="320.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">/livox/lidar  +  /livox/imu</text>
+<rect x="85" y="946" width="470" height="116" rx="14" fill="#e7efdc" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">建图射线证据</text>
+<text x="320.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">命中点 / 明确无返回射线</text>
+<rect x="675" y="510" width="470" height="132" rx="14" fill="#d5e6f3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">Faster-LIO</text>
+<text x="910.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">去畸变 · IMU 传播 · 点云匹配</text>
+<text x="910.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">内部点地图 / iVox → 里程计</text>
+<rect x="675" y="720" width="470" height="132" rx="14" fill="#d5e6f3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">LIO 桥接与坐标对齐</text>
+<text x="910.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">外参换算 → 机体位姿</text>
+<text x="910.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">扫描时刻对齐到 FCU 控制系</text>
+<rect x="685" y="956" width="470" height="116" rx="14" fill="#cbdfea" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="680" y="951" width="470" height="116" rx="14" fill="#cbdfea" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="675" y="946" width="470" height="116" rx="14" fill="#cbdfea" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">共享三维规划地图</text>
+<text x="910.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">占据 · 空闲 · 膨胀 · 增量更新</text>
+<rect x="1265" y="510" width="470" height="132" rx="14" fill="#f3e8ab" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">任务参考生成</text>
+<text x="1500.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">点到点 / 连续目标队列</text>
+<text x="1500.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">巡检区域 → 条带与转场路线</text>
+<rect x="1265" y="720" width="470" height="132" rx="14" fill="#f4df8d" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">全局 A* + 路线平滑</text>
+<text x="1500.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">安全全局参考路径</text>
+<text x="1500.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">区域巡检参考按窗口滚动提交</text>
+<rect x="1275" y="956" width="470" height="116" rx="14" fill="#f3d985" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="1270" y="951" width="470" height="116" rx="14" fill="#f3d985" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="1265" y="946" width="470" height="116" rx="14" fill="#f3d985" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">EGO 局部规划</text>
+<text x="1500.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">B 样条优化 · 滚动重规划</text>
+<rect x="1855" y="510" width="460" height="132" rx="14" fill="#edc6cd" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">轨迹安全审核</text>
+<text x="2085.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">连续曲线碰撞 / 已观测空间</text>
+<text x="2085.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">地图新鲜度 · 边界检查</text>
+<rect x="1855" y="720" width="460" height="132" rx="14" fill="#edb8c3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">飞行管理器</text>
+<text x="2085.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">目标队列 · 航向 · 终点收敛</text>
+<text x="2085.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">健康保护：HOLD / 降落</text>
+<rect x="1855" y="946" width="460" height="116" rx="14" fill="#dcd2ef" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">MAVROS / PX4 / Gazebo</text>
+<text x="2085.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">EKF + 飞控 IMU · OFFBOARD 执行</text>
+<path d="M 320,642 L 320,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 320,852 L 320,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 555,786 L 612,786 L 612,576 L 675,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="551.08" y="678" width="121.84" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="612" y="695" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">点云 + IMU</text>
+<path d="M 910,642 L 910,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="844.98" y="672" width="130.04000000000002" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="910" y="691" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">LIO 里程计</text>
+<path d="M 910,852 L 910,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="816.0" y="889" width="188" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="910" y="908" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">对齐后的空间观测</text>
+<path d="M 555,1004 L 675,1004" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1155,1023 L 1202,1023 L 1202,786 L 1265,786" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1202,1004 L 1265,1004" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1154.0" y="885" width="96" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1202" y="902" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">体素地图</text>
+<path d="M 1500,642 L 1500,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1500,852 L 1500,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1427.0" y="888" width="146" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1500" y="907" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">全局参考路线</text>
+<path d="M 1745,1004 L 1797,1004 L 1797,576 L 1855,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1749.0" y="878" width="96" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1797" y="895" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">候选轨迹</text>
+<path d="M 2085,642 L 2085,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="2001.5" y="672" width="167" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="2085" y="691" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">批准执行的轨迹</text>
+<path d="M 2085,852 L 2085,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1959.08" y="889" width="251.83999999999997" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="2085" y="908" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">位置 / 速度前馈 / yaw</text>
+<path d="M 1145,818 L 1180,818" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<rect x="1160" y="830" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7594a9" stroke-width="1.7"/>
+<text x="1191" y="854" font-size="20" font-weight="700" text-anchor="middle" style="fill:#547e9a">P1</text>
+<rect x="2250" y="900" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7594a9" stroke-width="1.7"/>
+<text x="2281" y="924" font-size="20" font-weight="700" text-anchor="middle" style="fill:#547e9a">P1</text>
+<path d="M 2281,934 L 2281,946" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<path d="M 2085,1062 L 2085,1140 L 910,1140 L 910,1072" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#blue)"/>
+<path d="M 1500,1140 L 1500,1072" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#blue)"/>
+<rect x="1260.56" y="1112" width="438.88" height="32" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1480" y="1132" font-size="22" font-weight="400" text-anchor="middle" style="fill:#547e9a">FCU 位姿 / 速度反馈 → 地图对齐与规划</text>
+<path d="M 2315,1000 L 2360,1000 L 2360,1198 L 40,1198 L 40,576 L 85,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#arrow)"/>
+<rect x="945.24" y="1170" width="529.52" height="32" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1210" y="1190" font-size="22" font-weight="400" text-anchor="middle" style="fill:#60717b">仿真闭环：飞行动力学 → 雷达 / IMU / 相机观测</text>
+<rect x="60" y="1245" width="2280" height="273" rx="20" fill="#f4f0f8" stroke="#b4abbf" stroke-width="1.7" stroke-dasharray="7 6"/>
+<text x="85" y="1286" font-size="29" font-weight="700" text-anchor="start" style="fill:#26333c">视觉感知与巡检记录</text>
+<text x="410" y="1286" font-size="17" font-weight="400" text-anchor="start" style="fill:#81718b">VISUAL INSPECTION &amp; RECORDING</text>
+<rect x="85" y="1340" width="470" height="120" rx="14" fill="#e1d7ec" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="1386" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">前视 / 下视相机</text>
+<text x="320.0" y="1423" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">图像 + CameraInfo</text>
+<rect x="675" y="1310" width="470" height="85" rx="14" fill="#efcede" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="1342" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">楼道堆砌杂物识别</text>
+<text x="910.0" y="1379" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">YOLOv8 · 目标框与类别</text>
+<rect x="675" y="1415" width="470" height="85" rx="14" fill="#d8e7d7" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="1447" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">下视覆盖与关键帧</text>
+<text x="910.0" y="1484" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">按采集时刻匹配 FCU 位姿</text>
+<rect x="1265" y="1340" width="470" height="120" rx="14" fill="#e8dff1" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="1386" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">巡检记录与任务统计</text>
+<text x="1500.0" y="1423" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">图像 · 实际轨迹 · 覆盖 · 异常</text>
+<rect x="1855" y="1340" width="460" height="120" rx="14" fill="#e1d7ec" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="1386" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">Qt / RViz 展示与存档</text>
+<text x="2085.0" y="1423" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">可视化回看 · 实验记录</text>
+<path d="M 555,1400 L 610,1400 L 610,1355 L 675,1355" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 610,1400 L 610,1460 L 675,1460" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1145,1355 L 1180,1355 L 1180,1318 L 2085,1318 L 2085,1340" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1145,1460 L 1200,1460 L 1200,1400 L 1265,1400" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1735,1400 L 1855,1400" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 65,1561 L 117,1561" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="133" y="1568" font-size="20" font-weight="400" text-anchor="start" style="fill:#60717b">数据 / 任务流</text>
+<path d="M 325,1561 L 377,1561" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#blue)"/>
+<text x="393" y="1568" font-size="20" font-weight="400" text-anchor="start" style="fill:#60717b">状态反馈</text>
+<text x="615" y="1568" font-size="20" font-weight="400" text-anchor="start" style="fill:#60717b">P1：LIO 外部位姿 → PX4 EKF（不融合外部速度）</text>
+</svg>

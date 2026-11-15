@@ -246,7 +246,13 @@
       "repository": "https://github.com/zzxy2006eee-cloud/drone-nav-and-vision",
       "demo": "",
       "detailPage": {
-        "workflow": { "image": "", "description": { "zh": "", "en": "" } },
+        "workflow": {
+          "image": "assets/images/drone-workflow.svg",
+          "description": {
+            "zh": "四旋翼无人机技术架构：多源感知、定位与共享地图、任务与轨迹规划、安全飞行执行，以及基于 YOLOv8 的楼道堆砌杂物识别。",
+            "en": "Quadrotor architecture: multi-sensor perception, localization and shared mapping, mission and trajectory planning, safe flight execution, and YOLOv8-based detection of clutter piled in corridors.",
+          },
+        },
         "hardware": { "image": "", "description": { "zh": "", "en": "" } },
         "videos": [],
         "achievements": [],
