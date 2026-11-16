@@ -140,6 +140,12 @@ export function normalizeConfig(input) {
         for (const name of ["image", "poster", "url"]) media(item[name], `${field}.${name}`);
         if (key === "videos" && !["file", "link"].includes(item.type))
           fail(`${field}.type`, '请填写 "file"（MP4/WebM）或 "link"（视频平台链接）。');
+        if (
+          key === "videos" &&
+          item.display !== undefined &&
+          !["dual", "qt-only"].includes(item.display)
+        )
+          fail(`${field}.display`, '请填写 "dual"（双端）或 "qt-only"（仅 Qt 界面）。');
         if (key === "videos" && item.qt !== undefined) {
           object(item.qt, `${field}.qt`);
           for (const name of ["url", "poster"]) media(item.qt[name], `${field}.qt.${name}`);

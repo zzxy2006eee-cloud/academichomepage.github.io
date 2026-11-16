@@ -43,9 +43,9 @@
     project?.detailPage?.layout === "showcase"
       ? [
           ["overview", w("项目概览", "Overview")],
-          ["videos", w("功能演示", "Demos")],
           ["workflow", w("系统架构", "Architecture")],
           ["hardware", w("整车结构", "Hardware")],
+          ["videos", w("功能演示", "Demos")],
           ["achievements", w("成果与实践", "Outcomes")],
         ]
       : [
@@ -99,6 +99,8 @@
   function demoStage(project, index) {
     const item = project.detailPage.videos?.[index];
     if (!item) return blankMedia(w("演示资料待补充", "Demo coming soon"));
+    if (item.display === "qt-only")
+      return `<div class="demo-single"><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}</div><div class="demo-screen">${demoMedia(item.qt, l(item.title))}</div>${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div>`;
     return `<div class="demo-primary"><div class="demo-view-label">${w("实物端", "Physical view")}</div><div class="demo-screen">${demoMedia(item, `${l(item.title)} · ${w("实物端", "Physical view")}`)}</div>${url(item.url) ? link(item.url, w("打开实物端视频", "Open physical video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}<div class="qt-demo"><div class="demo-view-label">${w("Qt 端", "Qt interface")}</div>${demoMedia(item.qt, `${l(item.title)} · Qt`)}${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div></div>`;
   }
   function hardwareDetail(project, index) {
@@ -129,7 +131,7 @@
       .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${text}</a>`)
       .join(
         "",
-      )}</nav>${projectBlock(project, "overview", paragraph(page.intro || project.description))}${projectBlock(project, "videos", demos)}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description))}${projectBlock(project, "hardware", hardware)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
+      )}</nav>${projectBlock(project, "overview", paragraph(page.intro || project.description))}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description))}${projectBlock(project, "hardware", hardware)}${projectBlock(project, "videos", demos)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
   }
   let activeId = "",
     scrollLock = "",

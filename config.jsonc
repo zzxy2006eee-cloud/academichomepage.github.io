@@ -472,6 +472,7 @@
           },
           {
             "id": "qt-interface",
+            "display": "qt-only",
             "title": {
               "zh": "Qt界面展示",
               "en": "Qt Interface",
