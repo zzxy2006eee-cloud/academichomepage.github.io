@@ -339,6 +339,24 @@ node scripts/dev.mjs
 - 页面骨架在 `src/project.html`，渲染逻辑在 `src/project.js`，样式在 `src/project.css`；后续设计项目页时修改这些文件即可。
 - 本地预览使用 `node scripts/dev.mjs`，项目页也支持保存后自动刷新。提交到 `main` 后，与主页一同通过 GitHub Pages 发布。
 
+#### 可切换演示的项目布局
+
+在对应项目的 `detailPage` 中设置 `"layout": "showcase"`，启用主演示窗口、场景缩略图、感知对照图与硬件部件切换。省略此项的项目保持原布局。
+
+| 配置位置（均位于 `detailPage`） | 修改内容 |
+| --- | --- |
+| `intro.zh / en` | 展示页概览；不改变主页简介或 PDF 简历 |
+| `videos[]` | 每个条目对应一个场景；填写 `title`、`description`、`type`、`url`、`poster` |
+| `perception[]` | 感知与规划对照卡片，字段为 `title`、`image`、`description` |
+| `workflow.image` | 系统架构 SVG 或图片，点击可放大 |
+| `hardware.image` | 整车图片 |
+| `hardware.parts[]` | 可切换的部件资料，字段为 `title`、`image`、`description` |
+| `achievements[]` | 项目成果、证书或个人贡献，字段同上，另可填写 `url` |
+
+标题与说明支持 `{ "zh": "中文", "en": "English" }`。没有的素材保留空字符串 `""`，页面显示黑色占位和“待补充”；视频地址为空时不会显示虚假的播放按钮。填写真实路径后自动替换占位，无需修改页面代码。删除列表条目即可移除对应的场景或卡片。
+
+视频切换会暂停旧视频，新视频由访客点击播放；切换语言会保留所选场景。`type: "link"` 的外部平台视频以新标签页打开。
+
 ### 中英文切换
 
 - `defaultLanguage` 决定首次访问的默认语言，填写 `"zh"` 或 `"en"`。

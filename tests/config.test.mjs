@@ -153,11 +153,14 @@ test("standalone project pages publish and version configured media with static 
   // The HTTP fixture verifies media delivery, not video decoding.
   await writeFile(path.join(root, "assets/demo.mp4"), Buffer.from([0, 0, 0, 24]));
   config.projects[0].detailPage = {
+    layout: "showcase",
+    perception: [{ title: "BEV", image: "assets/flow.svg" }, { image: "" }],
     workflow: { image: "assets/flow.svg", description: { zh: "流程说明", en: "Workflow" } },
-    hardware: { image: "https://example.com/hardware.png" },
+    hardware: { image: "https://example.com/hardware.png", parts: [{ title: "LiDAR", image: "assets/flow.svg" }, { image: "" }] },
     videos: [
       { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg" },
       { type: "link", url: "https://example.com/watch" },
+      { type: "file", url: "", poster: "" },
     ],
     achievements: [{ title: "Outcome", image: "assets/flow.svg" }],
   };
@@ -169,6 +172,12 @@ test("standalone project pages publish and version configured media with static 
   assert.equal(page.videos[0].poster, page.workflow.image);
   assert.equal(page.achievements[0].image, page.workflow.image);
   assert.equal(page.hardware.image, "https://example.com/hardware.png");
+  assert.equal(page.perception[0].image, page.workflow.image);
+  assert.equal(page.hardware.parts[0].image, page.workflow.image);
+  assert.equal(page.perception[1].image, "");
+  assert.equal(page.videos[2].url, "");
+  assert.throws(() => normalizeConfig({ ...config, projects: [{ ...config.projects[0], detailPage: { perception: [{ image: "javascript:alert(1)" }] } }] }), /perception\[0\].image/);
+  assert.throws(() => normalizeConfig({ ...config, projects: [{ ...config.projects[0], detailPage: { hardware: { parts: {} } } }] }), /hardware.parts/);
   const server = startServer({ directory: path.join(root, "dist"), port: 0 });
   await once(server, "listening");
   try {

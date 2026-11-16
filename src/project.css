@@ -596,8 +596,257 @@ video {
     padding: 8px;
   }
 }
+/* Optional project showcase; all additions stay inside the project document. */
+.directory-chapters {
+  margin: 20px 0 0 45px;
+}
+.directory-chapters a {
+  display: block;
+  padding: 6px 0;
+  font-size: 11px;
+  color: #8393a3;
+}
+.directory-chapters a[aria-current] {
+  color: #376c92;
+  font-weight: 600;
+}
+@media (max-width: 800px) {
+  .directory-chapters {
+    display: none;
+  }
+}
+.showcase .hero-visual {
+  background: radial-gradient(ellipse at center, #e7f0f6, #f6f9fc 75%);
+}
+.showcase .project-actions {
+  align-items: center;
+  flex-wrap: wrap;
+}
+.watch-demo {
+  background: #32688f;
+  color: #fff;
+  padding: 9px 16px;
+  border-radius: 5px;
+}
+.showcase .section-nav a[aria-current] {
+  color: #2f6a94;
+  font-weight: 700;
+}
+.demo-selector,
+.part-selector {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+.demo-selector button,
+.part-selector button {
+  border: 1px solid transparent;
+  background: #f1f6fa;
+  color: #627e94;
+  border-radius: 5px;
+  padding: 8px 13px;
+  font-size: 12px;
+}
+.demo-selector button[aria-pressed="true"],
+.part-selector button[aria-pressed="true"] {
+  background: #e7f1f9;
+  color: #2c658d;
+  border-color: #9cbed8;
+}
+.demo-stage {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) minmax(0, 1fr);
+  overflow: hidden;
+  border: 1px solid #dae6ef;
+  border-radius: 9px;
+  background: #f6f9fc;
+}
+.demo-screen {
+  background: #000;
+  align-content: center;
+  min-width: 0;
+}
+.media-placeholder {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16/9;
+  width: 100%;
+  background: #000;
+  color: #a7adb4;
+  border-radius: 5px;
+}
+.media-placeholder span {
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.demo-screen .media-placeholder,
+.demo-screen video {
+  border-radius: 0;
+}
+.demo-description {
+  padding: 25px;
+  min-height: 260px;
+}
+.demo-description h4 {
+  margin: 17px 0 12px;
+}
+.demo-description p {
+  font-size: 12px;
+  color: #698095;
+  line-height: 1.9;
+}
+.demo-description > a {
+  font-size: 11px;
+}
+.demo-index {
+  color: #8ca4b7;
+  letter-spacing: 2px;
+  font-size: 10px;
+}
+.demo-description .media-pending {
+  color: #8c9eac;
+  font-size: 10px;
+  margin: 24px 0 0;
+}
+.external-demo {
+  position: relative;
+  aspect-ratio: 16/9;
+  display: grid;
+  place-items: center;
+}
+.external-demo img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+.external-demo a {
+  position: relative;
+  z-index: 1;
+}
+.demo-thumbnails {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+.demo-thumbnails button {
+  padding: 6px;
+  border: 1px solid #e0e9f0;
+  border-radius: 6px;
+  background: #fff;
+  color: #6d8599;
+  text-align: left;
+  min-width: 0;
+}
+.demo-thumbnails button[aria-pressed="true"] {
+  border-color: #7ba6c7;
+  background: #edf5fb;
+  color: #356c94;
+}
+.thumbnail-image {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 16/9;
+  background: #000;
+  color: #969da5;
+  border-radius: 3px;
+  overflow: hidden;
+  font-size: 10px;
+}
+.thumbnail-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.demo-thumbnails button > span:last-child {
+  display: flex;
+  gap: 8px;
+  padding: 9px 4px 4px;
+  font-size: 11px;
+}
+.demo-thumbnails small {
+  color: #8da8bb;
+}
+.showcase-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+}
+.showcase-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  min-width: 0;
+}
+.showcase-card p {
+  margin: 13px 0 0;
+  font-size: 12px;
+  color: #75899c;
+}
+.showcase-card > a {
+  display: inline-block;
+  margin-top: 12px;
+  font-size: 12px;
+}
+.part-selector {
+  margin: 17px 0 0;
+}
+.part-selector button {
+  font-size: 11px;
+  padding: 6px 10px;
+}
+.showcase .demo-screen > *,
+.hardware-detail > .media-placeholder {
+  animation: media-reveal 0.2s ease-out;
+}
+@keyframes media-reveal {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media (max-width: 1100px) {
+  .demo-stage {
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  }
+  .demo-description {
+    padding: 18px;
+  }
+}
+@media (max-width: 800px) {
+  .demo-stage,
+  .showcase-pair {
+    grid-template-columns: 1fr;
+  }
+  .demo-description {
+    min-height: 0;
+  }
+  .demo-thumbnails {
+    display: flex;
+    overflow-x: auto;
+    padding-bottom: 8px;
+  }
+  .demo-thumbnails button {
+    flex: 0 0 140px;
+  }
+  .demo-selector {
+    gap: 6px;
+  }
+  .demo-selector button {
+    font-size: 11px;
+    padding: 7px 10px;
+  }
+  .showcase-card {
+    padding: 16px;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   * {
+    animation: none !important;
     scroll-behavior: auto !important;
   }
 }

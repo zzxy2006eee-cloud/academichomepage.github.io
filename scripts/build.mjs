@@ -29,7 +29,13 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
         project.cover = await versionedAsset(project.cover);
         const page = project.detailPage;
         if (!page) continue;
-        for (const block of [page.workflow, page.hardware, ...(page.achievements || [])]) {
+        for (const block of [
+          page.workflow,
+          page.hardware,
+          ...(page.achievements || []),
+          ...(page.perception || []),
+          ...(page.hardware?.parts || []),
+        ]) {
           if (block?.image) block.image = await versionedAsset(block.image);
         }
         for (const video of page.videos || []) {

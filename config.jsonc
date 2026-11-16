@@ -286,10 +286,175 @@
       "repository": "https://github.com/zzxy2006eee-cloud/robot_challenge",
       "demo": "",
       "detailPage": {
-        "workflow": { "image": "", "description": { "zh": "", "en": "" } },
-        "hardware": { "image": "", "description": { "zh": "", "en": "" } },
-        "videos": [],
-        "achievements": [],
+        "layout": "showcase",
+        "intro": {
+          "zh": "面向清扫任务，整合环视目标识别、地面二维定位与 BEV、激光定位建图及区域覆盖导航。通过 Qt 操作界面组织选区、路线预览、任务执行与状态查看。",
+          "en": "A sweeping platform integrating surround-view recognition, ground-plane localization and BEV, LiDAR mapping, and coverage navigation. The Qt interface brings together area selection, route preview, task execution and status monitoring.",
+        },
+        "workflow": {
+          "image": "assets/images/sweeper-architecture.svg",
+          "description": {
+            "zh": "双机协同下的感知、定位、任务规划与底盘执行；点击查看完整系统架构。",
+            "en": "Perception, localization, task planning and chassis execution across two hosts. Click to explore the full architecture.",
+          },
+        },
+        "hardware": {
+          "image": "assets/images/robot-perception.png",
+          "description": {
+            "zh": "整车结构",
+            "en": "Vehicle hardware",
+          },
+          "parts": [
+            {
+              "title": {
+                "zh": "视觉相机",
+                "en": "Cameras",
+              },
+              "image": "",
+              "description": {
+                "zh": "",
+                "en": "",
+              },
+            },
+            {
+              "title": {
+                "zh": "激光雷达",
+                "en": "LiDAR",
+              },
+              "image": "",
+              "description": {
+                "zh": "",
+                "en": "",
+              },
+            },
+            {
+              "title": {
+                "zh": "计算平台",
+                "en": "Compute",
+              },
+              "image": "",
+              "description": {
+                "zh": "",
+                "en": "",
+              },
+            },
+            {
+              "title": {
+                "zh": "清扫机构",
+                "en": "Sweeping hardware",
+              },
+              "image": "",
+              "description": {
+                "zh": "",
+                "en": "",
+              },
+            },
+          ],
+        },
+        "perception": [
+          {
+            "title": {
+              "zh": "环视识别",
+              "en": "Surround perception",
+            },
+            "image": "",
+            "description": {
+              "zh": "相机观测、目标检测框与类别展示。",
+              "en": "Camera observations, object detections and classes.",
+            },
+          },
+          {
+            "title": {
+              "zh": "BEV 与覆盖路线",
+              "en": "BEV & coverage routes",
+            },
+            "image": "",
+            "description": {
+              "zh": "地面目标分布、地图与规划路线展示。",
+              "en": "Ground-plane targets, maps and planned routes.",
+            },
+          },
+        ],
+        "videos": [
+          {
+            "title": {
+              "zh": "覆盖清扫",
+              "en": "Coverage",
+            },
+            "type": "file",
+            "url": "",
+            "poster": "",
+            "description": {
+              "zh": "区域选择、覆盖路线与车辆行进。",
+              "en": "Area selection, coverage routes and vehicle motion.",
+            },
+          },
+          {
+            "title": {
+              "zh": "目标识别",
+              "en": "Detection",
+            },
+            "type": "file",
+            "url": "",
+            "poster": "",
+            "description": {
+              "zh": "环视相机、目标识别与地面定位。",
+              "en": "Surround cameras, object detection and ground-plane localization.",
+            },
+          },
+          {
+            "title": {
+              "zh": "自主避障",
+              "en": "Avoidance",
+            },
+            "type": "file",
+            "url": "",
+            "poster": "",
+            "description": {
+              "zh": "导航过程中的障碍感知与局部路线。",
+              "en": "Obstacle observations and local routes during navigation.",
+            },
+          },
+          {
+            "title": {
+              "zh": "整车展示",
+              "en": "Vehicle",
+            },
+            "type": "file",
+            "url": "",
+            "poster": "",
+            "description": {
+              "zh": "车辆外观、传感器与清扫机构。",
+              "en": "The vehicle, sensors and sweeping hardware.",
+            },
+          },
+        ],
+        "achievements": [
+          {
+            "title": {
+              "zh": "项目成果与荣誉",
+              "en": "Outcomes & awards",
+            },
+            "image": "",
+            "description": {
+              "zh": "",
+              "en": "",
+            },
+            "url": "",
+          },
+          {
+            "title": {
+              "zh": "我的工作与贡献",
+              "en": "My contribution",
+            },
+            "image": "",
+            "description": {
+              "zh": "",
+              "en": "",
+            },
+            "url": "",
+          },
+        ],
       },
       "details": {
         "zh": "项目面向机场清扫车，采用 Jetson/J6M 双机架构。当前仓库版本将四路相机、YOLO11-GAM 检测、地面二维定位与 BEV、导航逐点清扫及区域覆盖流程集成到 Qt 操作界面，并结合激光定位与导航模块。项目包含复现、部署与实验记录；覆盖路线的离线验证不等同于完整实车跟踪验收，具体运行状态以仓库文档为准。",

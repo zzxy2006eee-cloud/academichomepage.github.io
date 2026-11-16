@@ -1,0 +1,180 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1700" viewBox="0 0 2400 1700" role="img" aria-labelledby="title desc"><title id="title">净途智行 · 国产无人清扫车系统架构</title><desc id="desc">Qt任务交互、多源感知、FAST-LIO与ICP定位、覆盖规划与TEB、控制仲裁和底盘执行。下方独立展示四路相机、YOLO11-GAM、地面BEV、导航逐点清扫及视觉伺服支路。</desc>
+<defs>
+<marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8 Z" fill="#48525e"/></marker>
+<marker id="blue" markerWidth="10" markerHeight="10" refX="8" refY="4" orient="auto" markerUnits="userSpaceOnUse"><path d="M0,0 L9,4 L0,8 Z" fill="#547e9a"/></marker>
+<style>text{font-family:'Microsoft YaHei','Segoe UI',sans-serif;fill:#26333c}.node-title{font-weight:700;font-size:29px}.body{font-size:24px;fill:#4d5c67}.tiny{font-size:21px;fill:#60717b}</style>
+</defs>
+<rect x="0" y="0" width="2400" height="1700" rx="0" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<rect x="20" y="20" width="2360" height="1660" rx="24" fill="#fffefa" stroke="#d9d9cd" stroke-width="1.7"/>
+<text x="60" y="85" font-size="46" font-weight="700" text-anchor="start" style="fill:#26333c">净途智行 · 国产无人清扫车系统架构</text>
+<text x="62" y="130" font-size="22" font-weight="400" text-anchor="start" style="fill:#71828d">感知 · 定位 · 规划 · 执行  /  AUTONOMOUS SWEEPER SYSTEM</text>
+<rect x="1900" y="58" width="438" height="50" rx="24" fill="#edf2f6" stroke="#c8d4dc" stroke-width="1.7"/>
+<text x="2119" y="92" font-size="23" font-weight="600" text-anchor="middle" style="fill:#4c6c83">ROS Noetic · Jetson / J6M</text>
+<rect x="60" y="167" width="2280" height="154" rx="20" fill="#f9f4de" stroke="#c8c2ab" stroke-width="1.7"/>
+<text x="87" y="211" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">Qt / RViz 操作界面</text>
+<text x="87" y="253" font-size="23" font-weight="400" text-anchor="start" style="fill:#626659">相机 / BEV / 地图 / 路线预览</text>
+<text x="87" y="288" font-size="23" font-weight="400" text-anchor="start" style="fill:#626659">任务选择 · 状态监测 · 记录回放</text>
+<rect x="600" y="191" width="450" height="105" rx="14" fill="#e5edcf" stroke="#9caab1" stroke-width="1.7"/>
+<text x="825.0" y="237" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">作业任务入口</text>
+<text x="825.0" y="274" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">区域覆盖 / 导航目标 / 模式选择</text>
+<rect x="1100" y="191" width="570" height="105" rx="14" fill="#e4edf3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1385.0" y="237" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">地图与定位模式</text>
+<text x="1385.0" y="274" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">在线建图 / 已知地图 + 初始位姿</text>
+<rect x="1720" y="191" width="590" height="105" rx="14" fill="#f4e5ed" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2015.0" y="237" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">可选语音 / AI 任务入口</text>
+<text x="2015.0" y="274" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">本地 ASR → 语义解析 → 授权与校验</text>
+<path d="M 825,297 L 825,352 L 1215,352 L 1215,576 L 1265,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 2015,297 L 2015,352 L 1215,352" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7"/>
+<rect x="1011.5" y="327" width="377" height="31" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1200" y="346" font-size="21" font-weight="400" text-anchor="middle" style="fill:#60717b">经任务接口提交，不直接发送底盘速度</text>
+<rect x="60" y="393" width="520" height="710" rx="22" fill="#f0f5ec" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="80" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="102" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">01</text>
+<text x="142" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">多源感知与驱动</text>
+<text x="142" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">SENSING &amp; DEVICE GATEWAY</text>
+<rect x="650" y="393" width="520" height="710" rx="22" fill="#edf3f8" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="670" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="692" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">02</text>
+<text x="732" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">定位与地图</text>
+<text x="732" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">LOCALIZATION &amp; MAPPING</text>
+<rect x="1240" y="393" width="520" height="710" rx="22" fill="#fcf6dc" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="1260" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="1282" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">03</text>
+<text x="1322" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">任务与导航规划</text>
+<text x="1322" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">TASK &amp; NAVIGATION PLANNING</text>
+<rect x="1830" y="393" width="520" height="710" rx="22" fill="#fbebea" stroke="#a7b3ba" stroke-width="1.7" stroke-dasharray="7 6"/>
+<rect x="1850" y="415" width="45" height="36" rx="9" fill="#ffffff" stroke="#c7d0d5" stroke-width="1.7"/>
+<text x="1872" y="441" font-size="21" font-weight="700" text-anchor="middle" style="fill:#627b8b">04</text>
+<text x="1912" y="443" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">控制仲裁与执行</text>
+<text x="1912" y="474" font-size="17" font-weight="400" text-anchor="start" style="fill:#6a7880">ARBITRATION &amp; EXECUTION</text>
+<rect x="85" y="510" width="470" height="132" rx="14" fill="#dceacb" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">MID360 + IMU</text>
+<text x="320.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">点云与惯性观测</text>
+<text x="320.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">Jetson 采集 → J6M relay</text>
+<rect x="85" y="720" width="470" height="132" rx="14" fill="#d7e7c6" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">前后 LD19 / 障碍观测</text>
+<text x="320.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">近场扫描 · 外参转换</text>
+<text x="320.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">MID360 / LD19 融合</text>
+<rect x="85" y="946" width="470" height="116" rx="14" fill="#e7efdc" stroke="#9caab1" stroke-width="1.7"/>
+<text x="320.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">底盘反馈与设备网关</text>
+<text x="320.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">USB-CAN / M2 · 轮角与状态</text>
+<rect x="675" y="510" width="470" height="132" rx="14" fill="#d5e6f3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">FAST-LIO</text>
+<text x="910.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">激光惯性里程计</text>
+<text x="910.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">运动估计与点云地图</text>
+<rect x="675" y="720" width="470" height="132" rx="14" fill="#d5e6f3" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">已知地图 ICP 定位</text>
+<text x="910.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">里程计 + 多尺度匹配</text>
+<text x="910.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">map / odom / base_link</text>
+<rect x="685" y="956" width="470" height="116" rx="14" fill="#cbdfea" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="680" y="951" width="470" height="116" rx="14" fill="#cbdfea" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="675" y="946" width="470" height="116" rx="14" fill="#cbdfea" stroke="#9caab1" stroke-width="1.7"/>
+<text x="910.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">二维地图与代价地图</text>
+<text x="910.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">静态 / 在线地图 · 障碍与膨胀</text>
+<rect x="1265" y="510" width="470" height="132" rx="14" fill="#f3e8ab" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">任务与覆盖管理</text>
+<text x="1500.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">区域选取 · 路线预览</text>
+<text x="1500.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">目标队列 · 扫掠与转场</text>
+<rect x="1265" y="720" width="470" height="132" rx="14" fill="#f6e18e" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">覆盖路线 / 全局路径</text>
+<text x="1500.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">Navfn 入场 · Hybrid A* 转场</text>
+<text x="1500.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">清扫线与固定档位分段</text>
+<rect x="1275" y="956" width="470" height="116" rx="14" fill="#f3dc87" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="1270" y="951" width="470" height="116" rx="14" fill="#f3dc87" stroke="#a8b4b7" stroke-width="1.7"/>
+<rect x="1265" y="946" width="470" height="116" rx="14" fill="#f3dc87" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1500.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">move_base + TEB</text>
+<text x="1500.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">局部避障 · 路径跟踪 · 速度输出</text>
+<rect x="1855" y="510" width="460" height="132" rx="14" fill="#edc8cf" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="554" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">模式与速度仲裁</text>
+<text x="2085.0" y="591" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">导航 / 视觉伺服控制权</text>
+<text x="2085.0" y="624" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">任务状态 · 指令有效性</text>
+<rect x="1855" y="720" width="460" height="132" rx="14" fill="#eab8c4" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="764" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">底盘命令看门狗</text>
+<text x="2085.0" y="801" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">指令时效 · 急停 · 状态反馈</text>
+<text x="2085.0" y="834" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">停车与控制门限</text>
+<rect x="1855" y="946" width="460" height="116" rx="14" fill="#ddd3e9" stroke="#9caab1" stroke-width="1.7"/>
+<text x="2085.0" y="992" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">M2 / CAN 底盘接口</text>
+<text x="2085.0" y="1029" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">行驶 · 转向 · 车辆状态反馈</text>
+<path d="M 555,576 L 675,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="556.76" y="543" width="116.47999999999999" height="28" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="615" y="559" font-size="18" font-weight="400" text-anchor="middle" style="fill:#60717b">点云 + IMU</text>
+<path d="M 910,642 L 910,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="871.5" y="671" width="77" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="910" y="688" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">里程计</text>
+<path d="M 910,852 L 910,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="846.04" y="887" width="127.92" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="910" y="904" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">位姿 / 地图</text>
+<path d="M 555,786 L 607,786 L 607,1004 L 675,1004" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="564.0" y="876" width="92" height="28" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="610" y="892" font-size="18" font-weight="400" text-anchor="middle" style="fill:#60717b">障碍观测</text>
+<path d="M 1145,1004 L 1205,1004 L 1205,786 L 1265,786" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1205,1004 L 1265,1004" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1177.0" y="882" width="56" height="28" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1205" y="898" font-size="18" font-weight="400" text-anchor="middle" style="fill:#60717b">地图</text>
+<path d="M 1500,642 L 1500,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1436.04" y="672" width="127.92" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1500" y="689" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">路线 / 目标</text>
+<path d="M 1500,852 L 1500,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1433.0" y="886" width="134" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1500" y="903" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">可行参考路径</text>
+<path d="M 1735,1004 L 1793,1004 L 1793,576 L 1855,576" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1747.0" y="882" width="92" height="28" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1793" y="898" font-size="18" font-weight="400" text-anchor="middle" style="fill:#60717b">导航指令</text>
+<path d="M 2085,642 L 2085,720" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="2037.0" y="673" width="96" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="2085" y="690" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">仲裁输出</text>
+<path d="M 2085,852 L 2085,946" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="2021.04" y="886" width="127.92" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="2085" y="903" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">速度 / 转向</text>
+<path d="M 2085,1062 L 2085,1151 L 320,1151 L 320,1062" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#blue)"/>
+<rect x="909.98" y="1125" width="560.04" height="33" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1190" y="1146" font-size="23" font-weight="400" text-anchor="middle" style="fill:#547e9a">底盘状态 / 轮角 / 里程计反馈 → 监测与任务执行</text>
+<rect x="1650" y="468" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7c9db8" stroke-width="1.7"/>
+<text x="1681" y="492" font-size="21" font-weight="700" text-anchor="middle" style="fill:#547e9a">V1</text>
+<path d="M 1681,502 L 1681,510" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<rect x="2220" y="468" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7c9db8" stroke-width="1.7"/>
+<text x="2251" y="492" font-size="21" font-weight="700" text-anchor="middle" style="fill:#547e9a">V2</text>
+<path d="M 2251,502 L 2251,510" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<rect x="60" y="1210" width="2280" height="320" rx="20" fill="#f5f0f8" stroke="#b8acc6" stroke-width="1.7" stroke-dasharray="7 5"/>
+<text x="85" y="1253" font-size="30" font-weight="700" text-anchor="start" style="fill:#26333c">视觉感知与任务分流</text>
+<text x="420" y="1252" font-size="18" font-weight="400" text-anchor="start" style="fill:#897594">SURROUND PERCEPTION &amp; TASK ROUTING</text>
+<rect x="85" y="1300" width="420" height="148" rx="14" fill="#e1d8eb" stroke="#9caab1" stroke-width="1.7"/>
+<text x="295.0" y="1344" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">四路相机 / RGB-D</text>
+<text x="295.0" y="1381" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">标定与图像采集</text>
+<text x="295.0" y="1414" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">相机图像 · 深度 / 内参</text>
+<rect x="565" y="1300" width="440" height="148" rx="14" fill="#edcfdf" stroke="#9caab1" stroke-width="1.7"/>
+<text x="785.0" y="1344" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">YOLO11-GAM</text>
+<text x="785.0" y="1381" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">Jetson CUDA 检测</text>
+<text x="785.0" y="1414" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">目标类别 / 检测框</text>
+<rect x="1065" y="1300" width="450" height="148" rx="14" fill="#d9e6d7" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1290.0" y="1344" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">地面二维定位 / BEV</text>
+<text x="1290.0" y="1381" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">相机外参 · 地面投影</text>
+<text x="1290.0" y="1414" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">目标位置与分布</text>
+<rect x="1580" y="1284" width="480" height="92" rx="14" fill="#e0e6f1" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1820.0" y="1316" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">导航逐点清扫</text>
+<text x="1820.0" y="1353" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">地面目标 → 导航任务</text>
+<rect x="1580" y="1404" width="480" height="92" rx="14" fill="#e6dcec" stroke="#9caab1" stroke-width="1.7"/>
+<text x="1820.0" y="1436" font-size="29" font-weight="700" text-anchor="middle" style="fill:#26333c">视觉伺服支路</text>
+<text x="1820.0" y="1473" font-size="23" font-weight="400" text-anchor="middle" style="fill:#4d5c67">RGB-D 目标 → 独立接近控制</text>
+<path d="M 505,1374 L 565,1374" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1005,1374 L 1065,1374" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 1515,1374 L 1545,1374 L 1545,1330 L 1580,1330" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<path d="M 785,1448 L 785,1480 L 1535,1480 L 1535,1450 L 1580,1450" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<rect x="1052.58" y="1459" width="254.83999999999997" height="29" rx="5" fill="#fffefa" stroke="none" stroke-width="1.7"/>
+<text x="1180" y="1476" font-size="19" font-weight="400" text-anchor="middle" style="fill:#60717b">检测 / 深度 / 局部里程计</text>
+<rect x="2150" y="1313" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7c9db8" stroke-width="1.7"/>
+<text x="2181" y="1337" font-size="21" font-weight="700" text-anchor="middle" style="fill:#547e9a">V1</text>
+<path d="M 2060,1330 L 2150,1330" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<rect x="2150" y="1433" width="62" height="34" rx="9" fill="#edf3f8" stroke="#7c9db8" stroke-width="1.7"/>
+<text x="2181" y="1457" font-size="21" font-weight="700" text-anchor="middle" style="fill:#547e9a">V2</text>
+<path d="M 2060,1450 L 2150,1450" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#blue)"/>
+<text x="2225" y="1337" font-size="20" font-weight="400" text-anchor="start" style="fill:#547e9a">导航链</text>
+<text x="2225" y="1457" font-size="20" font-weight="400" text-anchor="start" style="fill:#547e9a">仲裁链</text>
+<rect x="60" y="1560" width="2280" height="70" rx="14" fill="#edf2f7" stroke="#d5dfe7" stroke-width="1.7"/>
+<text x="85" y="1604" font-size="23" font-weight="400" text-anchor="start" style="fill:#506c82">Jetson / NVIDIA：传感器网关 · 视觉推理 · Qt / AI · 底盘看门狗</text>
+<text x="1260" y="1604" font-size="23" font-weight="400" text-anchor="start" style="fill:#506c82">J6M：定位建图 · 导航规划 · 模式仲裁</text>
+<path d="M 65,1660 L 118,1660" fill="none" stroke="#48525e" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" marker-end="url(#arrow)"/>
+<text x="132" y="1667" font-size="20" font-weight="400" text-anchor="start" style="fill:#60717b">数据 / 任务流</text>
+<path d="M 345,1660 L 398,1660" fill="none" stroke="#547e9a" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="9 7" marker-end="url(#blue)"/>
+<text x="412" y="1667" font-size="20" font-weight="400" text-anchor="start" style="fill:#60717b">反馈 / 跨区接口</text>
+</svg>

@@ -112,6 +112,19 @@ export function normalizeConfig(input) {
         fail(field, "仅支持本项目相对路径或 HTTP(S) 网址。");
     };
     object(page, prefix);
+    if (page.layout !== undefined && !["standard", "showcase"].includes(page.layout))
+      fail(`${prefix}.layout`, '请填写 "standard" 或 "showcase"。');
+    for (const [key, list] of [
+      ["perception", page.perception],
+      ["hardware.parts", page.hardware?.parts],
+    ]) {
+      if (list === undefined) continue;
+      if (!Array.isArray(list)) fail(`${prefix}.${key}`, "必须是列表 []。");
+      for (const [i, item] of list.entries()) {
+        object(item, `${prefix}.${key}[${i}]`);
+        media(item.image, `${prefix}.${key}[${i}].image`);
+      }
+    }
     for (const key of ["workflow", "hardware"]) {
       if (page[key] === undefined) continue;
       object(page[key], `${prefix}.${key}`);
