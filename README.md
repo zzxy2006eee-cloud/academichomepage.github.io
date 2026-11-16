@@ -57,8 +57,8 @@ academichomepage.github.io/
 │     ├─ spot-{physical,qt}.mp4      # 定点清扫
 │     ├─ avoidance-{physical,qt}.mp4 # 自主避障
 │     ├─ qt-interface.mp4            # Qt 界面展示
-│     ├─ hardware-*.mp4              # 从 PPT 拆出的五段硬件动画
-│     └─ manifest.json               # 媒体文件与原始素材的对应清单
+│     ├─ hardware-*.mp4              # 硬件爆炸视图动画
+│     └─ manifest.json               # 媒体文件清单
 ├─ data/github.json             # GitHub 贡献数据快照
 ├─ scripts/
 │  ├─ config.mjs / check.mjs    # 配置读取与检查
@@ -76,7 +76,7 @@ academichomepage.github.io/
 └─ dist/                       # 自动生成，不提交、不手动编辑
 ```
 
-`physical` 表示实物端，`qt` 表示 Qt 端。功能演示地址填写在 `projects[].detailPage.videos[]`（实物端）及其中的 `qt` 对象；硬件动画填写在 `detailPage.hardware.parts[]`。PPT 原文件不上传，网页直接播放拆出的独立动画。更新素材时同时修改配置路径；完整字段见[详细说明](docs/USAGE.md#可切换演示的项目布局)。
+`physical` 表示实物端，`qt` 表示 Qt 端。功能演示地址填写在 `projects[].detailPage.videos[]`（实物端）及其中的 `qt` 对象；硬件动画填写在 `detailPage.hardware.parts[]`。更新素材时同时修改配置路径；完整字段见[详细说明](docs/USAGE.md#可切换演示的项目布局)。
 
 ## 本地预览
 
