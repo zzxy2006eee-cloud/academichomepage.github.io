@@ -1,4 +1,5 @@
 import http from "node:http";
+import { createReadStream } from "node:fs";
 import { readFile, stat } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
@@ -44,6 +45,46 @@ export function startServer({
         return;
       }
       if ((await stat(target)).isDirectory()) target = path.join(target, "index.html");
+      if ([".mp4", ".webm"].includes(path.extname(target))) {
+        const { size } = await stat(target);
+        const headers = {
+          "Content-Type": types[path.extname(target)],
+          "Accept-Ranges": "bytes",
+          "Cache-Control": "no-cache",
+          "X-Content-Type-Options": "nosniff",
+        };
+        let start = 0,
+          end = size - 1,
+          status = 200;
+        if (req.headers.range) {
+          const match = /^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+          if (match && (match[1] || match[2])) {
+            start = match[1] ? Number(match[1]) : Math.max(0, size - Number(match[2]));
+            end = match[1] && match[2] ? Math.min(Number(match[2]), size - 1) : size - 1;
+          } else start = size;
+          if (
+            !Number.isSafeInteger(start) ||
+            !Number.isSafeInteger(end) ||
+            start > end ||
+            start >= size ||
+            (match && !match[1] && Number(match[2]) === 0)
+          ) {
+            res.writeHead(416, { ...headers, "Content-Range": `bytes */${size}` }).end();
+            return;
+          }
+          status = 206;
+          headers["Content-Range"] = `bytes ${start}-${end}/${size}`;
+        }
+        res.writeHead(status, { ...headers, "Content-Length": Math.max(0, end - start + 1) });
+        if (req.method === "HEAD" || !size) res.end();
+        else {
+          const stream = createReadStream(target, { start, end });
+          stream.on("error", () => res.destroy());
+          res.on("close", () => stream.destroy());
+          stream.pipe(res);
+        }
+        return;
+      }
       let body = await readFile(target);
       if (liveReload && ["index.html", "project.html"].includes(path.basename(target))) {
         const reload = `<script>(()=>{const current=${JSON.stringify(version(body))};setInterval(async()=>{try{const r=await fetch('/__dev/version?page=${path.basename(target)}',{cache:'no-store'});if(r.ok&&(await r.text())!==current)location.reload();}catch{}},1000);})();</script>`;

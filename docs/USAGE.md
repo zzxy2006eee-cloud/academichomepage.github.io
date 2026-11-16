@@ -341,21 +341,25 @@ node scripts/dev.mjs
 
 #### 可切换演示的项目布局
 
-在对应项目的 `detailPage` 中设置 `"layout": "showcase"`，启用主演示窗口、场景缩略图、感知对照图与硬件部件切换。省略此项的项目保持原布局。
+在对应项目的 `detailPage` 中设置 `"layout": "showcase"`，启用实物端主演示窗口、右侧 Qt 小窗口、场景缩略图与硬件部件切换。省略此项的项目保持原布局。感知、建图等内容统一通过功能演示展示。
 
 | 配置位置（均位于 `detailPage`） | 修改内容 |
 | --- | --- |
 | `intro.zh / en` | 展示页概览；不改变主页简介或 PDF 简历 |
 | `videos[]` | 每个条目对应一个场景；填写 `title`、`description`、`type`、`url`、`poster` |
-| `perception[]` | 感知与规划对照卡片，字段为 `title`、`image`、`description` |
+| `videos[].qt` | 右侧说明下方的 Qt 端视频，填写 `type`、`url`、`poster` |
 | `workflow.image` | 系统架构 SVG 或图片，点击可放大 |
-| `hardware.image` | 整车图片 |
-| `hardware.parts[]` | 可切换的部件资料，字段为 `title`、`image`、`description` |
-| `achievements[]` | 项目成果、证书或个人贡献，字段同上，另可填写 `url` |
+| `hardware.defaultPart` | 默认展示的部件 `id`，如 `"assembly"` |
+| `hardware.parts[]` | 可切换的部件，填写 `id`、`title`、`subtitle`、`url`（动画视频）、`poster`、`description`；静态图可用 `image` |
+| `achievements[]` | 项目成果、证书或个人贡献，填写 `title`、`description`、`image`、`url` |
 
 标题与说明支持 `{ "zh": "中文", "en": "English" }`。没有的素材保留空字符串 `""`，页面显示黑色占位和“待补充”；视频地址为空时不会显示虚假的播放按钮。填写真实路径后自动替换占位，无需修改页面代码。删除列表条目即可移除对应的场景或卡片。
 
-视频切换会暂停旧视频，新视频由访客点击播放；切换语言会保留所选场景。`type: "link"` 的外部平台视频以新标签页打开。
+功能演示切换会暂停旧视频，新视频由访客点击播放；实物端与 Qt 端独立控制，素材时长不一致时也不会互相截断。切换语言会保留所选场景和硬件部件。`type: "link"` 的外部平台视频以新标签页打开。
+
+点击硬件按钮会切换并播放对应的静音爆炸/旋转动画，提供“重新播放”；尊重系统的减少动画设置，此时由访客手动播放。默认展示整车，初次进入页面不自动播放。视频离开视野附近后暂停，素材按需加载。
+
+清扫车文件集中在 `assets/videos/sweeper/`，封面在 `assets/images/sweeper/`。`manifest.json` 记录每份网页素材对应的原始文件和时长；更换素材时同步维护清单。网页使用独立 MP4，不嵌入或发布原始 PPT。原视频转换为 H.264/AAC 网页副本，保留完整内容；PPT 动画直接拆出并整理 MP4 头部，便于在线播放。
 
 ### 中英文切换
 

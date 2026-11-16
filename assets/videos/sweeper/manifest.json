@@ -1,0 +1,100 @@
+[
+  {
+    "file": "assets/videos/sweeper/mapping-physical.mp4",
+    "source": "感知建图/建图实物端.mp4",
+    "poster": "assets/images/sweeper/mapping-physical.jpg",
+    "bytes": 32927993,
+    "durationSeconds": 125.75
+  },
+  {
+    "file": "assets/videos/sweeper/mapping-qt.mp4",
+    "source": "感知建图/建图Qt端.mp4",
+    "poster": "assets/images/sweeper/mapping-qt.jpg",
+    "bytes": 28466425,
+    "durationSeconds": 125.83
+  },
+  {
+    "file": "assets/videos/sweeper/coverage-physical.mp4",
+    "source": "覆盖清扫/覆盖清扫实物端.mp4",
+    "poster": "assets/images/sweeper/coverage-physical.jpg",
+    "bytes": 41144448,
+    "durationSeconds": 120.88
+  },
+  {
+    "file": "assets/videos/sweeper/coverage-qt.mp4",
+    "source": "覆盖清扫/覆盖清扫Qt端.mp4",
+    "poster": "assets/images/sweeper/coverage-qt.jpg",
+    "bytes": 28521510,
+    "durationSeconds": 176.04
+  },
+  {
+    "file": "assets/videos/sweeper/spot-physical.mp4",
+    "source": "定点清扫/垃圾清扫实物端.mp4",
+    "poster": "assets/images/sweeper/spot-physical.jpg",
+    "bytes": 6846713,
+    "durationSeconds": 32.29
+  },
+  {
+    "file": "assets/videos/sweeper/spot-qt.mp4",
+    "source": "定点清扫/垃圾定点清扫Qt端.mp4",
+    "poster": "assets/images/sweeper/spot-qt.jpg",
+    "bytes": 2005407,
+    "durationSeconds": 28.46
+  },
+  {
+    "file": "assets/videos/sweeper/avoidance-physical.mp4",
+    "source": "自主避障/动态避障实物端1.mp4",
+    "poster": "assets/images/sweeper/avoidance-physical.jpg",
+    "bytes": 16054694,
+    "durationSeconds": 49.79
+  },
+  {
+    "file": "assets/videos/sweeper/avoidance-qt.mp4",
+    "source": "自主避障/动态避障Qt端.mp4",
+    "poster": "assets/images/sweeper/avoidance-qt.jpg",
+    "bytes": 7265338,
+    "durationSeconds": 43.42
+  },
+  {
+    "file": "assets/videos/sweeper/qt-interface.mp4",
+    "source": "Qt界面展示.mp4",
+    "poster": "assets/images/sweeper/qt-interface.jpg",
+    "bytes": 11197107,
+    "durationSeconds": 60.0
+  },
+  {
+    "file": "assets/videos/sweeper/hardware-localization.mp4",
+    "source": "爆炸视图.pptx / ppt/media/media1.mp4",
+    "poster": "assets/images/sweeper/hardware-localization.jpg",
+    "bytes": 1951424,
+    "durationSeconds": 10
+  },
+  {
+    "file": "assets/videos/sweeper/hardware-motion.mp4",
+    "source": "爆炸视图.pptx / ppt/media/media2.mp4",
+    "poster": "assets/images/sweeper/hardware-motion.jpg",
+    "bytes": 2551383,
+    "durationSeconds": 10
+  },
+  {
+    "file": "assets/videos/sweeper/hardware-vision.mp4",
+    "source": "爆炸视图.pptx / ppt/media/media3.mp4",
+    "poster": "assets/images/sweeper/hardware-vision.jpg",
+    "bytes": 2052455,
+    "durationSeconds": 10
+  },
+  {
+    "file": "assets/videos/sweeper/hardware-cleaning.mp4",
+    "source": "爆炸视图.pptx / ppt/media/media4.mp4",
+    "poster": "assets/images/sweeper/hardware-cleaning.jpg",
+    "bytes": 2436274,
+    "durationSeconds": 10
+  },
+  {
+    "file": "assets/videos/sweeper/hardware-assembly.mp4",
+    "source": "爆炸视图.pptx / ppt/media/media5.mp4",
+    "poster": "assets/images/sweeper/hardware-assembly.jpg",
+    "bytes": 2044752,
+    "durationSeconds": 10
+  }
+]

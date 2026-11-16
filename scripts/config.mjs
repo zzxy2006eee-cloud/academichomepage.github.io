@@ -122,7 +122,8 @@ export function normalizeConfig(input) {
       if (!Array.isArray(list)) fail(`${prefix}.${key}`, "必须是列表 []。");
       for (const [i, item] of list.entries()) {
         object(item, `${prefix}.${key}[${i}]`);
-        media(item.image, `${prefix}.${key}[${i}].image`);
+        for (const name of ["image", "url", "poster"])
+          media(item[name], `${prefix}.${key}[${i}].${name}`);
       }
     }
     for (const key of ["workflow", "hardware"]) {
@@ -139,6 +140,12 @@ export function normalizeConfig(input) {
         for (const name of ["image", "poster", "url"]) media(item[name], `${field}.${name}`);
         if (key === "videos" && !["file", "link"].includes(item.type))
           fail(`${field}.type`, '请填写 "file"（MP4/WebM）或 "link"（视频平台链接）。');
+        if (key === "videos" && item.qt !== undefined) {
+          object(item.qt, `${field}.qt`);
+          for (const name of ["url", "poster"]) media(item.qt[name], `${field}.qt.${name}`);
+          if (!["file", "link"].includes(item.qt.type))
+            fail(`${field}.qt.type`, '请填写 "file" 或 "link"。');
+        }
       }
     }
   }

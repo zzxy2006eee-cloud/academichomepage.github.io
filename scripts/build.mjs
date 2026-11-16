@@ -38,9 +38,12 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
         ]) {
           if (block?.image) block.image = await versionedAsset(block.image);
         }
-        for (const video of page.videos || []) {
+        for (const video of [
+          ...(page.videos || []).flatMap((item) => [item, ...(item.qt ? [item.qt] : [])]),
+          ...(page.hardware?.parts || []),
+        ]) {
           if (video.poster) video.poster = await versionedAsset(video.poster);
-          if (video.type === "file" && video.url) video.url = await versionedAsset(video.url);
+          if (video.type !== "link" && video.url) video.url = await versionedAsset(video.url);
         }
       }
       for (const entry of data.education) {

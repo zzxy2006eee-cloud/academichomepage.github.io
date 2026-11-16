@@ -28,6 +28,56 @@
 
 “项目详情”跳转到统一项目展示页的对应章节；流程图、硬件结构、演示视频及成果在 `projects[].detailPage` 中配置，见[详细说明](docs/USAGE.md#统一项目展示页)。
 
+## 项目目录
+
+```text
+academichomepage.github.io/
+├─ config.jsonc                 # 个人资料、双语内容、项目与媒体路径
+├─ index.html                   # 主页入口
+├─ src/
+│  ├─ app.js / styles.css       # 主页渲染、样式和 PDF 简历
+│  ├─ project.html             # 统一项目页骨架
+│  ├─ project.js               # 项目导航、双端视频、硬件爆炸视图交互
+│  └─ project.css              # 项目页样式
+├─ assets/
+│  ├─ favicon.svg               # 浏览器标签图标
+│  ├─ images/
+│  │  ├─ avatar.png             # 头像
+│  │  ├─ uestc-emblem.png       # 学校校徽
+│  │  ├─ drone-navigation.png  # 无人机封面
+│  │  ├─ robot-perception.png  # 清扫车封面
+│  │  ├─ drone-workflow.svg    # 无人机技术流程图
+│  │  ├─ sweeper-architecture.svg # 清扫车系统架构图
+│  │  ├─ agents.svg / knowledge.svg # 附带的模板插图
+│  │  ├─ drone-navigation.svg / robot-perception.svg # 备用项目插图
+│  │  └─ sweeper/*.jpg         # 清扫车视频及爆炸视图的封面
+│  └─ videos/sweeper/
+│     ├─ mapping-{physical,qt}.mp4   # 感知建图：实物端、Qt 端
+│     ├─ coverage-{physical,qt}.mp4  # 覆盖清扫
+│     ├─ spot-{physical,qt}.mp4      # 定点清扫
+│     ├─ avoidance-{physical,qt}.mp4 # 自主避障
+│     ├─ qt-interface.mp4            # Qt 界面展示
+│     ├─ hardware-*.mp4              # 从 PPT 拆出的五段硬件动画
+│     └─ manifest.json               # 媒体文件与原始素材的对应清单
+├─ data/github.json             # GitHub 贡献数据快照
+├─ scripts/
+│  ├─ config.mjs / check.mjs    # 配置读取与检查
+│  ├─ build.mjs                # 生成网站与素材缓存版本
+│  ├─ dev.mjs / serve.mjs      # 本地预览、刷新与视频分段读取
+│  └─ sync-github.mjs          # 同步 GitHub 贡献
+├─ tests/config.test.mjs        # 配置、构建与媒体发布测试
+├─ docs/USAGE.md                # 详细使用说明
+├─ docs/ASSETS.md               # 素材来源与许可
+├─ docs/*-preview.png           # 桌面端、手机端预览图
+├─ .github/workflows/pages.yml  # 自动构建与 GitHub Pages 发布
+├─ .nojekyll / .gitignore       # 静态站点设置与本地文件排除
+├─ package.json / LICENSE      # 运行命令与代码许可
+├─ README.md                   # 本使用入口
+└─ dist/                       # 自动生成，不提交、不手动编辑
+```
+
+`physical` 表示实物端，`qt` 表示 Qt 端。功能演示地址填写在 `projects[].detailPage.videos[]`（实物端）及其中的 `qt` 对象；硬件动画填写在 `detailPage.hardware.parts[]`。PPT 原文件不上传，网页直接播放拆出的独立动画。更新素材时同时修改配置路径；完整字段见[详细说明](docs/USAGE.md#可切换演示的项目布局)。
+
 ## 本地预览
 
 安装 **Node.js 20+**，在项目目录运行，无需安装依赖：

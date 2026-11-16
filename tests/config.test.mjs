@@ -156,9 +156,9 @@ test("standalone project pages publish and version configured media with static 
     layout: "showcase",
     perception: [{ title: "BEV", image: "assets/flow.svg" }, { image: "" }],
     workflow: { image: "assets/flow.svg", description: { zh: "流程说明", en: "Workflow" } },
-    hardware: { image: "https://example.com/hardware.png", parts: [{ title: "LiDAR", image: "assets/flow.svg" }, { image: "" }] },
+    hardware: { image: "https://example.com/hardware.png", parts: [{ title: "LiDAR", image: "assets/flow.svg", url: "assets/demo.mp4", poster: "assets/flow.svg" }, { image: "" }] },
     videos: [
-      { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg" },
+      { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg", qt: { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg" } },
       { type: "link", url: "https://example.com/watch" },
       { type: "file", url: "", poster: "" },
     ],
@@ -174,6 +174,10 @@ test("standalone project pages publish and version configured media with static 
   assert.equal(page.hardware.image, "https://example.com/hardware.png");
   assert.equal(page.perception[0].image, page.workflow.image);
   assert.equal(page.hardware.parts[0].image, page.workflow.image);
+  assert.equal(page.hardware.parts[0].url, page.videos[0].url);
+  assert.equal(page.hardware.parts[0].poster, page.workflow.image);
+  assert.equal(page.videos[0].qt.url, page.videos[0].url);
+  assert.equal(page.videos[0].qt.poster, page.workflow.image);
   assert.equal(page.perception[1].image, "");
   assert.equal(page.videos[2].url, "");
   assert.throws(() => normalizeConfig({ ...config, projects: [{ ...config.projects[0], detailPage: { perception: [{ image: "javascript:alert(1)" }] } }] }), /perception\[0\].image/);
@@ -194,6 +198,15 @@ test("standalone project pages publish and version configured media with static 
     const video = await fetch(`${origin}/${page.videos[0].url}`);
     assert.equal(video.headers.get("content-type"), "video/mp4");
     assert.equal((await video.arrayBuffer()).byteLength, 4);
+    const partial = await fetch(`${origin}/${page.videos[0].url}`, { headers: { Range: "bytes=1-2" } });
+    assert.equal(partial.status, 206);
+    assert.equal(partial.headers.get("content-range"), "bytes 1-2/4");
+    assert.deepEqual([...new Uint8Array(await partial.arrayBuffer())], [0, 0]);
+    const tail = await fetch(`${origin}/${page.videos[0].url}`, { headers: { Range: "bytes=-1" } });
+    assert.equal(tail.status, 206);
+    assert.deepEqual([...new Uint8Array(await tail.arrayBuffer())], [24]);
+    assert.equal((await fetch(`${origin}/${page.videos[0].url}`, { headers: { Range: "bytes=99-" } })).status, 416);
+    assert.equal((await fetch(`${origin}/${page.videos[0].url}`, { method: "HEAD" })).headers.get("content-length"), "4");
   } finally {
     server.closeAllConnections();
     await new Promise(resolve => server.close(resolve));
@@ -203,6 +216,9 @@ test("standalone project pages publish and version configured media with static 
   assert.notEqual((await buildSite(root)).site.projects[0].detailPage.workflow.image, oldVersion);
   config.projects[0].detailPage.videos[0].type = "iframe";
   assert.throws(() => normalizeConfig(config), /detailPage.videos\[0\].type/);
+  config.projects[0].detailPage.videos[0].type = "file";
+  config.projects[0].detailPage.videos[0].qt.url = "javascript:alert(1)";
+  assert.throws(() => normalizeConfig(config), /videos\[0\].qt.url/);
   config.projects[0].detailPage.videos = [];
   config.projects[0].detailPage.workflow.image = "assets/missing.png";
   await writeFile(filename, JSON.stringify(config));

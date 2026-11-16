@@ -4,6 +4,8 @@
 
 - `assets/images/avatar.png`：用户提供的个人头像。
 - `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`：用户提供的项目照片。
+- `assets/videos/sweeper/`：用户提供的功能演示视频，以及从用户提供的 `爆炸视图.pptx` 中按点击目标拆出的五段硬件动画。来源对应表见该目录的 `manifest.json`。
+- `assets/images/sweeper/`：上述视频的封面帧。
 - `assets/images/uestc-emblem.png`：电子科技大学校徽，来源于[学校官方新闻网](https://news.uestc.edu.cn/info/1007/13146.htm)，相关权利归其权利人所有。
 
 复用模板时，请替换为自己的图片或已获授权的素材，并在 `config.jsonc` 中修改对应路径。

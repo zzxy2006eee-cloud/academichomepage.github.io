@@ -44,7 +44,6 @@
       ? [
           ["overview", w("项目概览", "Overview")],
           ["videos", w("功能演示", "Demos")],
-          ["perception", w("感知与规划", "Perception")],
           ["workflow", w("系统架构", "Architecture")],
           ["hardware", w("整车结构", "Hardware")],
           ["achievements", w("成果与实践", "Outcomes")],
@@ -91,20 +90,21 @@
   const selectedParts = new Map();
   const blankMedia = (label) =>
     `<div class="media-placeholder" role="img" aria-label="${esc(label)}"><span>${esc(label)}</span></div>`;
+  function demoMedia(item, label) {
+    if (!url(item?.url)) return blankMedia(w("视频待补充", "Video coming soon"));
+    if (item.type === "link")
+      return `<div class="external-demo">${url(item.poster) ? `<img src="${esc(url(item.poster))}" alt="${esc(label)}">` : ""}${link(item.url, w("打开演示视频", "Watch demonstration"), "external-video")}</div>`;
+    return `<video controls playsinline preload="none" data-video-src="${esc(url(item.url))}" aria-label="${esc(label)}"${url(item.poster) ? ` poster="${esc(url(item.poster))}"` : ""}></video>`;
+  }
   function demoStage(project, index) {
     const item = project.detailPage.videos?.[index];
     if (!item) return blankMedia(w("演示资料待补充", "Demo coming soon"));
-    const media = url(item.url)
-      ? item.type === "file"
-        ? `<video controls playsinline preload="none" data-video-src="${esc(url(item.url))}" aria-label="${esc(l(item.title))}"${url(item.poster) ? ` poster="${esc(url(item.poster))}"` : ""}></video>`
-        : `<div class="external-demo">${url(item.poster) ? `<img src="${esc(url(item.poster))}" alt="${esc(l(item.title))}">` : ""}${link(item.url, w("打开演示视频", "Watch demonstration"), "external-video")}</div>`
-      : blankMedia(w("视频待补充", "Video coming soon"));
-    return `<div class="demo-screen">${media}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}${url(item.url) ? link(item.url, w("打开原视频", "Open video")) : `<p class="media-pending">${w("演示素材待补充", "Demo material coming soon")}</p>`}</div>`;
+    return `<div class="demo-primary"><div class="demo-view-label">${w("实物端", "Physical view")}</div><div class="demo-screen">${demoMedia(item, `${l(item.title)} · ${w("实物端", "Physical view")}`)}</div>${url(item.url) ? link(item.url, w("打开实物端视频", "Open physical video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}<div class="qt-demo"><div class="demo-view-label">${w("Qt 端", "Qt interface")}</div>${demoMedia(item.qt, `${l(item.title)} · Qt`)}${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div></div>`;
   }
   function hardwareDetail(project, index) {
     const item = project.detailPage.hardware?.parts?.[index];
     if (!item) return "";
-    return `<h4>${esc(l(item.title))}</h4>${url(item.image) ? visual(item.image, item.title, "16 / 9") : blankMedia(w("部件图片待补充", "Component image coming soon"))}${paragraph(item.description)}`;
+    return `${url(item.url) ? `<video class="hardware-animation" controls muted playsinline preload="none" data-video-src="${esc(url(item.url))}" aria-label="${esc(l(item.title))}"${url(item.poster) ? ` poster="${esc(url(item.poster))}"` : ""}></video>` : url(item.image) ? visual(item.image, item.title, "2 / 1") : blankMedia(w("部件资料待补充", "Component material coming soon"))}<div class="hardware-caption"><div><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}</div>${url(item.url) ? `<button type="button" data-replay-hardware>${w("重新播放", "Replay")}</button>` : ""}</div>`;
   }
   function showcaseChapter(project, index) {
     const page = project.detailPage;
@@ -112,10 +112,16 @@
     const videos = page.videos || [];
     const selected = Math.min(selectedDemos.get(project.id) || 0, Math.max(videos.length - 1, 0));
     const parts = page.hardware?.parts || [];
-    const partIndex = Math.min(selectedParts.get(project.id) || 0, Math.max(parts.length - 1, 0));
+    const defaultPart = Math.max(
+      parts.findIndex((part) => part.id === page.hardware?.defaultPart),
+      0,
+    );
+    const partIndex = Math.min(
+      selectedParts.get(project.id) ?? defaultPart,
+      Math.max(parts.length - 1, 0),
+    );
     const demos = `<div class="demo-selector" role="group" aria-label="${w("选择演示场景", "Choose a demo")}">${videos.map((v, i) => `<button type="button" data-demo="${i}" aria-pressed="${i === selected}">${esc(l(v.title))}</button>`).join("")}</div><div class="demo-stage" id="${esc(project.id)}-demo-stage" aria-live="polite">${demoStage(project, selected)}</div><div class="demo-thumbnails" role="group" aria-label="${w("演示缩略图", "Demo thumbnails")}">${videos.map((v, i) => `<button type="button" data-demo="${i}" aria-pressed="${i === selected}" aria-controls="${esc(project.id)}-demo-stage"><span class="thumbnail-image">${url(v.poster) ? `<img src="${esc(url(v.poster))}" alt="" loading="lazy">` : `<span>${w("待补充", "Coming soon")}</span>`}</span><span><small>${number(i)}</small>${esc(l(v.title))}</span></button>`).join("")}</div>`;
-    const perception = `<div class="showcase-pair">${(page.perception || []).map((item) => `<article class="showcase-card"><h4>${esc(l(item.title))}</h4>${url(item.image) ? visual(item.image, item.title, "16 / 9") : blankMedia(w("效果图待补充", "Visualization coming soon"))}${paragraph(item.description)}</article>`).join("")}</div>`;
-    const hardware = `<div class="showcase-pair hardware-pair"><div class="showcase-card">${visual(page.hardware?.image || project.cover, w("整车外观", "Vehicle overview"), "4 / 3")}<div class="part-selector" role="group" aria-label="${w("查看硬件部件", "Explore components")}">${parts.map((item, i) => `<button type="button" data-part="${i}" aria-pressed="${i === partIndex}">${esc(l(item.title))}</button>`).join("")}</div></div><div class="showcase-card hardware-detail" aria-live="polite">${hardwareDetail(project, partIndex)}</div></div>`;
+    const hardware = `<p class="hardware-intro">${w("选择功能模块，查看对应硬件的分解与旋转展示。", "Choose a module to explore its exploded and rotating hardware view.")}</p><div class="hardware-explorer"><div class="part-selector" role="group" aria-label="${w("查看硬件部件", "Explore components")}">${parts.map((item, i) => `<button type="button" data-part="${i}" aria-pressed="${i === partIndex}" aria-controls="${esc(project.id)}-hardware-detail"><span>${esc(l(item.title))}</span>${l(item.subtitle) ? `<small>${esc(l(item.subtitle))}</small>` : ""}</button>`).join("")}</div><div class="hardware-detail" id="${esc(project.id)}-hardware-detail" aria-live="polite">${hardwareDetail(project, partIndex)}</div></div>`;
     const achievements = `<div class="showcase-pair">${(page.achievements || []).map((item) => `<article class="showcase-card"><h4>${esc(l(item.title))}</h4>${url(item.image) ? visual(item.image, item.title, "16 / 10") : blankMedia(w("成果资料待补充", "Outcome material coming soon"))}${paragraph(item.description)}${link(item.url, w("相关资料", "Related material"))}</article>`).join("")}</div>`;
     return `<article class="project-chapter showcase" id="${esc(project.id)}" tabindex="-1"><header class="chapter-heading"><p class="eyebrow"><span>${number(index)}</span> / ${w("核心项目", "SELECTED PROJECT")}</p><div class="project-hero"><div><h2>${esc(title)}</h2><p class="project-subtitle">${esc(subtitle)}</p>${paragraph(project.description)}<div class="tags">${(project.tags || []).map((tag) => `<span>${esc(l(tag))}</span>`).join("")}</div><div class="project-actions"><a class="watch-demo" data-jump href="${href(blockId(project, "videos"))}">▷ ${w("观看功能演示", "Explore demos")}</a>${link(project.repository, "GitHub", "repo-link")}</div></div><div class="hero-visual"><img class="hero-cover" src="${esc(url(project.cover))}" alt="${esc(l(project.title))}" width="600" height="400" loading="lazy"></div></div></header><nav class="section-nav" aria-label="${esc(title)} ${w("章节", "sections")}">${blocks(
       project,
@@ -123,7 +129,7 @@
       .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${text}</a>`)
       .join(
         "",
-      )}</nav>${projectBlock(project, "overview", paragraph(page.intro || project.description))}${projectBlock(project, "videos", demos)}${projectBlock(project, "perception", perception)}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description))}${projectBlock(project, "hardware", hardware)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
+      )}</nav>${projectBlock(project, "overview", paragraph(page.intro || project.description))}${projectBlock(project, "videos", demos)}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description))}${projectBlock(project, "hardware", hardware)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
   }
   let activeId = "",
     scrollLock = "",
@@ -257,6 +263,16 @@
     observeMedia();
   }
   document.addEventListener("click", (event) => {
+    const replay = event.target.closest("[data-replay-hardware]");
+    if (replay) {
+      const video = replay.closest(".hardware-detail").querySelector("video");
+      if (video) {
+        if (!video.getAttribute("src")) video.src = video.dataset.videoSrc;
+        video.currentTime = 0;
+        video.play().catch(() => {});
+      }
+      return;
+    }
     const demo = event.target.closest("button[data-demo]");
     const part = event.target.closest("button[data-part]");
     if (demo || part) {
@@ -274,11 +290,18 @@
           .forEach((b) => b.setAttribute("aria-pressed", Number(b.dataset.demo) === index));
         observeMedia();
       } else {
+        chapter.querySelectorAll(".hardware-detail video").forEach((v) => v.pause());
         selectedParts.set(project.id, index);
         chapter.querySelector(".hardware-detail").innerHTML = hardwareDetail(project, index);
         chapter
           .querySelectorAll("[data-part]")
           .forEach((b) => b.setAttribute("aria-pressed", Number(b.dataset.part) === index));
+        observeMedia();
+        const video = chapter.querySelector(".hardware-detail video");
+        if (video) {
+          video.src = video.dataset.videoSrc;
+          if (!matchMedia("(prefers-reduced-motion: reduce)").matches) video.play().catch(() => {});
+        }
       }
       return;
     }

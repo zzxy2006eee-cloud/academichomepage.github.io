@@ -661,6 +661,34 @@ video {
   border: 1px solid #dae6ef;
   border-radius: 9px;
   background: #f6f9fc;
+  align-items: start;
+}
+.demo-primary {
+  min-width: 0;
+  background: #fff;
+}
+.demo-view-label {
+  padding: 10px 14px;
+  color: #6c8498;
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+.media-original {
+  display: inline-block;
+  margin: 8px 14px 10px;
+  font-size: 10px;
+}
+.qt-demo {
+  margin-top: 18px;
+}
+.qt-demo .demo-view-label {
+  padding: 0 0 8px;
+}
+.qt-demo .media-original {
+  margin: 8px 0 0;
+}
+.qt-demo video {
+  background: #000;
 }
 .demo-screen {
   background: #000;
@@ -727,7 +755,7 @@ video {
 }
 .demo-thumbnails {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 12px;
   margin-top: 14px;
 }
@@ -797,6 +825,81 @@ video {
   font-size: 11px;
   padding: 6px 10px;
 }
+.hardware-intro {
+  font-size: 12px;
+  color: #8193a3;
+}
+.hardware-explorer {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  overflow: hidden;
+}
+.hardware-explorer .part-selector {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 16px;
+  background: #f6f9fc;
+  gap: 9px;
+}
+.hardware-explorer .part-selector button {
+  text-align: left;
+  background: #fff;
+  padding: 13px;
+  border-color: #e1eaf1;
+}
+.hardware-explorer .part-selector button[aria-pressed="true"] {
+  border-color: #94b8d2;
+  background: #eaf3fa;
+}
+.hardware-explorer .part-selector span {
+  display: block;
+  font-size: 13px;
+}
+.hardware-explorer .part-selector small {
+  display: block;
+  font-size: 10px;
+  color: #8497a7;
+  line-height: 1.7;
+  margin-top: 5px;
+}
+.hardware-detail {
+  min-width: 0;
+  background: #fff;
+  align-self: center;
+}
+.hardware-detail .hardware-animation {
+  aspect-ratio: 2/1;
+  border-radius: 0;
+  background: #fff;
+}
+.hardware-caption {
+  display: flex;
+  align-items: start;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 22px;
+  border-top: 1px solid #edf1f5;
+}
+.hardware-caption h4 {
+  margin: 0 0 6px;
+}
+.hardware-caption p {
+  font-size: 12px;
+  color: #8193a3;
+  margin: 0;
+}
+.hardware-caption button {
+  flex-shrink: 0;
+  padding: 5px 9px;
+  border: 1px solid #ccdae5;
+  border-radius: 4px;
+  background: #f2f7fb;
+  color: #497797;
+  font-size: 11px;
+}
 .showcase .demo-screen > *,
 .hardware-detail > .media-placeholder {
   animation: media-reveal 0.2s ease-out;
@@ -818,6 +921,20 @@ video {
   }
 }
 @media (max-width: 800px) {
+  .hardware-explorer {
+    grid-template-columns: 1fr;
+  }
+  .hardware-explorer .part-selector {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 12px;
+  }
+  .hardware-explorer .part-selector button:last-child {
+    grid-column: 1 / -1;
+  }
+  .hardware-caption {
+    padding: 14px;
+  }
   .demo-stage,
   .showcase-pair {
     grid-template-columns: 1fr;
