@@ -348,7 +348,7 @@ node scripts/dev.mjs
 | `intro.zh / en` | 展示页概览；不改变主页简介或 PDF 简历 |
 | `videos[]` | 每个条目对应一个场景；填写 `title`、`description`、`type`、`url`、`poster` |
 | `videos[].qt` | 右侧说明下方的 Qt 端视频，填写 `type`、`url`、`poster` |
-| `videos[].display` | 默认为双端展示；填写 `"qt-only"` 时仅以大窗口展示 `qt` 视频，不显示实物端占位 |
+| `videos[].display` | 默认为双端展示；填写 `"qt-only"` 时左侧展示 `qt` 视频，右侧仅显示文字说明，不放第二个视频或实物端占位 |
 | `workflow.image` | 系统架构 SVG 或图片，点击可放大 |
 | `hardware.defaultPart` | 默认展示的部件 `id`，如 `"assembly"` |
 | `hardware.parts[]` | 可切换的部件，填写 `id`、`title`、`subtitle`、`url`（动画视频）、`poster`、`description`；静态图可用 `image` |

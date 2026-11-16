@@ -667,14 +667,6 @@ video {
   min-width: 0;
   background: #fff;
 }
-.demo-single {
-  grid-column: 1 / -1;
-  min-width: 0;
-  background: #fff;
-}
-.demo-single .demo-description {
-  min-height: 0;
-}
 .demo-view-label {
   padding: 10px 14px;
   color: #6c8498;
