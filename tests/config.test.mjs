@@ -160,7 +160,7 @@ test("standalone project pages publish and version configured media with static 
     videos: [
       { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg", qt: { type: "file", url: "assets/demo.mp4", poster: "assets/flow.svg" } },
       { type: "link", url: "https://example.com/watch" },
-      { type: "file", url: "", poster: "" },
+      { type: "file", display: "single", url: "", poster: "", image: "assets/flow.svg", qt: { type: "file", url: "", image: "assets/flow.svg" } },
     ],
     achievements: [{ title: "Outcome", image: "assets/flow.svg" }],
   };
@@ -180,6 +180,8 @@ test("standalone project pages publish and version configured media with static 
   assert.equal(page.videos[0].qt.poster, page.workflow.image);
   assert.equal(page.perception[1].image, "");
   assert.equal(page.videos[2].url, "");
+  assert.equal(page.videos[2].image, page.workflow.image);
+  assert.equal(page.videos[2].qt.image, page.workflow.image);
   assert.throws(() => normalizeConfig({ ...config, projects: [{ ...config.projects[0], detailPage: { perception: [{ image: "javascript:alert(1)" }] } }] }), /perception\[0\].image/);
   assert.throws(() => normalizeConfig({ ...config, projects: [{ ...config.projects[0], detailPage: { hardware: { parts: {} } } }] }), /hardware.parts/);
   const server = startServer({ directory: path.join(root, "dist"), port: 0 });
@@ -213,7 +215,10 @@ test("standalone project pages publish and version configured media with static 
   }
   const oldVersion = page.workflow.image;
   await writeFile(path.join(root, "assets/flow.svg"), '<svg xmlns="http://www.w3.org/2000/svg"><title>Changed</title></svg>');
-  assert.notEqual((await buildSite(root)).site.projects[0].detailPage.workflow.image, oldVersion);
+  const changedMedia = (await buildSite(root)).site.projects[0].detailPage;
+  assert.notEqual(changedMedia.workflow.image, oldVersion);
+  assert.equal(changedMedia.videos[2].image, changedMedia.workflow.image);
+  assert.equal(changedMedia.videos[2].qt.image, changedMedia.workflow.image);
   config.projects[0].detailPage.videos[0].type = "iframe";
   assert.throws(() => normalizeConfig(config), /detailPage.videos\[0\].type/);
   config.projects[0].detailPage.videos[0].type = "file";

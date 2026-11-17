@@ -42,6 +42,7 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
           ...(page.videos || []).flatMap((item) => [item, ...(item.qt ? [item.qt] : [])]),
           ...(page.hardware?.parts || []),
         ]) {
+          if (video.image) video.image = await versionedAsset(video.image);
           if (video.poster) video.poster = await versionedAsset(video.poster);
           if (video.type !== "link" && video.url) video.url = await versionedAsset(video.url);
         }

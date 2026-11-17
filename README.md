@@ -37,7 +37,7 @@ academichomepage.github.io/
 ├─ src/
 │  ├─ app.js / styles.css       # 主页渲染、样式和 PDF 简历
 │  ├─ project.html             # 统一项目页骨架
-│  ├─ project.js               # 项目导航、双端视频、硬件爆炸视图交互
+│  ├─ project.js               # 项目导航、图像与视频、硬件部件切换
 │  └─ project.css              # 项目页样式
 ├─ assets/
 │  ├─ favicon.svg               # 浏览器标签图标
@@ -50,6 +50,7 @@ academichomepage.github.io/
 │  │  ├─ sweeper-architecture.svg # 清扫车系统架构图
 │  │  ├─ agents.svg / knowledge.svg # 附带的模板插图
 │  │  ├─ drone-navigation.svg / robot-perception.svg # 备用项目插图
+│  │  ├─ drone/*               # 无人机硬件、功能效果与评估图
 │  │  └─ sweeper/*.jpg         # 清扫车视频及爆炸视图的封面
 │  └─ videos/sweeper/
 │     ├─ mapping-{physical,qt}.mp4   # 感知建图：实物端、Qt 端
@@ -76,7 +77,7 @@ academichomepage.github.io/
 └─ dist/                       # 自动生成，不提交、不手动编辑
 ```
 
-`physical` 表示实物端，`qt` 表示 Qt 端。功能演示地址填写在 `projects[].detailPage.videos[]`（实物端）及其中的 `qt` 对象；硬件动画填写在 `detailPage.hardware.parts[]`。更新素材时同时修改配置路径；完整字段见[详细说明](docs/USAGE.md#可切换演示的项目布局)。
+`physical` 表示实物端，`qt` 表示 Qt 端。功能演示地址填写在 `projects[].detailPage.videos[]`（实物端）及其中的 `qt` 对象；硬件图片或动画填写在 `detailPage.hardware.parts[]`。更新素材时同时修改配置路径；完整字段见[详细说明](docs/USAGE.md#可切换演示的项目布局)。
 
 ## 本地预览
 

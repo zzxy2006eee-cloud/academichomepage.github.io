@@ -348,7 +348,10 @@ node scripts/dev.mjs
 | `intro.zh / en` | 展示页概览；不改变主页简介或 PDF 简历 |
 | `videos[]` | 每个条目对应一个场景；填写 `title`、`description`、`type`、`url`、`poster` |
 | `videos[].qt` | 右侧说明下方的 Qt 端视频，填写 `type`、`url`、`poster` |
-| `videos[].display` | 默认为双端展示；填写 `"qt-only"` 时左侧展示 `qt` 视频，右侧仅显示文字说明，不放第二个视频或实物端占位 |
+| `videos[].display` | `"single"` 为左侧媒体、右侧文字；默认为双端展示；填写 `"qt-only"` 时左侧展示 `qt` 视频，右侧仅显示文字说明，不放第二个视频或实物端占位 |
+| `videos[].image / qt.image` | 视频 URL 为空时展示的静态图片，点击可放大；后续填写视频 URL 即可优先播放视频 |
+| `videos[].viewLabel / secondaryLabel` | 主、副展示窗口的双语标题，省略时沿用实物端 / Qt 端 |
+| `hardware.title / description` | 硬件章节的双语标题与操作提示 |
 | `workflow.image` | 系统架构 SVG 或图片，点击可放大 |
 | `hardware.defaultPart` | 默认展示的部件 `id`，如 `"assembly"` |
 | `hardware.parts[]` | 可切换的部件，填写 `id`、`title`、`subtitle`、`url`（动画视频）、`poster`、`description`；静态图可用 `image` |
@@ -360,7 +363,7 @@ node scripts/dev.mjs
 
 点击硬件按钮会切换并播放对应的静音爆炸/旋转动画，提供“重新播放”；尊重系统的减少动画设置，此时由访客手动播放。默认展示整车，初次进入页面不自动播放。视频离开视野附近后暂停，素材按需加载。
 
-清扫车文件集中在 `assets/videos/sweeper/`，封面在 `assets/images/sweeper/`。`manifest.json` 记录每份网页素材对应的原始文件和时长；更换素材时同步维护清单。网页使用独立 MP4，不嵌入或发布原始 PPT。原视频转换为 H.264/AAC 网页副本，保留完整内容；PPT 动画直接拆出并整理 MP4 头部，便于在线播放。
+无人机硬件与效果图片放在 `assets/images/drone/`。清扫车视频放在 `assets/videos/sweeper/`，封面在 `assets/images/sweeper/`。更换素材后修改配置中的对应路径；视频建议使用 H.264/AAC 编码的 MP4。静态硬件部件填写 `image`，不需要填写动画地址。
 
 ### 中英文切换
 

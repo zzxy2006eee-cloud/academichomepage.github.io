@@ -246,16 +246,275 @@
       "repository": "https://github.com/zzxy2006eee-cloud/drone-nav-and-vision",
       "demo": "",
       "detailPage": {
+        "layout": "showcase",
+        "intro": {
+          "zh": "面向居民楼道消防通道巡检，将激光惯性定位、三维建图、分层路径规划和 YOLOv8n 杂物识别整合到四旋翼平台。通过 Qt 操作台组织区域覆盖、跨楼层巡检、任务授权与隐患图像记录。",
+          "en": "A quadrotor inspection platform for residential fire-access corridors, combining LiDAR-inertial localization, 3D mapping, hierarchical planning and YOLOv8n clutter detection. A Qt console coordinates area coverage, cross-floor inspection, task authorization and visual records.",
+        },
         "workflow": {
           "image": "assets/images/drone-workflow.svg",
           "description": {
-            "zh": "四旋翼无人机技术架构：多源感知、定位与共享地图、任务与轨迹规划、安全飞行执行，以及基于 YOLOv8 的楼道堆砌杂物识别。",
-            "en": "Quadrotor architecture: multi-sensor perception, localization and shared mapping, mission and trajectory planning, safe flight execution, and YOLOv8-based detection of clutter piled in corridors.",
+            "zh": "从激光惯性感知、共享地图到全局与局部规划，再连接飞行执行、视觉识别和巡检记录。",
+            "en": "LiDAR-inertial sensing and shared mapping feed global and local planning, flight execution, visual detection and inspection records.",
           },
         },
-        "hardware": { "image": "", "description": { "zh": "", "en": "" } },
-        "videos": [],
-        "achievements": [],
+        "hardware": {
+          "title": {
+            "zh": "硬件结构",
+            "en": "Hardware",
+          },
+          "description": {
+            "zh": "选择部件查看图片与功能说明，点击图片可放大。",
+            "en": "Select a component to explore its image and role. Click an image to enlarge.",
+          },
+          "defaultPart": "assembly",
+          "parts": [
+            {
+              "id": "assembly",
+              "title": {
+                "zh": "整机平台",
+                "en": "Airframe",
+              },
+              "subtitle": {
+                "zh": "四旋翼 · 感知与计算集成",
+                "en": "Quadrotor · integrated sensing and compute",
+              },
+              "image": "assets/images/drone-navigation.png",
+              "description": {
+                "zh": "碳纤维机架承载激光雷达、前视与下视相机、飞控及机载计算单元，围绕楼道巡检组织传感器布局。",
+                "en": "A carbon-fiber frame integrates LiDAR, forward and downward cameras, flight control and onboard computing for corridor inspection.",
+              },
+            },
+            {
+              "id": "lidar",
+              "title": {
+                "zh": "Livox MID-360",
+                "en": "Livox MID-360",
+              },
+              "subtitle": {
+                "zh": "激光雷达与惯性测量",
+                "en": "LiDAR and inertial sensing",
+              },
+              "image": "assets/images/drone/mid360.jpg",
+              "description": {
+                "zh": "采集点云与 IMU 数据，为 Faster-LIO 提供激光惯性观测。雷达前倾 30° 安装，结合外参补偿完成传感器与机体坐标转换。",
+                "en": "Point clouds and IMU measurements feed Faster-LIO. A 30° forward tilt and extrinsic compensation align sensor observations with the airframe.",
+              },
+            },
+            {
+              "id": "depth",
+              "title": {
+                "zh": "RealSense 深度相机",
+                "en": "RealSense Depth Camera",
+              },
+              "subtitle": {
+                "zh": "前视环境观测",
+                "en": "Forward scene sensing",
+              },
+              "image": "assets/images/drone/realsense.jpg",
+              "description": {
+                "zh": "提供前方环境的图像与深度信息，辅助观察楼道空间和前向障碍物。",
+                "en": "Provides forward imagery and depth for observing corridor geometry and nearby obstacles.",
+              },
+            },
+            {
+              "id": "rgb",
+              "title": {
+                "zh": "轮趣 C70 RGB 相机",
+                "en": "C70 RGB Camera",
+              },
+              "subtitle": {
+                "zh": "下视图像采集",
+                "en": "Downward imaging",
+              },
+              "image": "assets/images/drone/c70.jpg",
+              "description": {
+                "zh": "采集下视图像，用于 YOLOv8n 楼道堆砌杂物识别、巡检关键帧与覆盖记录。",
+                "en": "Captures downward imagery for YOLOv8n clutter detection, inspection keyframes and coverage records.",
+              },
+            },
+            {
+              "id": "flight",
+              "title": {
+                "zh": "Pixhawk 6C Mini",
+                "en": "Pixhawk 6C Mini",
+              },
+              "subtitle": {
+                "zh": "PX4 飞行控制",
+                "en": "PX4 flight control",
+              },
+              "image": "assets/images/drone/pixhawk.jpg",
+              "description": {
+                "zh": "运行 PX4，通过 MAVLink 与机载计算单元通信，承担姿态稳定、轨迹跟踪与底层飞行控制。",
+                "en": "Runs PX4 and communicates with the onboard computer via MAVLink for attitude stabilization, trajectory tracking and flight control.",
+              },
+            },
+            {
+              "id": "compute",
+              "title": {
+                "zh": "Intel NUC",
+                "en": "Intel NUC",
+              },
+              "subtitle": {
+                "zh": "机载计算与任务调度",
+                "en": "Onboard computing",
+              },
+              "image": "assets/images/drone/nuc.jpg",
+              "description": {
+                "zh": "承载 Faster-LIO、三维 A*、EGO-Planner 与 YOLOv8n 等模块，组织感知、规划、识别与巡检数据处理。",
+                "en": "Hosts Faster-LIO, 3D A*, EGO-Planner and YOLOv8n, coordinating perception, planning, recognition and inspection data processing.",
+              },
+            },
+          ],
+        },
+        "videos": [
+          {
+            "title": {
+              "zh": "感知建图",
+              "en": "Mapping",
+            },
+            "type": "file",
+            "url": "",
+            "image": "assets/images/drone/point-cloud.png",
+            "poster": "assets/images/drone/point-cloud.png",
+            "viewLabel": {
+              "zh": "三维点云地图",
+              "en": "3D point cloud",
+            },
+            "description": {
+              "zh": "由激光点云与 IMU 构建楼道地图，再转为体素占据地图供导航使用。图示为报告中的双层楼道仿真场景建图结果。",
+              "en": "LiDAR and IMU measurements produce a corridor point cloud and a voxel occupancy map for navigation. The figures show the report’s two-floor simulated corridor.",
+            },
+            "display": "dual",
+            "qt": {
+              "type": "file",
+              "url": "",
+              "image": "assets/images/drone/voxel-map.png",
+            },
+            "secondaryLabel": {
+              "zh": "三维体素地图",
+              "en": "Voxel occupancy map",
+            },
+          },
+          {
+            "title": {
+              "zh": "自主导航与避障",
+              "en": "Navigation & Avoidance",
+            },
+            "type": "file",
+            "url": "",
+            "image": "assets/images/drone/avoidance-screen.png",
+            "poster": "assets/images/drone/avoidance-screen.png",
+            "viewLabel": {
+              "zh": "Gazebo / Qt 运行画面",
+              "en": "Gazebo / Qt view",
+            },
+            "description": {
+              "zh": "三维 A* 提供全局参考路线，EGO-Planner 以 B 样条生成局部绕障轨迹。左侧展示仿真运行画面，右侧展示动态避障轨迹。",
+              "en": "3D A* supplies a global reference route; EGO-Planner generates local B-spline avoidance trajectories. The simulation view is paired with the resulting trajectory.",
+            },
+            "display": "dual",
+            "qt": {
+              "type": "file",
+              "url": "",
+              "image": "assets/images/drone/avoidance-route.png",
+            },
+            "secondaryLabel": {
+              "zh": "动态避障轨迹",
+              "en": "Avoidance trajectory",
+            },
+          },
+          {
+            "title": {
+              "zh": "全覆盖巡检",
+              "en": "Coverage Inspection",
+            },
+            "type": "file",
+            "url": "",
+            "image": "assets/images/drone/coverage-route.png",
+            "poster": "assets/images/drone/coverage-route.png",
+            "viewLabel": {
+              "zh": "跨楼层参考路线",
+              "en": "Cross-floor reference route",
+            },
+            "description": {
+              "zh": "以水平条带覆盖大厅与走廊，以航点连接楼梯和不同楼层。右侧为报告中 1.6 m 条带间距下的覆盖统计。",
+              "en": "Horizontal strips cover halls and corridors, while waypoints connect stairs and floors. The companion chart reports coverage with a 1.6 m strip spacing.",
+            },
+            "display": "dual",
+            "qt": {
+              "type": "file",
+              "url": "",
+              "image": "assets/images/drone/coverage-results.png",
+            },
+            "secondaryLabel": {
+              "zh": "巡检覆盖统计",
+              "en": "Coverage results",
+            },
+          },
+          {
+            "title": {
+              "zh": "楼道堆砌杂物识别",
+              "en": "Corridor Clutter Detection",
+            },
+            "type": "file",
+            "url": "",
+            "image": "assets/images/drone/clutter-detection.jpg",
+            "poster": "assets/images/drone/clutter-detection.jpg",
+            "viewLabel": {
+              "zh": "楼道图像识别",
+              "en": "Corridor image detection",
+            },
+            "description": {
+              "zh": "使用 YOLOv8n 识别楼道堆砌杂物，记录目标类别、置信度与现场图像，并结合识别时刻的机体位姿标记巡检位置。",
+              "en": "YOLOv8n identifies corridor clutter and records object classes, confidence and evidence images. The airframe pose at detection time marks the inspection location.",
+            },
+            "display": "single",
+          },
+          {
+            "title": {
+              "zh": "Qt 界面展示",
+              "en": "Qt Interface",
+            },
+            "type": "file",
+            "url": "",
+            "image": "assets/images/drone/qt-console.png",
+            "poster": "assets/images/drone/qt-console.png",
+            "viewLabel": {
+              "zh": "Qt 操作台",
+              "en": "Qt console",
+            },
+            "description": {
+              "zh": "在统一界面中查看地图、飞行状态与任务信息，完成区域选择、路线预览、任务授权和异常处理；文本入口支持自然语言任务解析。",
+              "en": "A unified console displays maps, flight status and tasks, with area selection, route preview, task authorization and exception handling. A text interface supports natural-language task parsing.",
+            },
+            "display": "single",
+          },
+        ],
+        "achievements": [
+          {
+            "title": {
+              "zh": "建图与定位评估",
+              "en": "Mapping & Localization",
+            },
+            "image": "assets/images/drone/pose-error.png",
+            "description": {
+              "zh": "报告中的 Gazebo 双层楼道实验：轨迹平移 RMSE 为 0.1190 m，旋转 RMSE 为 0.3931°；上图展示完整轨迹的位姿误差。",
+              "en": "In the report’s two-floor Gazebo experiment, translation RMSE is 0.1190 m and rotation RMSE is 0.3931°. The chart shows pose errors along the trajectory.",
+            },
+          },
+          {
+            "title": {
+              "zh": "视觉识别与巡检记录",
+              "en": "Recognition & Inspection Records",
+            },
+            "image": "assets/images/drone/detection-metrics.jpg",
+            "description": {
+              "zh": "YOLOv8n 面向楼道堆放物检测，图示为报告中的 Precision、Recall 与 mAP@0.5 曲线；识别结果与现场图像、位姿和任务信息关联留存。",
+              "en": "YOLOv8n detects objects piled in corridors. The report’s chart shows precision, recall and mAP@0.5; detections are associated with images, poses and task records.",
+            },
+          },
+        ],
       },
       "details": {
         "zh": "项目基于 ROS Noetic，集成 PX4 SITL、Gazebo Classic、MID360 仿真、Faster-LIO 定位以及 Qt/RViz 操作台，衔接全局 A* 路线与 EGO 局部规划。支持在线建图、加载地图、区域选择、巡检路线与相机关键帧记录。根据仓库说明，项目仍处于仿真验证阶段，新增巡检功能尚未完成飞行验收，实机验收也尚未完成。",

@@ -143,12 +143,16 @@ export function normalizeConfig(input) {
         if (
           key === "videos" &&
           item.display !== undefined &&
-          !["dual", "qt-only"].includes(item.display)
+          !["dual", "qt-only", "single"].includes(item.display)
         )
-          fail(`${field}.display`, '请填写 "dual"（双端）或 "qt-only"（仅 Qt 界面）。');
+          fail(
+            `${field}.display`,
+            '请填写 "dual"（双端）、"qt-only"（仅 Qt 界面）或 "single"（单幅媒体）。',
+          );
         if (key === "videos" && item.qt !== undefined) {
           object(item.qt, `${field}.qt`);
-          for (const name of ["url", "poster"]) media(item.qt[name], `${field}.qt.${name}`);
+          for (const name of ["url", "poster", "image"])
+            media(item.qt[name], `${field}.qt.${name}`);
           if (!["file", "link"].includes(item.qt.type))
             fail(`${field}.qt.type`, '请填写 "file" 或 "link"。');
         }

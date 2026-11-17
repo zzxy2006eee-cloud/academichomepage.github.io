@@ -44,7 +44,7 @@
       ? [
           ["overview", w("项目概览", "Overview")],
           ["workflow", w("系统架构", "Architecture")],
-          ["hardware", w("整车结构", "Hardware")],
+          ["hardware", l(project.detailPage.hardware?.title) || w("整车结构", "Hardware")],
           ["videos", w("功能演示", "Demos")],
           ["achievements", w("成果与实践", "Outcomes")],
         ]
@@ -62,7 +62,7 @@
   }
   function projectBlock(project, key, content) {
     const title = blocks(project).find((b) => b[0] === key)[1];
-    return `<section class="detail-section${content ? "" : " pending-section"}" id="${esc(blockId(project, key))}" tabindex="-1"><h3>${title}</h3>${content || `<p class="empty">${w("内容待补充", "Content coming soon")}</p>`}</section>`;
+    return `<section class="detail-section${content ? "" : " pending-section"}" id="${esc(blockId(project, key))}" tabindex="-1"><h3>${esc(title)}</h3>${content || `<p class="empty">${w("内容待补充", "Content coming soon")}</p>`}</section>`;
   }
   function chapter(project, index) {
     const page = project.detailPage || {};
@@ -81,7 +81,7 @@
       )
       .join("");
     return `<article class="project-chapter" id="${esc(project.id)}" tabindex="-1"><header class="chapter-heading"><p class="eyebrow"><span>${number(index)}</span> / ${w("核心项目", "SELECTED PROJECT")}</p><div class="project-hero"><div><h2>${esc(title)}</h2>${subtitle ? `<p class="project-subtitle">${esc(subtitle)}</p>` : ""}${paragraph(project.description)}<div class="tags">${(project.tags || []).map((tag) => `<span>${esc(l(tag))}</span>`).join("")}</div><div class="project-actions">${link(project.repository, "GitHub", "repo-link")}${link(project.demo, w("在线演示", "Live demo"))}</div></div><div class="hero-visual"><img class="hero-cover" src="${esc(url(project.cover))}" alt="${esc(l(project.title))}" width="600" height="400" loading="${index ? "lazy" : "eager"}"></div></div></header><nav class="section-nav" aria-label="${esc(title)} ${w("章节", "sections")}">${blocks()
-      .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${text}</a>`)
+      .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${esc(text)}</a>`)
       .join(
         "",
       )}</nav>${projectBlock(project, "overview", paragraph(project.details || project.description) + (l(project.outcome) ? `<div class="outcome"><span>${w("项目成果", "OUTCOME")}</span>${paragraph(project.outcome)}</div>` : ""))}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description) + (page.workflow?.image ? "" : paragraph(page.workflow?.description)))}${projectBlock(project, "hardware", visual(page.hardware?.image, page.hardware?.description, "4 / 3") + (page.hardware?.image ? "" : paragraph(page.hardware?.description)))}${projectBlock(project, "videos", videos)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
@@ -91,7 +91,10 @@
   const blankMedia = (label) =>
     `<div class="media-placeholder" role="img" aria-label="${esc(label)}"><span>${esc(label)}</span></div>`;
   function demoMedia(item, label) {
-    if (!url(item?.url)) return blankMedia(w("视频待补充", "Video coming soon"));
+    if (!url(item?.url))
+      return url(item?.image)
+        ? `<div class="demo-still">${visual(item.image, label, "16 / 10")}</div>`
+        : blankMedia(w("视频待补充", "Video coming soon"));
     if (item.type === "link")
       return `<div class="external-demo">${url(item.poster) ? `<img src="${esc(url(item.poster))}" alt="${esc(label)}">` : ""}${link(item.url, w("打开演示视频", "Watch demonstration"), "external-video")}</div>`;
     return `<video controls playsinline preload="none" data-video-src="${esc(url(item.url))}" aria-label="${esc(label)}"${url(item.poster) ? ` poster="${esc(url(item.poster))}"` : ""}></video>`;
@@ -99,9 +102,13 @@
   function demoStage(project, index) {
     const item = project.detailPage.videos?.[index];
     if (!item) return blankMedia(w("演示资料待补充", "Demo coming soon"));
+    const primaryLabel = l(item.viewLabel) || w("实物端", "Physical view");
+    const secondaryLabel = l(item.secondaryLabel) || w("Qt 端", "Qt interface");
+    if (item.display === "single")
+      return `<div class="demo-primary"><div class="demo-view-label">${esc(primaryLabel)}</div><div class="demo-screen">${demoMedia(item, l(item.title))}</div>${url(item.url) ? link(item.url, w("打开演示视频", "Open demo video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}</div>`;
     if (item.display === "qt-only")
       return `<div class="demo-primary"><div class="demo-view-label">${w("Qt 界面", "Qt interface")}</div><div class="demo-screen">${demoMedia(item.qt, l(item.title))}</div>${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}</div>`;
-    return `<div class="demo-primary"><div class="demo-view-label">${w("实物端", "Physical view")}</div><div class="demo-screen">${demoMedia(item, `${l(item.title)} · ${w("实物端", "Physical view")}`)}</div>${url(item.url) ? link(item.url, w("打开实物端视频", "Open physical video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}<div class="qt-demo"><div class="demo-view-label">${w("Qt 端", "Qt interface")}</div>${demoMedia(item.qt, `${l(item.title)} · Qt`)}${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div></div>`;
+    return `<div class="demo-primary"><div class="demo-view-label">${esc(primaryLabel)}</div><div class="demo-screen">${demoMedia(item, `${l(item.title)} · ${primaryLabel}`)}</div>${url(item.url) ? link(item.url, w("打开实物端视频", "Open physical video"), "media-original") : ""}</div><div class="demo-description"><span class="demo-index">DEMO ${number(index)} / ${number(project.detailPage.videos.length - 1)}</span><h4>${esc(l(item.title))}</h4>${paragraph(item.description)}<div class="qt-demo"><div class="demo-view-label">${esc(secondaryLabel)}</div>${demoMedia(item.qt, `${l(item.title)} · ${secondaryLabel}`)}${url(item.qt?.url) ? link(item.qt.url, w("打开 Qt 视频", "Open Qt video"), "media-original") : ""}</div></div>`;
   }
   function hardwareDetail(project, index) {
     const item = project.detailPage.hardware?.parts?.[index];
@@ -123,12 +130,12 @@
       Math.max(parts.length - 1, 0),
     );
     const demos = `<div class="demo-selector" role="group" aria-label="${w("选择演示场景", "Choose a demo")}">${videos.map((v, i) => `<button type="button" data-demo="${i}" aria-pressed="${i === selected}">${esc(l(v.title))}</button>`).join("")}</div><div class="demo-stage" id="${esc(project.id)}-demo-stage" aria-live="polite">${demoStage(project, selected)}</div><div class="demo-thumbnails" role="group" aria-label="${w("演示缩略图", "Demo thumbnails")}">${videos.map((v, i) => `<button type="button" data-demo="${i}" aria-pressed="${i === selected}" aria-controls="${esc(project.id)}-demo-stage"><span class="thumbnail-image">${url(v.poster) ? `<img src="${esc(url(v.poster))}" alt="" loading="lazy">` : `<span>${w("待补充", "Coming soon")}</span>`}</span><span><small>${number(i)}</small>${esc(l(v.title))}</span></button>`).join("")}</div>`;
-    const hardware = `<p class="hardware-intro">${w("选择功能模块，查看对应硬件的分解与旋转展示。", "Choose a module to explore its exploded and rotating hardware view.")}</p><div class="hardware-explorer"><div class="part-selector" role="group" aria-label="${w("查看硬件部件", "Explore components")}">${parts.map((item, i) => `<button type="button" data-part="${i}" aria-pressed="${i === partIndex}" aria-controls="${esc(project.id)}-hardware-detail"><span>${esc(l(item.title))}</span>${l(item.subtitle) ? `<small>${esc(l(item.subtitle))}</small>` : ""}</button>`).join("")}</div><div class="hardware-detail" id="${esc(project.id)}-hardware-detail" aria-live="polite">${hardwareDetail(project, partIndex)}</div></div>`;
+    const hardware = `<p class="hardware-intro">${esc(l(page.hardware?.description) || w("选择功能模块，查看对应硬件的分解与旋转展示。", "Choose a module to explore its exploded and rotating hardware view."))}</p><div class="hardware-explorer"><div class="part-selector" role="group" aria-label="${w("查看硬件部件", "Explore components")}">${parts.map((item, i) => `<button type="button" data-part="${i}" aria-pressed="${i === partIndex}" aria-controls="${esc(project.id)}-hardware-detail"><span>${esc(l(item.title))}</span>${l(item.subtitle) ? `<small>${esc(l(item.subtitle))}</small>` : ""}</button>`).join("")}</div><div class="hardware-detail" id="${esc(project.id)}-hardware-detail" aria-live="polite">${hardwareDetail(project, partIndex)}</div></div>`;
     const achievements = `<div class="showcase-pair">${(page.achievements || []).map((item) => `<article class="showcase-card"><h4>${esc(l(item.title))}</h4>${url(item.image) ? visual(item.image, item.title, "16 / 10") : blankMedia(w("成果资料待补充", "Outcome material coming soon"))}${paragraph(item.description)}${link(item.url, w("相关资料", "Related material"))}</article>`).join("")}</div>`;
     return `<article class="project-chapter showcase" id="${esc(project.id)}" tabindex="-1"><header class="chapter-heading"><p class="eyebrow"><span>${number(index)}</span> / ${w("核心项目", "SELECTED PROJECT")}</p><div class="project-hero"><div><h2>${esc(title)}</h2><p class="project-subtitle">${esc(subtitle)}</p>${paragraph(project.description)}<div class="tags">${(project.tags || []).map((tag) => `<span>${esc(l(tag))}</span>`).join("")}</div><div class="project-actions"><a class="watch-demo" data-jump href="${href(blockId(project, "videos"))}">▷ ${w("观看功能演示", "Explore demos")}</a>${link(project.repository, "GitHub", "repo-link")}</div></div><div class="hero-visual"><img class="hero-cover" src="${esc(url(project.cover))}" alt="${esc(l(project.title))}" width="600" height="400" loading="lazy"></div></div></header><nav class="section-nav" aria-label="${esc(title)} ${w("章节", "sections")}">${blocks(
       project,
     )
-      .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${text}</a>`)
+      .map(([key, text]) => `<a data-jump href="${href(blockId(project, key))}">${esc(text)}</a>`)
       .join(
         "",
       )}</nav>${projectBlock(project, "overview", paragraph(page.intro || project.description))}${projectBlock(project, "workflow", visual(page.workflow?.image, page.workflow?.description))}${projectBlock(project, "hardware", hardware)}${projectBlock(project, "videos", demos)}${projectBlock(project, "achievements", achievements)}${index === projects.length - 1 ? `<div class="chapter-end"><a href="./#projects">← ${w("返回主页", "Back to homepage")}</a></div>` : ""}</article>`;
@@ -248,7 +255,7 @@
             `<div class="directory-chapters" data-chapter-directory="${esc(p.id)}" role="navigation" aria-label="${esc(l(p.title))}" hidden>${blocks(
               p,
             )
-              .map(([key, text]) => `<a data-jump href="${href(blockId(p, key))}">${text}</a>`)
+              .map(([key, text]) => `<a data-jump href="${href(blockId(p, key))}">${esc(text)}</a>`)
               .join("")}</div>`,
         )
         .join(""),
