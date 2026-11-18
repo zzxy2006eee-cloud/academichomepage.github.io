@@ -132,7 +132,7 @@
     return data.awards
       .map(
         (x) =>
-          `<div class="award-row"><span class="award-icon">${icon("medal")}</span><div class="award-main"><strong>${esc(l(x.title))}</strong>${l(x.organization) ? `<small>${esc(l(x.organization))}</small>` : ""}</div><span class="award-year">${esc(x.year)}</span></div>`,
+          `<div class="award-row"><span class="award-icon">${icon("medal")}</span><div class="award-main"><strong>${esc(l(x.title))}${l(x.level) ? `<span class="award-level">${esc(l(x.level))}</span>` : ""}</strong>${l(x.organization) ? `<small>${esc(l(x.organization))}</small>` : ""}</div><span class="award-year">${esc(x.year)}</span></div>`,
       )
       .join("");
   }

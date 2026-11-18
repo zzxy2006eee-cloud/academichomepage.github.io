@@ -126,13 +126,14 @@
       "logo": "assets/images/uestc-emblem.png",
     },
   ],
-  // 荣誉与奖项。按列表顺序展示；organization 为空时隐藏授予单位。
+  // 荣誉与奖项。level 为名称旁的级别标签；organization 为空时隐藏授予单位。
   "awards": [
     {
       "title": {
         "zh": "优秀学生一等奖学金",
         "en": "First-Class Outstanding Student Scholarship",
       },
+      "level": { "zh": "校级", "en": "University" },
       "organization": "",
       "year": "2024–2025",
     },
@@ -141,6 +142,7 @@
         "zh": "优秀学生一等奖学金",
         "en": "First-Class Outstanding Student Scholarship",
       },
+      "level": { "zh": "校级", "en": "University" },
       "organization": "",
       "year": "2025–2026",
     },
@@ -149,6 +151,7 @@
         "zh": "国家励志奖学金",
         "en": "National Endeavor Scholarship",
       },
+      "level": { "zh": "校级", "en": "University" },
       "organization": "",
       "year": "2025–2026",
     },
@@ -157,6 +160,7 @@
         "zh": "Openhouse工程创新与设计金奖",
         "en": "Openhouse Engineering Innovation and Design — Gold Award",
       },
+      "level": { "zh": "院级", "en": "School" },
       "organization": "",
       "year": "2026",
     },
@@ -165,6 +169,7 @@
         "zh": "中国机器人及人工智能大赛省级优秀奖",
         "en": "China Robot and Artificial Intelligence Competition — Provincial Excellence Award",
       },
+      "level": { "zh": "省级", "en": "Provincial" },
       "organization": "",
       "year": "2026",
     },
