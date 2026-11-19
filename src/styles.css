@@ -577,11 +577,24 @@ button {
   white-space: nowrap;
 }
 .award-row {
+  width: 100%;
+  text-align: left;
+  color: inherit;
+  background: transparent;
+  border: 0;
+  border-radius: 4px;
   display: grid;
   grid-template-columns: 23px 1fr auto;
   gap: 12px;
   align-items: center;
   padding: 12px 0;
+}
+.award-row:hover {
+  background: #f4f8fb;
+}
+.award-row:focus-visible {
+  outline: 2px solid #6f9fbd;
+  outline-offset: 3px;
 }
 .award-row + .award-row {
   border-top: 1px solid var(--line);
@@ -1125,6 +1138,58 @@ dialog {
 dialog::backdrop {
   background: #15253780;
   backdrop-filter: blur(3px);
+}
+.certificate-dialog {
+  max-width: 1120px;
+  max-height: calc(100dvh - 32px);
+  padding: 26px;
+}
+.certificate-dialog h2 {
+  font-size: 18px;
+  margin: 0;
+}
+.certificate-meta {
+  margin: 6px 0 18px;
+}
+.certificate-stage {
+  overflow: auto;
+  max-height: 65dvh;
+  background: #f1f4f6;
+  border-radius: 5px;
+}
+.certificate-image {
+  display: block;
+  width: auto;
+  max-width: 100%;
+  margin: auto;
+  height: auto;
+  max-height: 65dvh;
+  object-fit: contain;
+}
+.certificate-placeholder {
+  aspect-ratio: 1400 / 990;
+  background: #000;
+}
+.certificate-zoomed .certificate-image {
+  width: 180%;
+  max-width: none;
+  max-height: none;
+}
+.certificate-actions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 16px;
+  font-size: 12px;
+  color: #75889a;
+}
+@media (max-width: 760px) {
+  .certificate-dialog {
+    padding: 24px 14px 16px;
+  }
+  .certificate-dialog h2 {
+    font-size: 15px;
+  }
 }
 dialog h2 {
   font-size: 22px;

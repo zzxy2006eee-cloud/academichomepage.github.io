@@ -2,6 +2,7 @@
 
 代码及原创 SVG 插图采用仓库中的 [MIT 许可](../LICENSE)。以下图片不包含在该代码许可中：
 
+- `assets/images/awards/*.jpg`：用户提供的两张原始奖状照片，保留证书内容；网页中的边缘裁切仅改变显示区域。`pending.svg` 为纯黑占位图。
 - `assets/images/avatar.png`：用户提供的个人头像。
 - `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`：用户提供的项目照片。
 - `assets/videos/sweeper/`：用户提供的功能演示视频，以及从用户提供的 `爆炸视图.pptx` 中按点击目标拆出的五段硬件动画。来源对应表见该目录的 `manifest.json`。

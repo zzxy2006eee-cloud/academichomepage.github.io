@@ -131,8 +131,8 @@
   function awards() {
     return data.awards
       .map(
-        (x) =>
-          `<div class="award-row"><span class="award-icon">${icon("medal")}</span><div class="award-main"><strong>${esc(l(x.title))}${l(x.level) ? `<span class="award-level">${esc(l(x.level))}</span>` : ""}</strong>${l(x.organization) ? `<small>${esc(l(x.organization))}</small>` : ""}</div><span class="award-year">${esc(x.year)}</span></div>`,
+        (x, index) =>
+          `<button type="button" class="award-row" data-award="${index}" aria-haspopup="dialog" title="${w("查看奖状", "View certificate")}"><span class="award-icon">${icon("medal")}</span><span class="award-main"><strong>${esc(l(x.title))}${l(x.level) ? `<span class="award-level">${esc(l(x.level))}</span>` : ""}</strong>${l(x.organization) ? `<small>${esc(l(x.organization))}</small>` : ""}</span><span class="award-year">${esc(x.year)}</span></button>`,
       )
       .join("");
   }
@@ -292,7 +292,11 @@
     });
   }
   const dialog = document.getElementById("detail-dialog");
-  function openDialog(html) {
+  function openDialog(html, certificate = false) {
+    dialog.classList.toggle("certificate-dialog", certificate);
+    dialog.classList.remove("certificate-zoomed");
+    if (certificate) dialog.setAttribute("aria-labelledby", "certificate-title");
+    else dialog.removeAttribute("aria-labelledby");
     document.getElementById("dialog-content").innerHTML = html;
     dialog.showModal();
   }
@@ -332,6 +336,25 @@
       });
       history.replaceState(null, "", `#${target.id}`);
       setActive(target.id);
+      return;
+    }
+    const award = e.target.closest("[data-award]");
+    if (award) {
+      const item = data.awards[Number(award.dataset.award)];
+      if (!item) return;
+      const image = safeUrl(item.certificate);
+      const pending = !image || /\/pending\.svg(?:[?#]|$)/.test(image);
+      openDialog(
+        `<h2 id="certificate-title">${esc(l(item.title))}</h2><p class="certificate-meta">${esc(item.year)}${l(item.level) ? ` · ${esc(l(item.level))}` : ""}</p><div class="certificate-stage">${image ? `<img class="certificate-image" style="clip-path:inset(0 0 0 ${Math.min(10, Math.max(0, Number(item.certificateCropLeft) || 0))}%)" src="${esc(image)}" alt="${esc(pending ? w("奖状待补充", "Certificate coming soon") : `${l(item.title)} · ${item.year}`)}">` : `<div class="certificate-placeholder" role="img" aria-label="${w("奖状待补充", "Certificate coming soon")}"></div>`}</div><div class="certificate-actions">${pending ? `<span>${w("奖状待补充", "Certificate coming soon")}</span>` : `<button type="button" class="dialog-action" data-certificate-zoom aria-pressed="false">${w("放大查看", "Zoom in")}</button>${link(image, w("打开原图 ↗", "Open image ↗"))}`}</div>`,
+        true,
+      );
+      return;
+    }
+    const zoom = e.target.closest("[data-certificate-zoom]");
+    if (zoom) {
+      const expanded = dialog.classList.toggle("certificate-zoomed");
+      zoom.setAttribute("aria-pressed", expanded);
+      zoom.textContent = expanded ? w("适应窗口", "Fit to window") : w("放大查看", "Zoom in");
       return;
     }
     const bib = e.target.closest("[data-bibtex]");

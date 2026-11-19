@@ -152,6 +152,7 @@ test("standalone project pages publish and version configured media with static 
   await writeFile(path.join(root, "assets/flow.svg"), '<svg xmlns="http://www.w3.org/2000/svg"/>');
   // The HTTP fixture verifies media delivery, not video decoding.
   await writeFile(path.join(root, "assets/demo.mp4"), Buffer.from([0, 0, 0, 24]));
+  config.awards[0].certificate = "assets/flow.svg";
   config.projects[0].detailPage = {
     layout: "showcase",
     perception: [{ title: "BEV", image: "assets/flow.svg" }, { image: "" }],
@@ -167,6 +168,7 @@ test("standalone project pages publish and version configured media with static 
   await writeFile(filename, JSON.stringify(config));
   const built = await buildSite(root);
   const page = built.site.projects[0].detailPage;
+  assert.equal(built.site.awards[0].certificate, page.workflow.image);
   assert.match(page.workflow.image, /^assets\/flow.svg\?v=[a-f\d]+$/);
   assert.match(page.videos[0].url, /^assets\/demo.mp4\?v=[a-f\d]+$/);
   assert.equal(page.videos[0].poster, page.workflow.image);
@@ -215,7 +217,9 @@ test("standalone project pages publish and version configured media with static 
   }
   const oldVersion = page.workflow.image;
   await writeFile(path.join(root, "assets/flow.svg"), '<svg xmlns="http://www.w3.org/2000/svg"><title>Changed</title></svg>');
-  const changedMedia = (await buildSite(root)).site.projects[0].detailPage;
+  const changedBuild = await buildSite(root);
+  const changedMedia = changedBuild.site.projects[0].detailPage;
+  assert.equal(changedBuild.site.awards[0].certificate, changedMedia.workflow.image);
   assert.notEqual(changedMedia.workflow.image, oldVersion);
   assert.equal(changedMedia.videos[2].image, changedMedia.workflow.image);
   assert.equal(changedMedia.videos[2].qt.image, changedMedia.workflow.image);

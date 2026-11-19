@@ -14,6 +14,9 @@ for (const item of [site.profile.name, site.profile.role, ...site.about])
 for (const asset of [
   site.profile.avatar,
   site.favicon,
+  ...site.awards
+    .map((award) => award.certificate)
+    .filter((src) => src && !/^https?:\/\//i.test(src)),
   ...site.projects.map((p) => p.cover),
   ...site.education.map((entry) => entry.logo).filter(Boolean),
 ])

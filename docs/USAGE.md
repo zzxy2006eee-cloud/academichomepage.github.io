@@ -206,6 +206,8 @@ node scripts/dev.mjs
 
 在 `awards` 列表里填写 `title`（奖项名称）、`level`（名称旁的小号级别标签）、`organization`（授予单位）、`year`（年份）。日期、学位和奖项不会自动从其他平台获取，需要自行维护。
 
+`awards[].certificate` 填写 `assets/images/awards/` 下的奖状图片路径。点击奖项弹出证书，可放大、打开原图，或通过关闭按钮、Esc、点击遮罩退出。暂无奖状时使用 `assets/images/awards/pending.svg`，日后替换路径即可。`certificateCropLeft` 是可选的左侧显示裁切百分比（0–10），只隐藏照片边缘，不改变原始文件；更换图片后通常应删除此字段。
+
 ### 实习经历
 
 在 `config.jsonc` 的 `internships` 列表中填写实习记录，按列表顺序展示在“荣誉与奖项”和“论文成果”之间。例如：

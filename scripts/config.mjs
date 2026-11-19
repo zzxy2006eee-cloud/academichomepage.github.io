@@ -76,6 +76,21 @@ export function normalizeConfig(input) {
     "about",
   ])
     if (!Array.isArray(site[field])) fail(field, "必须是列表 []；不显示内容时填写 []。");
+  for (const [index, award] of site.awards.entries()) {
+    if (
+      award.certificate !== undefined &&
+      (typeof award.certificate !== "string" ||
+        (/^[a-z][a-z\d+.-]*:/i.test(award.certificate) && !/^https?:\/\//i.test(award.certificate)))
+    )
+      fail(`awards[${index}].certificate`, "请填写图片相对路径或 HTTP(S) 网址。");
+    if (
+      award.certificateCropLeft !== undefined &&
+      (!Number.isFinite(award.certificateCropLeft) ||
+        award.certificateCropLeft < 0 ||
+        award.certificateCropLeft > 10)
+    )
+      fail(`awards[${index}].certificateCropLeft`, "请填写 0–10 之间的裁切百分比。");
+  }
   for (const [index, entry] of site.internships.entries()) {
     if (!entry || typeof entry !== "object" || Array.isArray(entry))
       fail(`internships[${index}]`, "每条实习经历必须是 {} 对象。");

@@ -26,6 +26,8 @@
 
 双语文字使用 `{ "zh": "中文内容", "en": "English content" }`，需要分别维护。图片放入 [`assets/images/`](assets/images/)，再修改头像或项目的图片路径；配色和间距在 [`src/styles.css`](src/styles.css) 中调整。
 
+奖项的 `awards[].certificate` 设置奖状图片路径，点击奖项即可查看；暂无图片时填写 `assets/images/awards/pending.svg`。
+
 “项目详情”跳转到统一项目展示页的对应章节；流程图、硬件结构、演示视频及成果在 `projects[].detailPage` 中配置，见[详细说明](docs/USAGE.md#统一项目展示页)。
 
 ## 项目目录
@@ -42,6 +44,7 @@ academichomepage.github.io/
 ├─ assets/
 │  ├─ favicon.svg               # 浏览器标签图标
 │  ├─ images/
+│  │  ├─ awards/               # 奖状图片与黑色占位图
 │  │  ├─ avatar.png             # 头像
 │  │  ├─ uestc-emblem.png       # 学校校徽
 │  │  ├─ drone-navigation.png  # 无人机封面
