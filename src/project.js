@@ -181,8 +181,14 @@
     document.querySelectorAll(".showcase").forEach((chapter) => {
       let section = chapter.querySelector(".detail-section");
       chapter.querySelectorAll(".detail-section").forEach((item) => {
-        if (item.getBoundingClientRect().top <= threshold + 40) section = item;
+        const sectionThreshold = parseFloat(getComputedStyle(item).scrollMarginTop) + 8;
+        if (item.getBoundingClientRect().top <= sectionThreshold) section = item;
       });
+      if (
+        chapter === chapters.at(-1) &&
+        scrollY + innerHeight >= document.documentElement.scrollHeight - 2
+      )
+        section = [...chapter.querySelectorAll(".detail-section")].at(-1);
       const directory = [...document.querySelectorAll("[data-chapter-directory]")].find(
         (group) => group.dataset.chapterDirectory === chapter.id,
       );
@@ -245,21 +251,23 @@
     document.getElementById("project-nav").innerHTML =
       `<a class="back-home" href="./#projects">← ${w("返回主页", "Back to homepage")}</a><div class="language-switch" role="group" aria-label="Language">${["zh", "en"].map((code) => `<button data-language="${code}" aria-pressed="${lang === code}">${code === "zh" ? "中文" : "EN"}</button>`).join("")}</div>`;
     document.getElementById("project-directory").innerHTML =
-      `<div class="directory-heading"><span>${w("项目目录", "CONTENTS")}</span><small>${String(projects.length).padStart(2, "0")} ${w("个项目", "PROJECTS")}</small></div><nav aria-label="${w("核心项目目录", "Project directory")}">${projects.map((p, i) => `<a data-jump data-project-link="${esc(p.id)}" href="${href(p.id)}"><span class="directory-number">${number(i)}</span><span>${esc(titleParts(p)[0])}<small>${esc(titleParts(p)[1])}</small></span><span class="directory-arrow">↗</span></a>`).join("")}</nav>`;
-    document.getElementById("project-directory").insertAdjacentHTML(
-      "beforeend",
-      projects
-        .filter((p) => p.detailPage?.layout === "showcase")
+      `<div class="directory-heading"><span>${w("项目目录", "CONTENTS")}</span><small>${String(projects.length).padStart(2, "0")} ${w("个项目", "PROJECTS")}</small></div><nav aria-label="${w("核心项目目录", "Project directory")}">${projects
         .map(
-          (p) =>
-            `<div class="directory-chapters" data-chapter-directory="${esc(p.id)}" role="navigation" aria-label="${esc(l(p.title))}" hidden>${blocks(
-              p,
-            )
-              .map(([key, text]) => `<a data-jump href="${href(blockId(p, key))}">${esc(text)}</a>`)
-              .join("")}</div>`,
+          (p, i) =>
+            `<a data-jump data-project-link="${esc(p.id)}" href="${href(p.id)}"><span class="directory-number">${number(i)}</span><span>${esc(titleParts(p)[0])}<small>${esc(titleParts(p)[1])}</small></span><span class="directory-arrow">↗</span></a>${
+              p.detailPage?.layout === "showcase"
+                ? `<div class="directory-chapters" data-chapter-directory="${esc(p.id)}" role="group" aria-label="${esc(l(p.title))}" hidden>${blocks(
+                    p,
+                  )
+                    .map(
+                      ([key, text]) =>
+                        `<a data-jump href="${href(blockId(p, key))}">${esc(text)}</a>`,
+                    )
+                    .join("")}</div>`
+                : ""
+            }`,
         )
-        .join(""),
-    );
+        .join("")}</nav>`;
     document.getElementById("project-content").innerHTML =
       `<header class="portfolio-intro"><p class="eyebrow">SELECTED WORK / ${String(projects.length).padStart(2, "0")}</p><h1>${w("核心项目", "Selected Projects")}<span>.</span></h1><p>${w("从技术路线到系统实现，记录每一个项目。", "From technical approaches to system implementation.")}</p></header><p id="link-notice" class="link-notice" hidden>${w("原链接未找到对应项目，以下展示全部项目。", "The requested project was not found. All projects are listed below.")}</p>${projects.map(chapter).join("")}`;
     document

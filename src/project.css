@@ -113,7 +113,7 @@ button {
   display: grid;
   gap: 6px;
 }
-.project-directory nav a {
+.project-directory [data-project-link] {
   display: grid;
   grid-template-columns: 24px minmax(0, 1fr) 10px;
   align-items: baseline;
@@ -125,11 +125,11 @@ button {
   line-height: 1.6;
   border-radius: 0 6px 6px 0;
 }
-.project-directory nav a:hover {
+.project-directory [data-project-link]:hover {
   text-decoration: none;
   background: #f7f9fc;
 }
-.project-directory nav a[aria-current] {
+.project-directory [data-project-link][aria-current] {
   color: #244d72;
   border-left-color: #568bb6;
   background: #edf4fa;
@@ -143,10 +143,10 @@ button {
   font-size: 11px;
   opacity: 0;
 }
-.project-directory nav a[aria-current] .directory-arrow {
+.project-directory [data-project-link][aria-current] .directory-arrow {
   opacity: 1;
 }
-.project-directory nav small {
+.project-directory [data-project-link] small {
   display: block;
   font-size: 10px;
   color: #8391a0;
@@ -523,7 +523,7 @@ video {
     overflow-x: auto;
     scrollbar-width: none;
   }
-  .project-directory nav a {
+  .project-directory [data-project-link] {
     flex-shrink: 0;
     display: flex;
     gap: 8px;
@@ -534,11 +534,11 @@ video {
     border-radius: 5px;
     white-space: nowrap;
   }
-  .project-directory nav small,
+  .project-directory [data-project-link] small,
   .directory-arrow {
     display: none;
   }
-  .project-directory nav a[aria-current] {
+  .project-directory [data-project-link][aria-current] {
     border-color: #aac4db;
   }
   main {
@@ -598,7 +598,7 @@ video {
 }
 /* Optional project showcase; all additions stay inside the project document. */
 .directory-chapters {
-  margin: 20px 0 0 45px;
+  margin: 2px 0 16px 45px;
 }
 .directory-chapters a {
   display: block;
