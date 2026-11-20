@@ -55,6 +55,8 @@ academichomepage.github.io/
 │  │  ├─ drone-navigation.svg / robot-perception.svg # 备用项目插图
 │  │  ├─ drone/*               # 无人机硬件、功能效果与评估图
 │  │  └─ sweeper/*.jpg         # 清扫车视频及爆炸视图的封面
+│  ├─ videos/drone/
+│  │  └─ full-process-demo.mp4 # 无人机全流程实机演示
 │  └─ videos/sweeper/
 │     ├─ mapping-{physical,qt}.mp4   # 感知建图：实物端、Qt 端
 │     ├─ coverage-{physical,qt}.mp4  # 覆盖清扫

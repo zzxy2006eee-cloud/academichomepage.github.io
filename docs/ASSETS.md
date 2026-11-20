@@ -5,6 +5,7 @@
 - `assets/images/awards/*.jpg`：用户提供的两张原始奖状照片，保留证书内容；网页中的边缘裁切仅改变显示区域。`pending.svg` 为纯黑占位图。
 - `assets/images/avatar.png`：用户提供的个人头像。
 - `assets/images/drone-navigation.png`、`assets/images/robot-perception.png`：用户提供的项目照片。
+- `assets/videos/drone/full-process-demo.mp4`：用户提供的四旋翼无人机全流程实机演示视频；对应封面为 `assets/images/drone/full-process-demo.jpg`。
 - `assets/videos/sweeper/`：用户提供的功能演示视频，以及从用户提供的 `爆炸视图.pptx` 中按点击目标拆出的五段硬件动画。来源对应表见该目录的 `manifest.json`。
 - `assets/images/drone/`：来自用户提供的《居民楼道消防通道智能巡检无人机系统设计与实现》报告的硬件图片、运行截图及评估图。相关图片权利归原权利人所有，不纳入代码 MIT 许可。
 - `assets/images/sweeper/`：上述视频的封面帧。

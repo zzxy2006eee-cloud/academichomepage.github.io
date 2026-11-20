@@ -382,6 +382,24 @@
         "videos": [
           {
             "title": {
+              "zh": "全流程实机演示",
+              "en": "Full-Process Hardware Demo",
+            },
+            "type": "file",
+            "url": "assets/videos/drone/full-process-demo.mp4",
+            "poster": "assets/images/drone/full-process-demo.jpg",
+            "display": "single",
+            "viewLabel": {
+              "zh": "实机演示",
+              "en": "Hardware demonstration",
+            },
+            "description": {
+              "zh": "实机运行场景与 RViz 话题画面并列展示，集中呈现无人机的运行过程。",
+              "en": "A full-length demonstration pairing real-world quadrotor operation with RViz topic views.",
+            },
+          },
+          {
+            "title": {
               "zh": "感知建图",
               "en": "Mapping",
             },
@@ -506,25 +524,15 @@
         "achievements": [
           {
             "title": {
-              "zh": "建图与定位评估",
-              "en": "Mapping & Localization",
+              "zh": "Openhouse工程创新与设计金奖",
+              "en": "Openhouse Engineering Innovation and Design — Gold Award",
             },
-            "image": "assets/images/drone/pose-error.png",
             "description": {
-              "zh": "报告中的 Gazebo 双层楼道实验：轨迹平移 RMSE 为 0.1190 m，旋转 RMSE 为 0.3931°；上图展示完整轨迹的位姿误差。",
-              "en": "In the report’s two-floor Gazebo experiment, translation RMSE is 0.1190 m and rotation RMSE is 0.3931°. The chart shows pose errors along the trajectory.",
+              "zh": "2026 年 · 院级。",
+              "en": "2026 · School-level award.",
             },
-          },
-          {
-            "title": {
-              "zh": "视觉识别与巡检记录",
-              "en": "Recognition & Inspection Records",
-            },
-            "image": "assets/images/drone/detection-metrics.jpg",
-            "description": {
-              "zh": "YOLOv8n 面向楼道堆放物检测，图示为报告中的 Precision、Recall 与 mAP@0.5 曲线；识别结果与现场图像、位姿和任务信息关联留存。",
-              "en": "YOLOv8n detects objects piled in corridors. The report’s chart shows precision, recall and mAP@0.5; detections are associated with images, poses and task records.",
-            },
+            "image": "",
+            "url": "",
           },
         ],
       },
