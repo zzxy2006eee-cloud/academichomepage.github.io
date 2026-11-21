@@ -581,6 +581,24 @@
           "defaultPart": "assembly",
           "parts": [
             {
+              "id": "assembly",
+              "title": {
+                "zh": "整车平台",
+                "en": "Vehicle Platform",
+              },
+              "subtitle": {
+                "zh": "查看整车装配与旋转展示",
+                "en": "Assembly and rotation overview",
+              },
+              "type": "file",
+              "url": "assets/videos/sweeper/hardware-assembly.mp4",
+              "poster": "assets/images/sweeper/hardware-assembly.jpg",
+              "description": {
+                "zh": "国产算力驱动，多传感器协同。",
+                "en": "Domestic computing with coordinated sensors.",
+              },
+            },
+            {
               "id": "localization",
               "title": {
                 "zh": "定位感知",
@@ -650,24 +668,6 @@
               "description": {
                 "zh": "聚拢地面垃圾并收集入箱。",
                 "en": "Gathering ground litter into the collection bin.",
-              },
-            },
-            {
-              "id": "assembly",
-              "title": {
-                "zh": "恢复整车",
-                "en": "Complete Vehicle",
-              },
-              "subtitle": {
-                "zh": "查看整车装配与旋转展示",
-                "en": "Assembly and rotation overview",
-              },
-              "type": "file",
-              "url": "assets/videos/sweeper/hardware-assembly.mp4",
-              "poster": "assets/images/sweeper/hardware-assembly.jpg",
-              "description": {
-                "zh": "国产算力驱动，多传感器协同。",
-                "en": "Domestic computing with coordinated sensors.",
               },
             },
           ],
