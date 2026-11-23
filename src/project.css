@@ -827,6 +827,44 @@ video {
 .demo-thumbnails small {
   color: #8da8bb;
 }
+.outcome-metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px;
+  margin: 0;
+  padding: 28px 24px;
+  background: #f3f7fa;
+  border-radius: 8px;
+}
+.outcome-metric {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 14px;
+}
+.outcome-metric dd {
+  order: -1;
+  margin: 0;
+  color: #263b4c;
+  font-size: clamp(28px, 3vw, 40px);
+  font-weight: 750;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+.outcome-metric dt {
+  color: #708292;
+  font-size: 12px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+@media (max-width: 600px) {
+  .outcome-metrics {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+  }
+  .outcome-metric { gap: 8px; }
+}
 .showcase-pair {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

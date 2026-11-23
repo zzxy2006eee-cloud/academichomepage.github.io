@@ -131,6 +131,7 @@ export function normalizeConfig(input) {
       fail(`${prefix}.layout`, '请填写 "standard" 或 "showcase"。');
     for (const [key, list] of [
       ["perception", page.perception],
+      ["outcomeMetrics", page.outcomeMetrics],
       ["hardware.parts", page.hardware?.parts],
     ]) {
       if (list === undefined) continue;

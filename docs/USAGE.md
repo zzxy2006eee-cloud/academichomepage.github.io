@@ -358,6 +358,7 @@ node scripts/dev.mjs
 | `hardware.defaultPart` | 默认展示的部件 `id`，如 `"assembly"` |
 | `hardware.parts[]` | 可切换的部件，填写 `id`、`title`、`subtitle`、`url`（动画视频）、`poster`、`description`；静态图可用 `image` |
 | `achievements[]` | 项目成果、证书或个人贡献，填写 `title`、`description`、`image`、`url` |
+| `outcomeMetrics[]` | 成果数据条，每项填写双语 `value`（数值或奖项）和 `label`（说明）；非空时替代成果图片卡片 |
 
 标题与说明支持 `{ "zh": "中文", "en": "English" }`。没有的素材保留空字符串 `""`，页面显示黑色占位和“待补充”；视频地址为空时不会显示虚假的播放按钮。填写真实路径后自动替换占位，无需修改页面代码。删除列表条目即可移除对应的场景或卡片。
 

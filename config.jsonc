@@ -521,20 +521,24 @@
             "display": "single",
           },
         ],
-        "achievements": [
+        "outcomeMetrics": [
           {
-            "title": {
-              "zh": "Openhouse工程创新与设计金奖",
-              "en": "Openhouse Engineering Innovation and Design — Gold Award",
+            "value": { "zh": ">3 kg", "en": ">3 kg" },
+            "label": { "zh": "有效载荷", "en": "Payload capacity" },
+          },
+          {
+            "value": { "zh": "<5 cm", "en": "<5 cm" },
+            "label": { "zh": "定位精度", "en": "Positioning accuracy" },
+          },
+          {
+            "value": { "zh": "金奖", "en": "Gold Award" },
+            "label": {
+              "zh": "Openhouse工程创新与设计",
+              "en": "Openhouse Engineering Innovation and Design",
             },
-            "description": {
-              "zh": "2026 年 · 院级。",
-              "en": "2026 · School-level award.",
-            },
-            "image": "",
-            "url": "",
           },
         ],
+        "achievements": [],
       },
       "details": {
         "zh": "项目基于 ROS Noetic，集成 PX4 SITL、Gazebo Classic、MID360 仿真、Faster-LIO 定位以及 Qt/RViz 操作台，衔接全局 A* 路线与 EGO 局部规划。支持在线建图、加载地图、区域选择、巡检路线与相机关键帧记录。根据仓库说明，项目仍处于仿真验证阶段，新增巡检功能尚未完成飞行验收，实机验收也尚未完成。",
