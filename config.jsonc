@@ -266,8 +266,8 @@
         "workflow": {
           "image": "assets/images/drone-workflow.svg",
           "description": {
-            "zh": "从激光惯性感知、共享地图到全局与局部规划，再连接飞行执行、视觉识别和巡检记录。",
-            "en": "LiDAR-inertial sensing and shared mapping feed global and local planning, flight execution, visual detection and inspection records.",
+            "zh": "",
+            "en": "",
           },
         },
         "hardware": {
@@ -573,8 +573,8 @@
         "workflow": {
           "image": "assets/images/sweeper-architecture.svg",
           "description": {
-            "zh": "双机协同下的感知、定位、任务规划与底盘执行；点击查看完整系统架构。",
-            "en": "Perception, localization, task planning and chassis execution across two hosts. Click to explore the full architecture.",
+            "zh": "",
+            "en": "",
           },
         },
         "hardware": {
