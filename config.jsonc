@@ -774,11 +774,25 @@
             },
           },
         ],
+        "outcomeMetrics": [
+          {
+            "value": { "zh": "≥10000㎡", "en": "≥10000 m²" },
+            "label": { "zh": "建图面积", "en": "Mapping area" },
+          },
+          {
+            "value": { "zh": "≥3600㎡/h", "en": "≥3600 m²/h" },
+            "label": { "zh": "清扫效率", "en": "Sweeping efficiency" },
+          },
+          {
+            "value": { "zh": "6种", "en": "6 types" },
+            "label": { "zh": "支持识别垃圾类别", "en": "Recognizable litter categories" },
+          },
+        ],
         "achievements": [
           {
             "title": {
-              "zh": "项目成果与荣誉",
-              "en": "Outcomes & awards",
+              "zh": "比赛现场",
+              "en": "Competition Highlights",
             },
             "image": "",
             "description": {
@@ -789,8 +803,8 @@
           },
           {
             "title": {
-              "zh": "我的工作与贡献",
-              "en": "My contribution",
+              "zh": "获奖名次",
+              "en": "Competition Results",
             },
             "image": "",
             "description": {
