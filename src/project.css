@@ -865,6 +865,62 @@ video {
   }
   .outcome-metric { gap: 8px; }
 }
+/* Keep the sweeper's three outcome columns visually balanced. */
+#robot-challenge .outcome-metrics {
+  container-type: inline-size;
+  gap: 0;
+  padding: 32px 16px;
+  background: linear-gradient(135deg, #f5f9fc, #edf4f9);
+  border: 1px solid #e4edf4;
+  border-radius: 12px;
+}
+#robot-challenge .outcome-metric {
+  position: relative;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+  padding: 4px 16px;
+  text-align: center;
+}
+#robot-challenge .outcome-metric + .outcome-metric::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8px;
+  bottom: 8px;
+  width: 1px;
+  background: #d9e5ef;
+}
+#robot-challenge .outcome-metric dd {
+  font-size: clamp(22px, 3.8cqi, 38px);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+}
+#robot-challenge .outcome-metric dt {
+  color: #6b8194;
+  font-size: 13px;
+}
+@media (max-width: 600px) {
+  #robot-challenge .outcome-metrics {
+    padding: 8px 24px;
+  }
+  #robot-challenge .outcome-metric {
+    padding: 24px 0;
+    gap: 10px;
+  }
+  #robot-challenge .outcome-metric dd {
+    font-size: 32px;
+  }
+  #robot-challenge .outcome-metric + .outcome-metric::before {
+    left: 12%;
+    right: 12%;
+    top: 0;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+}
 .outcome-metrics + .showcase-pair {
   margin-top: 24px;
 }
