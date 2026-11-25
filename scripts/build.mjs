@@ -25,6 +25,7 @@ export async function buildSite(root = fileURLToPath(new URL("../", import.meta.
     const data = file === "site" ? site : github;
     if (file === "site") {
       data.profile.avatar = await versionedAsset(data.profile.avatar);
+      if (data.resume?.photo) data.resume.photo = await versionedAsset(data.resume.photo);
       for (const award of data.awards) {
         if (award.certificate) award.certificate = await versionedAsset(award.certificate);
       }

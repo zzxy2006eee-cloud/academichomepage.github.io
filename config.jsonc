@@ -229,7 +229,8 @@
     },
   ],
   // 简历导出：替换为真实论文后可设为 true；false 不影响主页论文栏。
-  "resume": { "includePublications": false },
+  // photo 为简历独立照片路径；留空沿用主页头像。
+  "resume": { "includePublications": false, "photo": "" },
   // 核心项目：title 标题、description 简介、cover 封面、repository 项目仓库完整网址。
   // 留空的 research / role / outcome 不显示；details 是独立项目页的概览。
   // detailPage：workflow / hardware 配置 image 和双语 description；videos / achievements 示例见 docs/USAGE.md。

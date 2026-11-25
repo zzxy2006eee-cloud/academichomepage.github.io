@@ -13,6 +13,7 @@ for (const item of [site.profile.name, site.profile.role, ...site.about])
   assert.ok(item.zh && item.en, "Both language variants are required");
 for (const asset of [
   site.profile.avatar,
+  ...[site.resume?.photo].filter((src) => src && !/^https?:\/\//i.test(src)),
   site.favicon,
   ...site.awards
     .map((award) => award.certificate)

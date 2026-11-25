@@ -107,19 +107,22 @@
     const section = (title, content) =>
       content ? `<section class="resume-section"><h2>${esc(title)}</h2>${content}</section>` : "";
     const p = data.profile;
+    const photo = safeUrl(data.resume?.photo || p.avatar);
     const contacts = [
-      l(p.institution) && esc(l(p.institution)),
-      l(p.location) && esc(l(p.location)),
-      p.email && link(`mailto:${p.email}`, esc(p.email)),
-      link(`https://github.com/${data.githubUsername}`, `GitHub: ${esc(data.githubUsername)}`),
-    ].filter(Boolean);
+      [w("所在地", "Location"), l(p.location) && esc(l(p.location))],
+      [w("邮箱", "Email"), p.email && link(`mailto:${p.email}`, esc(p.email))],
+      ["GitHub", link(`https://github.com/${data.githubUsername}`, esc(data.githubUsername))],
+    ].filter(([, value]) => value);
     // Example publications must never become claims in an exported resume.
     const includePapers = data.resume?.includePublications ?? !data.demo;
     sheet.lang = lang === "zh" ? "zh-CN" : "en";
-    sheet.innerHTML = `<header class="resume-header"><h1>${esc(l(p.name))}</h1>${lang === "zh" && p.romanized ? `<p class="resume-romanized">${esc(p.romanized)}</p>` : ""}<div class="resume-contact">${contacts.map((x) => `<span>${x}</span>`).join("")}</div></header>${section(w("教育背景", "Education"), data.education.map((x) => `<article class="resume-entry"><div class="resume-entry-heading"><h3>${esc(l(x.school))} · ${esc(l(x.degree))}</h3><span>${esc(l(x.period))}</span></div>${l(x.detail) ? `<p>${esc(l(x.detail))}</p>` : ""}</article>`).join(""))}${section(w("研究方向与专业技能", "Research Interests & Skills"), `${data.interests.length ? `<p><strong>${w("研究方向", "Research interests")}：</strong>${data.interests.map((x) => esc(l(x))).join(" · ")}</p>` : ""}${data.skills.map((x) => `<p><strong>${esc(l(x.title) || w("专业技能", "Skills"))}：</strong>${x.items.map((item) => esc(l(item))).join(" · ")}</p>`).join("")}`)}${section(w("荣誉与奖项", "Honors & Awards"), data.awards.map((x) => `<div class="resume-award"><span>${esc(l(x.title))}${l(x.organization) ? ` · ${esc(l(x.organization))}` : ""}</span><span>${esc(x.year)}</span></div>`).join(""))}${section(w("实习经历", "Internships"), internships(true))}${section(w("核心项目", "Selected Projects"), data.projects.map((x) => `<article class="resume-entry resume-project"><h3>${x.repository ? link(x.repository, esc(l(x.title))) : esc(l(x.title))}</h3><ul>${l(x.description) ? `<li><strong>${w("简介", "Overview")}：</strong>${esc(l(x.description))}</li>` : ""}${l(x.outcome) ? `<li><strong>${w("成果", "Outcome")}：</strong>${esc(l(x.outcome))}</li>` : ""}</ul></article>`).join(""))}${includePapers ? section(w("论文成果", "Publications"), data.publications.map((x) => `<article class="resume-entry"><h3>${x.pdf ? link(x.pdf, esc(l(x.title))) : esc(l(x.title))}</h3><p>${esc(x.authors.join(", "))}</p><p>${[l(x.venue), l(x.status), x.year].filter(Boolean).map(esc).join(" · ")}</p></article>`).join("")) : ""}`;
+    sheet.dataset.language = lang;
+    sheet.innerHTML = `<header class="resume-header"><div class="resume-identity"><div class="resume-name"><h1>${esc(l(p.name))}</h1>${lang === "zh" && p.romanized ? `<span class="resume-romanized">${esc(p.romanized)}</span>` : ""}</div>${l(p.role || p.institution) ? `<p class="resume-role">${esc(l(p.role || p.institution))}</p>` : ""}<dl class="resume-contact">${contacts.map(([label, value]) => `<div><dt>${esc(label)}</dt><dd>${value}</dd></div>`).join("")}</dl></div>${photo ? `<img class="resume-photo" src="${esc(photo)}" alt="${esc(l(p.name))}" width="300" height="360" loading="eager">` : ""}</header>${section(w("教育背景", "Education"), data.education.map((x) => `<article class="resume-entry"><div class="resume-entry-heading"><h3>${esc(l(x.school))} · ${esc(l(x.degree))}</h3><span>${esc(l(x.period))}</span></div>${l(x.detail) ? `<p>${esc(l(x.detail))}</p>` : ""}</article>`).join(""))}${section(w("研究方向与专业技能", "Research Interests & Skills"), `${data.interests.length ? `<p><strong>${w("研究方向", "Research interests")}：</strong>${data.interests.map((x) => esc(l(x))).join(" · ")}</p>` : ""}${data.skills.map((x) => `<p><strong>${esc(l(x.title) || w("专业技能", "Skills"))}：</strong>${x.items.map((item) => esc(l(item))).join(" · ")}</p>`).join("")}`)}${section(w("荣誉与奖项", "Honors & Awards"), data.awards.map((x) => `<div class="resume-award"><span>${esc(l(x.title))}${l(x.organization) ? ` · ${esc(l(x.organization))}` : ""}</span><span>${esc(x.year)}</span></div>`).join(""))}${section(w("实习经历", "Internships"), internships(true))}${section(w("核心项目", "Selected Projects"), data.projects.map((x) => `<article class="resume-entry resume-project"><h3>${x.repository ? link(x.repository, esc(l(x.title))) : esc(l(x.title))}</h3><ul>${l(x.description) ? `<li><strong>${w("简介", "Overview")}：</strong>${esc(l(x.description))}</li>` : ""}${l(x.outcome) ? `<li><strong>${w("成果", "Outcome")}：</strong>${esc(l(x.outcome))}</li>` : ""}</ul></article>`).join(""))}${includePapers ? section(w("论文成果", "Publications"), data.publications.map((x) => `<article class="resume-entry"><h3>${x.pdf ? link(x.pdf, esc(l(x.title))) : esc(l(x.title))}</h3><p>${esc(x.authors.join(", "))}</p><p>${[l(x.venue), l(x.status), x.year].filter(Boolean).map(esc).join(" · ")}</p></article>`).join("")) : ""}`;
   }
   // Native Ctrl+P and the export button use the same current-language resume.
-  window.addEventListener("beforeprint", renderResume);
+  window.addEventListener("beforeprint", () => {
+    if (document.getElementById("resume-print")?.dataset.language !== lang) renderResume();
+  });
   function education() {
     return data.education
       .map(
@@ -267,6 +270,7 @@
     document.getElementById("content").innerHTML =
       `<section id="about" class="content-section about-section" aria-labelledby="about-title">${heading("about")}<div class="about-copy">${data.about.map((p) => `<p>${esc(l(p))}</p>`).join("")}</div>${data.news ? `<div class="news"><span class="status-dot"></span><span class="news-label">${w("近况", "Now")}</span><span class="news-date">${esc(data.news.date)}</span><span>${esc(l(data.news.text))}</span></div>` : ""}${data.demo && data.demoNote !== null ? `<div class="demo-note"><span>${w("示例资料", "DEMO PROFILE")}</span>${esc(l(data.demoNote) || w("履历、论文和项目为可替换的示例；GitHub 区域展示真实公开数据。", "Biography, papers, and projects are examples. The GitHub section uses real public data."))}</div>` : ""}</section><section id="education" class="content-section" aria-labelledby="education-title">${heading("education")}${education()}</section><section id="honors" class="content-section" aria-labelledby="honors-title">${heading("honors")}${awards()}</section><section id="internships" class="content-section" aria-labelledby="internships-title">${heading("internships")}${internships()}</section><section id="publications" class="content-section" aria-labelledby="publications-title">${heading("publications")}${papers()}</section><section id="projects" class="content-section" aria-labelledby="projects-title">${heading("projects", `<a class="section-action" href="project.html">${w("全部项目", "All projects")} ↗</a>`)}${projects()}</section><section id="opensource" class="content-section" aria-labelledby="opensource-title">${heading("opensource")}${contributions()}</section><footer class="site-footer"><span>© ${new Date().getFullYear()} ${esc(l(data.profile.name))}</span><div class="footer-links">${data.demo ? `<span>${esc(l(data.demoLabel) || w("履历与项目为示例", "Example biography & projects"))}</span>` : ""}${link(`https://github.com/${data.repository}`, "Open source ↗")}</div></footer>`;
     renderCalendar();
+    renderResume();
     main.scrollTop = oldScroll;
     side.scrollTop = sideScroll;
     setupObserver();
@@ -379,6 +383,12 @@
     const action = e.target.closest("[data-action]")?.dataset.action;
     if (action === "print") {
       renderResume();
+      await Promise.all([
+        document.fonts.ready,
+        ...[...document.querySelectorAll("#resume-print img")].map((img) =>
+          img.decode().catch(() => {}),
+        ),
+      ]);
       window.print();
       return;
     }

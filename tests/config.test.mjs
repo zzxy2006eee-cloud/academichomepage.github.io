@@ -57,6 +57,7 @@ test("config changes reach HTML, runtime data, source links, images and safe acc
   config.profile.email = "updated@example.com";
   await writeFile(path.join(root, "assets/test-icon.svg"), '<svg xmlns="http://www.w3.org/2000/svg"><title>Test</title></svg>');
   config.favicon = "assets/test-icon.svg";
+  config.resume = { includePublications: false, photo: "assets/test-icon.svg" };
   config.education = [{ logo: "assets/test-icon.svg" }];
   config.projects = [{ cover: "assets/test-icon.svg", description: { zh: "修改后的项目简介", en: "Updated project" } }];
   await writeFile(path.join(root, "data/github.json"), JSON.stringify({ username: "previous-test-user", status: "ready", calendars: [{ total: 999 }], mergedPRs: [{ title: "Old user" }] }));
@@ -74,6 +75,7 @@ test("config changes reach HTML, runtime data, source links, images and safe acc
   assert.deepEqual(result.github.mergedPRs, []);
   assert.notEqual(result.html.match(/data\/site\.js\?v=([a-f\d]+)/)[1], oldDataVersion);
   assert.match(result.site.education[0].logo, /\?v=[a-f\d]+$/);
+  assert.equal(result.site.resume.photo, result.site.favicon);
   const generated = await readFile(path.join(root, "dist/data/site.js"), "utf8");
   assert.ok(!generated.includes("</script>"));
   config.defaultLanguage = "zh";
@@ -85,6 +87,8 @@ test("config changes reach HTML, runtime data, source links, images and safe acc
   await writeFile(path.join(root, "assets/test-icon.svg"), '<svg xmlns="http://www.w3.org/2000/svg"/>');
   const changedIcon = await buildSite(root);
   assert.notEqual(changedIcon.site.favicon, chinese.site.favicon);
+  assert.notEqual(changedIcon.site.resume.photo, chinese.site.resume.photo);
+  assert.throws(() => normalizeConfig({ ...config, resume: { photo: 123 } }), /resume.photo/);
   assert.throws(() => normalizeConfig({ ...config, repository: "https://evil.test/a/b" }), /repository/);
   assert.throws(() => normalizeConfig({ ...config, defaultLanguage: "fr" }), /defaultLanguage/);
   assert.throws(() => normalizeConfig({ ...config, title: { zh: "only" } }), /title/);

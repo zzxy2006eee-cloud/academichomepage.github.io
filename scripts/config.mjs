@@ -63,6 +63,12 @@ export function normalizeConfig(input) {
   if (!input || typeof input !== "object" || Array.isArray(input))
     fail("根节点", "必须是 {} 对象。");
   const site = structuredClone(input);
+  if (
+    site.resume?.photo !== undefined &&
+    (typeof site.resume.photo !== "string" ||
+      (/^[a-z][a-z\d+.-]*:/i.test(site.resume.photo) && !/^https?:\/\//i.test(site.resume.photo)))
+  )
+    fail("resume.photo", "请填写图片相对路径或 HTTP(S) 网址；留空沿用主页头像。");
   site.internships ??= [];
   if (!site.profile || typeof site.profile !== "object") fail("profile", "请保留个人资料对象。");
   for (const field of [
