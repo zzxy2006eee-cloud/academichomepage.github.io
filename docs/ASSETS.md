@@ -13,4 +13,4 @@
 
 复用模板时，请替换为自己的图片或已获授权的素材，并在 `config.jsonc` 中修改对应路径。
 
-`assets/images/sweeper-architecture.svg` 为原创可编辑矢量图，沿用本仓库无人机技术流程图的视觉风格。技术关系参考 [robot_challenge README](https://github.com/zzxy2006eee-cloud/robot_challenge/blob/main/README.md)（2026-11-16 读取），展示环视 BEV、双机分工、覆盖导航及独立视觉控制链路，不表示测试进度或验收结果。原始 SVG 内含文字、节点和连线，可直接编辑。黑色素材占位由 CSS 生成，不引用外部图片。
+`assets/images/sweeper-architecture.svg` 为原创可编辑矢量图，沿用本仓库无人机技术流程图的视觉风格。技术关系参考 [robot_challenge README](https://github.com/zzxy2006eee-cloud/robot_challenge/blob/main/README.md)（2026-11-16 读取），展示环视 BEV、双机分工、覆盖导航及独立视觉控制链路，不表示测试进度或验收结果。三层语义规划、IGO 端到端局部控制与 FCOS 模型依据项目维护者提供的技术路线更新。原始 SVG 内含文字、节点和连线，可直接编辑。黑色素材占位由 CSS 生成，不引用外部图片。
