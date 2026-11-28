@@ -1673,7 +1673,8 @@ table {
 @media print {
   @page {
     size: A4;
-    margin: 15mm 17mm;
+    /* No page-margin area for the browser-generated date/title/URL. */
+    margin: 0;
   }
   html,
   body {
@@ -1691,6 +1692,9 @@ table {
   }
   .resume-sheet {
     display: block;
+    padding: 15mm 17mm;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
     line-height: 1.65;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
@@ -1737,11 +1741,6 @@ table {
     color: #6b7d8b;
     letter-spacing: 0.3px;
   }
-  .resume-sheet .resume-role {
-    margin: 3mm 0;
-    font-size: 10pt;
-    color: #46637a;
-  }
   .resume-photo {
     flex: 0 0 30mm;
     width: 30mm;
@@ -1752,7 +1751,7 @@ table {
     border-radius: 2mm;
   }
   .resume-contact {
-    margin: 0;
+    margin: 4mm 0 0;
     font-size: 9pt;
     line-height: 1.7;
   }
